@@ -1,0 +1,1935 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roster Agentes — Mar–May 2026</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #f0f2f5;
+            --surface: #ffffff;
+            --surface2: #f7f8fa;
+            --surface3: #eef0f4;
+            --border: #e2e5eb;
+            --text: #0f1923;
+            --text2: #4a5568;
+            --text3: #8898aa;
+            --accent: #2563eb;
+            --accent2: #7c3aed;
+            --shadow: 0 2px 12px rgba(0,0,0,0.08);
+            --shadow-lg: 0 8px 32px rgba(0,0,0,0.12);
+            --radius: 12px;
+            --radius-sm: 8px;
+
+            --c-trabajo: #16a34a;
+            --c-trabajo-bg: #dcfce7;
+            --c-trabajo-border: #86efac;
+            --c-descanso: #64748b;
+            --c-descanso-bg: #f1f5f9;
+            --c-descanso-border: #cbd5e1;
+            --c-permuta-d: #2563eb;
+            --c-permuta-d-bg: #dbeafe;
+            --c-permuta-d-border: #93c5fd;
+            --c-permuta-t: #0891b2;
+            --c-permuta-t-bg: #cffafe;
+            --c-permuta-t-border: #67e8f9;
+            --c-permiso: #d97706;
+            --c-permiso-bg: #fef3c7;
+            --c-permiso-border: #fcd34d;
+            --c-sin-goce: #7c3aed;
+            --c-sin-goce-bg: #ede9fe;
+            --c-sin-goce-border: #c4b5fd;
+            --c-incapacidad: #dc2626;
+            --c-incapacidad-bg: #fee2e2;
+            --c-incapacidad-border: #fca5a5;
+            --c-cumple: #db2777;
+            --c-cumple-bg: #fce7f3;
+            --c-cumple-border: #f9a8d4;
+            --c-sininfo: #ea580c;
+            --c-sininfo-bg: #fff7ed;
+            --c-sininfo-border: #fdba74;
+            --c-desc-trab: #7c3aed;
+            --c-desc-trab-bg: #ede9fe;
+            --c-desc-trab-border: #c4b5fd;
+            --c-curso: #0369a1;
+            --c-curso-bg: #e0f2fe;
+            --c-curso-border: #7dd3fc;
+            --c-desc-ajuste: #7c3aed;
+            --c-desc-ajuste-bg: #ede9fe;
+            --c-desc-ajuste-border: #c4b5fd;
+            --c-permuta-t: #0e7490;
+            --c-permuta-t-bg: #cffafe;
+            --c-permuta-t-border: #22d3ee;
+            --c-permuta-d: #7e22ce;
+            --c-permuta-d-bg: #f3e8ff;
+            --c-permuta-d-border: #c084fc;
+        }
+
+        [data-theme="dark"] {
+            --bg: #0d1117;
+            --surface: #161b22;
+            --surface2: #1c2128;
+            --surface3: #21262d;
+            --border: #30363d;
+            --text: #e6edf3;
+            --text2: #8b949e;
+            --text3: #484f58;
+            --accent: #58a6ff;
+            --accent2: #bc8cff;
+            --shadow: 0 2px 12px rgba(0,0,0,0.4);
+            --shadow-lg: 0 8px 32px rgba(0,0,0,0.5);
+
+            --c-trabajo: #4ade80;
+            --c-trabajo-bg: #052e16;
+            --c-trabajo-border: #166534;
+            --c-descanso: #94a3b8;
+            --c-descanso-bg: #1e293b;
+            --c-descanso-border: #334155;
+            --c-permuta-d: #60a5fa;
+            --c-permuta-d-bg: #1e3a5f;
+            --c-permuta-d-border: #1d4ed8;
+            --c-permuta-t: #22d3ee;
+            --c-permuta-t-bg: #0c3040;
+            --c-permuta-t-border: #0e7490;
+            --c-permiso: #fbbf24;
+            --c-permiso-bg: #3d2600;
+            --c-permiso-border: #92400e;
+            --c-sin-goce: #a78bfa;
+            --c-sin-goce-bg: #2e1065;
+            --c-sin-goce-border: #6d28d9;
+            --c-incapacidad: #f87171;
+            --c-incapacidad-bg: #3b0000;
+            --c-incapacidad-border: #991b1b;
+            --c-cumple: #f472b6;
+            --c-cumple-bg: #3d0022;
+            --c-cumple-border: #9d174d;
+            --c-sininfo: #fb923c;
+            --c-sininfo-bg: #3d1200;
+            --c-sininfo-border: #9a3412;
+            --c-desc-trab: #a78bfa;
+            --c-desc-trab-bg: #2e1065;
+            --c-desc-trab-border: #5b21b6;
+            --c-curso: #38bdf8;
+            --c-curso-bg: #0c2a3d;
+            --c-curso-border: #0369a1;
+            --c-desc-ajuste: #a78bfa;
+            --c-desc-ajuste-bg: #2e1065;
+            --c-desc-ajuste-border: #5b21b6;
+            --c-permuta-t: #22d3ee;
+            --c-permuta-t-bg: #0c3040;
+            --c-permuta-t-border: #0e7490;
+            --c-permuta-d: #c084fc;
+            --c-permuta-d-bg: #3b0764;
+            --c-permuta-d-border: #7e22ce;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg);
+            min-height: 100vh;
+            color: var(--text);
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .container {
+            max-width: 640px;
+            margin: 0 auto;
+            padding: 16px;
+        }
+
+        /* BRANDING TLACUACHE OPS */
+        .brand-strip {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 0 0;
+            margin-top: 10px;
+            border-top: 1px solid var(--border);
+        }
+        .brand-icon {
+            font-size: 14px;
+            opacity: 0.7;
+        }
+        .brand-name {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--accent);
+            letter-spacing: 0.04em;
+            white-space: nowrap;
+        }
+        .brand-tagline {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9px;
+            color: var(--text3);
+            white-space: nowrap;
+        }
+        .brand-sep {
+            color: var(--border);
+            font-size: 10px;
+        }
+        .brand-version {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9px;
+            color: var(--text3);
+            opacity: 0.6;
+            margin-left: auto;
+        }
+
+        .list-footer {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 10px 16px;
+            margin-top: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: var(--shadow);
+        }
+        .list-footer .brand-icon { font-size: 12px; }
+        .list-footer .brand-name { font-size: 9px; }
+        .list-footer .brand-tagline { font-size: 8px; }
+        .list-footer .brand-version { font-size: 8px; }
+
+        /* HEADER */
+        .header {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 20px 24px 16px;
+            margin-bottom: 12px;
+            box-shadow: var(--shadow);
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+
+        .header-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text);
+            letter-spacing: -0.5px;
+        }
+
+        .header-subtitle {
+            font-size: 12px;
+            color: var(--text3);
+            margin-top: 3px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .dark-toggle {
+            background: var(--surface3);
+            border: 1px solid var(--border);
+            color: var(--text2);
+            width: 36px;
+            height: 36px;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        .dark-toggle:hover { background: var(--border); }
+
+        .roster-meta {
+            display: flex;
+            gap: 16px;
+            padding-top: 12px;
+            border-top: 1px solid var(--border);
+            flex-wrap: wrap;
+        }
+
+        .meta-item {
+            font-size: 11px;
+            color: var(--text3);
+            font-family: 'JetBrains Mono', monospace;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .meta-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #22c55e;
+            display: inline-block;
+            box-shadow: 0 0 0 2px rgba(34,197,94,0.3);
+        }
+
+        /* MONTH TABS */
+        .view-tabs {
+            display: flex;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 5px;
+            margin-bottom: 12px;
+            gap: 4px;
+            box-shadow: var(--shadow);
+        }
+
+        .view-tab {
+            flex: 1;
+            padding: 9px;
+            border: none;
+            border-radius: var(--radius-sm);
+            background: transparent;
+            color: var(--text2);
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        .view-tab.active {
+            background: var(--accent);
+            color: white;
+            box-shadow: 0 2px 8px rgba(37,99,235,0.35);
+        }
+
+        /* SEARCH BAR */
+        .search-bar {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 10px 16px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: var(--shadow);
+            transition: border-color 0.2s;
+        }
+        .search-bar:focus-within { border-color: var(--accent); }
+
+        .search-icon { color: var(--text3); font-size: 14px; }
+
+        .search-input {
+            flex: 1;
+            border: none;
+            outline: none;
+            background: transparent;
+            font-size: 14px;
+            color: var(--text);
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        .search-input::placeholder { color: var(--text3); }
+
+        .search-clear {
+            background: none;
+            border: none;
+            color: var(--text3);
+            cursor: pointer;
+            font-size: 16px;
+            padding: 0 2px;
+            display: none;
+        }
+
+        /* CALENDAR VIEW */
+        .calendar-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 20px;
+            margin-bottom: 12px;
+            box-shadow: var(--shadow);
+        }
+
+        .month-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .month-nav button {
+            background: var(--surface3);
+            border: 1px solid var(--border);
+            color: var(--text2);
+            padding: 7px 14px;
+            border-radius: var(--radius-sm);
+            font-size: 13px;
+            cursor: pointer;
+            font-weight: 500;
+            font-family: 'DM Sans', sans-serif;
+            transition: all 0.2s;
+        }
+        .month-nav button:disabled { opacity: 0.3; cursor: not-allowed; }
+        .month-nav button:not(:disabled):hover { background: var(--border); }
+
+        .month-name {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            font-size: 15px;
+        }
+
+        .weekdays {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 4px;
+            margin-bottom: 6px;
+        }
+
+        .weekday {
+            text-align: center;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text3);
+            padding: 6px 0;
+            font-family: 'JetBrains Mono', monospace;
+            letter-spacing: 0.5px;
+        }
+
+        .days {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 4px;
+        }
+
+        .day {
+            aspect-ratio: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 13px;
+            transition: all 0.15s;
+            border: 2px solid transparent;
+            position: relative;
+            gap: 2px;
+        }
+
+        .day:hover:not(.empty) { background: var(--surface3); border-color: var(--border); }
+        .day.empty { cursor: default; }
+        .day.today { background: var(--accent); color: white; }
+        .day.selected { background: var(--accent2); color: white; border-color: transparent; }
+
+        .day-coverage {
+            font-size: 9px;
+            font-weight: 700;
+            padding: 1px 4px;
+            border-radius: 4px;
+            line-height: 1;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .coverage-ok { background: rgba(22,163,74,0.15); color: #16a34a; }
+        .coverage-low { background: rgba(220,38,38,0.15); color: #dc2626; }
+        .day.today .day-coverage, .day.selected .day-coverage { background: rgba(255,255,255,0.2); color: white; }
+
+        /* FILTERS */
+        .filters {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 12px 16px;
+            margin-bottom: 12px;
+            box-shadow: var(--shadow);
+        }
+
+        .filters-label {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text3);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: 10px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .filter-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .chip {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.15s;
+            user-select: none;
+            background: var(--surface3);
+            color: var(--text2);
+            border-color: var(--border);
+        }
+
+        .chip.active-filter {
+            color: white;
+            border-color: transparent;
+        }
+
+        .chip[data-filter="all"].active-filter { background: var(--text); }
+        .chip[data-filter="trabajo"].active-filter { background: var(--c-trabajo); }
+        .chip[data-filter="descanso"].active-filter { background: var(--c-descanso); }
+        .chip[data-filter="permiso"].active-filter { background: var(--c-permiso); color: #000; }
+        .chip[data-filter="sin-goce"].active-filter { background: var(--c-sin-goce); color: #fff; }
+        .chip[data-filter="curso"].active-filter { background: var(--c-curso); }
+        .chip[data-filter="supervisor"].active-filter { background: var(--accent2); }
+
+        /* SERVICE COUNTER */
+        .service-counter {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 16px 20px;
+            margin-bottom: 12px;
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .service-counter:hover { border-color: var(--accent); }
+
+        .counter-main {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .counter-label {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: var(--text3);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .counter-right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .counter-value {
+            font-size: 36px;
+            font-weight: 700;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--accent);
+            line-height: 1;
+        }
+
+        .expand-indicator {
+            font-size: 11px;
+            color: var(--text3);
+            transition: transform 0.3s;
+        }
+        .expand-indicator.expanded { transform: rotate(180deg); }
+
+        .counter-detail {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        .counter-detail.expanded {
+            max-height: 200px;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid var(--border);
+        }
+
+        .counter-breakdown { display: flex; flex-direction: column; gap: 8px; }
+
+        .counter-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            color: var(--text2);
+        }
+
+        .counter-item-value {
+            font-size: 20px;
+            font-weight: 700;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--text);
+        }
+
+        /* LEGEND */
+        .legend {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 12px 16px;
+            margin-bottom: 12px;
+            box-shadow: var(--shadow);
+        }
+
+        .legend-title {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text3);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: 10px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .legend-items {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 6px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            color: var(--text2);
+        }
+
+        .legend-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        /* AGENTS LIST */
+        .section-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text3);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: 10px;
+        }
+
+        .agents-list { display: flex; flex-direction: column; gap: 6px; }
+
+        .agent-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 12px 14px;
+            cursor: pointer;
+            transition: all 0.15s;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-left: 3px solid var(--border);
+        }
+        .agent-card:hover { transform: translateX(2px); box-shadow: var(--shadow); }
+
+        .agent-card.trabajo { border-left-color: var(--c-trabajo); }
+        .agent-card.descanso { border-left-color: var(--c-descanso); }
+        .agent-card.permiso { border-left-color: var(--c-permiso); }
+        .agent-card.sin-goce { border-left-color: var(--c-sin-goce); }
+        .agent-card.incapacidad { border-left-color: var(--c-incapacidad); }
+        .agent-card.cumpleanos { border-left-color: var(--c-cumple); }
+        .agent-card.curso { border-left-color: var(--c-curso); }
+        .agent-card.curso-recurrente { border-left-color: #eab308; }
+        .agent-card.descanso-ajuste { border-left-color: var(--c-desc-ajuste); }
+        .agent-card.permuta-trabajo { border-left-color: var(--c-permuta-t); }
+        .agent-card.permuta-descanso { border-left-color: var(--c-permuta-d); }
+
+        .agent-left { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+
+        .agent-name {
+            font-weight: 700;
+            font-size: 14px;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .agent-id {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            color: var(--text3);
+        }
+
+        .supervisor-badge {
+            background: #fbbf24;
+            color: #000;
+            font-size: 8px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .agent-right { text-align: right; flex-shrink: 0; margin-left: 12px; }
+
+        .agent-status-badge {
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 20px;
+        }
+
+        .badge-trabajo { background: var(--c-trabajo-bg); color: var(--c-trabajo); border: 1px solid var(--c-trabajo-border); }
+        .badge-descanso { background: var(--c-descanso-bg); color: var(--c-descanso); border: 1px solid var(--c-descanso-border); }
+        .badge-permiso { background: var(--c-permiso-bg); color: var(--c-permiso); border: 1px solid var(--c-permiso-border); }
+        .badge-sin-goce { background: var(--c-sin-goce-bg); color: var(--c-sin-goce); border: 1px solid var(--c-sin-goce-border); }
+        .badge-incapacidad { background: var(--c-incapacidad-bg); color: var(--c-incapacidad); border: 1px solid var(--c-incapacidad-border); }
+        .badge-cumpleanos { background: var(--c-cumple-bg); color: var(--c-cumple); border: 1px solid var(--c-cumple-border); }
+        .badge-curso { background: var(--c-curso-bg); color: var(--c-curso); border: 1px solid var(--c-curso-border); }
+        .badge-curso-recurrente { background: #fef9c3; color: #854d0e; border: 1px solid #fde047; }
+        [data-theme="dark"] .badge-curso-recurrente { background: #3d2e00; color: #fde047; border: 1px solid #854d0e; }
+        .badge-descanso-ajuste { background: var(--c-desc-ajuste-bg); color: var(--c-desc-ajuste); border: 1px solid var(--c-desc-ajuste-border); }
+        .badge-permuta-trabajo { background: var(--c-permuta-t-bg); color: var(--c-permuta-t); border: 1px solid var(--c-permuta-t-border); }
+        .badge-permuta-descanso { background: var(--c-permuta-d-bg); color: var(--c-permuta-d); border: 1px solid var(--c-permuta-d-border); }
+
+        .no-results {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text3);
+            font-size: 14px;
+        }
+
+        /* WEEKLY VIEW */
+        .weekly-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            margin-bottom: 12px;
+        }
+
+        .weekly-scroll {
+            overflow-x: auto;
+        }
+
+        .weekly-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+            min-width: 580px;
+        }
+
+        .weekly-table thead {
+            background: var(--surface3);
+            position: sticky;
+            top: 0;
+        }
+
+        .weekly-table th {
+            padding: 10px 8px;
+            text-align: center;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            font-size: 11px;
+            color: var(--text2);
+            border-bottom: 1px solid var(--border);
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+
+        .weekly-table th:first-child {
+            text-align: left;
+            padding-left: 16px;
+            min-width: 140px;
+        }
+
+        .weekly-table th.today-col {
+            color: var(--accent);
+        }
+
+        .weekly-table td {
+            padding: 7px 6px;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+            vertical-align: middle;
+        }
+
+        .weekly-table td:first-child {
+            padding-left: 16px;
+            text-align: left;
+        }
+
+        .weekly-table tr:last-child td { border-bottom: none; }
+        .weekly-table tr:hover td { background: var(--surface2); }
+
+        .weekly-table td.today-col { background: rgba(37,99,235,0.04); }
+
+        .agent-name-cell {
+            font-weight: 600;
+            font-size: 12px;
+            color: var(--text);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 130px;
+            display: block;
+        }
+
+        .weekly-dot {
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: 700;
+            font-family: 'JetBrains Mono', monospace;
+            cursor: pointer;
+            transition: transform 0.1s;
+        }
+        .weekly-dot:hover { transform: scale(1.15); }
+
+        .wd-trabajo { background: var(--c-trabajo-bg); color: var(--c-trabajo); }
+        .wd-descanso { background: var(--c-descanso-bg); color: var(--c-descanso); }
+        .wd-permiso { background: var(--c-permiso-bg); color: var(--c-permiso); }
+        .wd-sin-goce { background: var(--c-sin-goce-bg); color: var(--c-sin-goce); }
+        .wd-incapacidad { background: var(--c-incapacidad-bg); color: var(--c-incapacidad); }
+        .wd-cumpleanos { background: var(--c-cumple-bg); color: var(--c-cumple); }
+        .wd-curso { background: var(--c-curso-bg); color: var(--c-curso); }
+        .wd-curso-recurrente { background: #fef9c3; color: #854d0e; font-size:8px; font-weight:800; }
+        .wd-descanso-ajuste { background: var(--c-desc-ajuste-bg); color: var(--c-desc-ajuste); }
+        .wd-permuta-t { background: var(--c-permuta-t-bg); color: var(--c-permuta-t); font-size:8px; }
+        .wd-permuta-d { background: var(--c-permuta-d-bg); color: var(--c-permuta-d); font-size:8px; }
+
+        .week-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .week-nav button {
+            background: var(--surface3);
+            border: 1px solid var(--border);
+            color: var(--text2);
+            padding: 6px 12px;
+            border-radius: var(--radius-sm);
+            font-size: 12px;
+            cursor: pointer;
+            font-family: 'DM Sans', sans-serif;
+            transition: all 0.2s;
+        }
+        .week-nav button:disabled { opacity: 0.3; cursor: not-allowed; }
+        .week-nav button:not(:disabled):hover { background: var(--border); }
+
+        .week-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text2);
+        }
+
+        /* MODAL */
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            backdrop-filter: blur(4px);
+        }
+        .modal.active { display: flex; }
+
+        .modal-content {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px;
+            max-width: 420px;
+            width: 100%;
+            max-height: 85vh;
+            overflow-y: auto;
+            box-shadow: var(--shadow-lg);
+            animation: slideUp 0.2s ease;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .modal-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .close-btn {
+            background: var(--surface3);
+            border: 1px solid var(--border);
+            color: var(--text2);
+            width: 32px;
+            height: 32px;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        .close-btn:hover { background: var(--border); }
+
+        .info-row {
+            margin-bottom: 14px;
+            padding-bottom: 14px;
+            border-bottom: 1px solid var(--border);
+        }
+        .info-row:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+
+        .info-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--text3);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: 5px;
+        }
+
+        .info-value {
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .modal-status-badge {
+            display: inline-block;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .progress-bar-wrap {
+            background: var(--surface3);
+            border-radius: 6px;
+            height: 8px;
+            margin-top: 6px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            border-radius: 6px;
+            background: var(--accent);
+            transition: width 0.5s ease;
+        }
+
+        .curso-alert {
+            background: var(--c-curso);
+            color: white;
+            border-radius: var(--radius-sm);
+            padding: 12px 14px;
+            font-weight: 700;
+            font-size: 13px;
+            line-height: 1.4;
+            margin-bottom: 14px;
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+        }
+
+        .desc-ajuste-alert {
+            background: var(--c-desc-ajuste);
+            color: white;
+            border-radius: var(--radius-sm);
+            padding: 12px 14px;
+            font-weight: 700;
+            font-size: 13px;
+            line-height: 1.4;
+            margin-bottom: 14px;
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+        }
+
+        .permiso-entrada-alert {
+            background: var(--c-permiso);
+            color: white;
+            border-radius: var(--radius-sm);
+            padding: 12px 14px;
+            font-weight: 700;
+            font-size: 13px;
+            line-height: 1.4;
+            margin-bottom: 14px;
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+        }
+
+        .permuta-trabajo-alert {
+            background: var(--c-permuta-t);
+            color: white;
+            border-radius: var(--radius-sm);
+            padding: 12px 14px;
+            font-weight: 700;
+            font-size: 13px;
+            line-height: 1.4;
+            margin-bottom: 14px;
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+        }
+
+        .permuta-descanso-alert {
+            background: var(--c-permuta-d);
+            color: white;
+            border-radius: var(--radius-sm);
+            padding: 12px 14px;
+            font-weight: 700;
+            font-size: 13px;
+            line-height: 1.4;
+            margin-bottom: 14px;
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+        }
+
+        .alert-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+
+        .progress-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--accent);
+        }
+        /* ── SHARED NAV BAR ── */
+        .stbc-nav{position:sticky;top:0;z-index:500;display:flex;align-items:center;justify-content:space-between;padding:8px 14px;background:rgba(var(--nav-bg-rgb),.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border);gap:8px;margin-bottom:0;}
+        :root{--nav-bg-rgb:240,242,245;}
+        [data-theme="dark"]{--nav-bg-rgb:13,17,23;}
+        .stbc-nav-brand{display:flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:var(--text);text-decoration:none;white-space:nowrap;}
+        .stbc-nav-links{display:flex;gap:4px;align-items:center;overflow-x:auto;scrollbar-width:none;}
+        .stbc-nav-links::-webkit-scrollbar{display:none;}
+        .stbc-nav-link{display:flex;align-items:center;gap:5px;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;padding:5px 10px;border-radius:6px;border:1px solid var(--border);background:var(--surface);color:var(--text2);text-decoration:none;white-space:nowrap;transition:all .15s;cursor:pointer;}
+        .stbc-nav-link:hover{background:var(--surface3);color:var(--text);}
+        .stbc-nav-link.nav-active{background:var(--accent2);border-color:var(--accent2);color:#fff;}
+        .stbc-nav-link:active{transform:scale(.96);}
+        .stbc-nav-right{display:flex;gap:6px;align-items:center;flex-shrink:0;}
+        .stbc-theme-btn{background:var(--surface3);border:1px solid var(--border);color:var(--text2);width:30px;height:30px;border-radius:6px;cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;transition:all .15s;flex-shrink:0;}
+        .stbc-theme-btn:hover{background:var(--border);}
+    </style>
+</head>
+<body>
+<nav class="stbc-nav">
+  <a href="index.html" class="stbc-nav-brand">🦝 <span>WFM STBC</span></a>
+  <div class="stbc-nav-links">
+    <a href="index.html" class="stbc-nav-link">⌂ Inicio</a>
+    <a href="calendario_stbc.html" class="stbc-nav-link nav-active">📅 Calendario</a>
+    <a href="abril_stbc_map.html" class="stbc-nav-link">📋 Asignaciones</a>
+  </div>
+  <div class="stbc-nav-right">
+    <button class="stbc-theme-btn" id="stbc-theme-nav-btn" onclick="toggleDark()" title="Cambiar tema">🌙</button>
+  </div>
+</nav>
+<div class="container">
+
+    <!-- HEADER -->
+    <div class="header">
+        <div class="header-top">
+            <div>
+                <div class="header-title">✈ ROSTER · MAR–MAY 2026</div>
+                <div class="header-subtitle" id="current-date-display"></div>
+            </div>
+            <div class="header-actions">
+                <button class="dark-toggle" onclick="toggleDark()" title="Modo oscuro" id="theme-btn">🌙</button>
+            </div>
+        </div>
+        <div class="roster-meta">
+            <div class="meta-item"><span class="meta-dot"></span> VIGENTE</div>
+            <div class="meta-item">41 AGENTES · AEROPUERTO</div>
+            <div class="meta-item">GENERADO: 01 MAR 2026 · 00:00</div>
+            <div class="meta-item">ACTUALIZADO: 06 APR 2026 · 15:22</div>
+        </div>
+        <div class="brand-strip">
+            <span class="brand-icon">🦝</span>
+            <span class="brand-name">Sistema de Todo Bajo Control (según)</span>
+            <span class="brand-sep">·</span>
+            <span class="brand-tagline">con tecnología de Tlacuache Ops</span>
+            <span class="brand-version">V 2.32 beta 1</span>
+        </div>
+    </div>
+
+    <!-- MONTH TABS -->
+    <div class="view-tabs">
+        <button class="view-tab active" id="tab-3" onclick="setMonth(3)">Marzo</button>
+        <button class="view-tab" id="tab-4" onclick="setMonth(4)">Abril</button>
+        <button class="view-tab" id="tab-5" onclick="setMonth(5)">Mayo</button>
+    </div>
+
+    <!-- SEARCH -->
+    <div class="search-bar">
+        <span class="search-icon">🔍</span>
+        <input type="text" class="search-input" id="search-input" placeholder="Buscar por nombre o ID..." oninput="onSearch(this.value)">
+        <button class="search-clear" id="search-clear" onclick="clearSearch()">✕</button>
+    </div>
+
+    <!-- CALENDAR + AGENTS (unified view) -->
+    <div id="view-calendar">
+        <div class="calendar-card">
+            <div class="month-nav">
+                <button onclick="previousMonth()" id="prev-btn" disabled>◀</button>
+                <span class="month-name" id="month-name"></span>
+                <button onclick="nextMonth()" id="next-btn">▶</button>
+            </div>
+            <div class="weekdays">
+                <div class="weekday">DOM</div>
+                <div class="weekday">LUN</div>
+                <div class="weekday">MAR</div>
+                <div class="weekday">MIÉ</div>
+                <div class="weekday">JUE</div>
+                <div class="weekday">VIE</div>
+                <div class="weekday">SÁB</div>
+            </div>
+            <div class="days" id="calendar-days"></div>
+        </div>
+
+        <!-- FILTERS -->
+        <div class="filters">
+            <div class="filters-label">Filtrar por estado</div>
+            <div class="filter-chips">
+                <span class="chip active-filter" data-filter="all" onclick="setFilter('all')">Todos</span>
+                <span class="chip" data-filter="trabajo" onclick="setFilter('trabajo')">✅ En servicio</span>
+                <span class="chip" data-filter="descanso" onclick="setFilter('descanso')">💤 Descanso</span>
+                <span class="chip" data-filter="permiso" onclick="setFilter('permiso')">🟡 Permiso</span>
+                <span class="chip" data-filter="sin-goce" onclick="setFilter('sin-goce')">🟣 S/Goce</span>
+                <span class="chip" data-filter="curso" onclick="setFilter('curso')">📚 Curso</span>
+                <span class="chip" data-filter="supervisor" onclick="setFilter('supervisor')">👔 Supervisores</span>
+            </div>
+        </div>
+
+        <!-- AGENTS SECTION -->
+        <div id="agents-section">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+                <div class="section-title" id="selected-date-title" style="margin-bottom:0"></div>
+                <div style="display:flex;gap:4px">
+                    <button class="view-tab active" id="sub-tab-list" onclick="setSubView('list')" style="flex:none;padding:6px 12px;font-size:12px">☰ Lista</button>
+                    <button class="view-tab" id="sub-tab-week" onclick="setSubView('week')" style="flex:none;padding:6px 12px;font-size:12px">📊 Semana</button>
+                </div>
+            </div>
+            <div id="agents-content"></div>
+            <div id="sub-view-weekly" style="display:none">
+                <div class="weekly-card">
+                    <div class="week-nav">
+                        <button onclick="prevWeek()" id="week-prev-btn">◀ Semana ant.</button>
+                        <span class="week-label" id="week-label"></span>
+                        <button onclick="nextWeek()" id="week-next-btn">Semana sig. ▶</button>
+                    </div>
+                    <div class="weekly-scroll">
+                        <table class="weekly-table" id="weekly-table"></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER BRANDING -->
+    <div class="list-footer">
+        <span class="brand-icon">🦝</span>
+        <span class="brand-name">Sistema de Todo Bajo Control (según)</span>
+        <span class="brand-sep">·</span>
+        <span class="brand-tagline">con tecnología de Tlacuache Ops</span>
+        <span class="brand-version">V 2.32 beta 1</span>
+    </div>
+
+</div>
+
+<!-- MODAL -->
+<div class="modal" id="agent-modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <div class="modal-title" id="modal-agent-name"></div>
+            <button class="close-btn" onclick="closeModal()">×</button>
+        </div>
+        <div class="modal-body" id="modal-body"></div>
+    </div>
+</div>
+
+<script src="roster-data.js"></script>
+<script>
+    // ═══════════════════════════════════════════════════
+    // DATOS — fuente: calsaa.html
+    // ═══════════════════════════════════════════════════
+    const agentes = [{"id":"2000467","nombre":"CRUZ MEJIA ELIZABETH","tipo":"Agente de tráfico","descansos":"Dom-Lun","cumple":"03/05"},{"id":"2000469","nombre":"PEÑA CRUZ KATIA CELINA","tipo":"Agente de tráfico","descansos":"Dom-Lun","cumple":null},{"id":"2000477","nombre":"RIVERA HERNANDEZ THANIA","tipo":"Agente de tráfico","descansos":"Dom-Lun","cumple":null},{"id":"2000587","nombre":"BECERRIL VEGA ALEJANDRA","tipo":"Agente de tráfico","descansos":"Dom-Lun","cumple":"04/03"},{"id":"2000609","nombre":"BUTANDA MENDOZA TANIA JOHANA","tipo":"Agente de tráfico","descansos":"Lun-Mar","cumple":null},{"id":"2000675","nombre":"FERNANDA GALVEZ","tipo":"Agente de tráfico","descansos":"Lun-Mar","cumple":null},{"id":"2000475","nombre":"TADDEI SANTIAGO FRIDA ALESSIA","tipo":"Agente de tráfico","descansos":"Lun-Mar","cumple":null},{"id":"2000707","nombre":"SOLARES ORTEGA LILIANA","tipo":"Agente de tráfico","descansos":"Lun-Mar","cumple":null},{"id":"2000682","nombre":"MORENO OCEGUERA ALMA FERNANADA","tipo":"Agente de tráfico","descansos":"Mar-Mié","cumple":null},{"id":"2000673","nombre":"MORENO OCEGUERA FATIMA BERENICE","tipo":"Agente de tráfico","descansos":"Mar-Mié","cumple":null},{"id":"2000674","nombre":"JURADO TRACHUELO KENJI SANTIAGO","tipo":"Agente de tráfico","descansos":"Mar-Mié","cumple":null},{"id":"2000706","nombre":"SALINAS CONTRERAS KAROL ANTONIO","tipo":"Agente de tráfico","descansos":"Vie-Sáb","cumple":"20/05"},{"id":"2000704","nombre":"RIVERA GONZALEZ DYLAN IZZIEL","tipo":"Agente de tráfico","descansos":"Mié-Jue","cumple":null},{"id":"2000701","nombre":"LEDEZMA MEJIA ANGEL VIDAL","tipo":"Agente de tráfico","descansos":"Mié-Jue","cumple":"17/05"},{"id":"2000683","nombre":"HERNANDEZ CRUZ JANETH SILVANA","tipo":"Agente de tráfico","descansos":"Mié-Jue","cumple":null},{"id":"2000677","nombre":"MORALES BELMAN LUIS REY","tipo":"Agente de tráfico","descansos":"Mié-Jue","cumple":"28/04"},{"id":"2000681","nombre":"GUZMAN ARMENTA AILIN MONSERRAT","tipo":"Agente de tráfico","descansos":"Jue-Vie","cumple":null},{"id":"2000734","nombre":"SANCHEZ GALICIA JONATHAN","tipo":"Agente de tráfico","descansos":"Dom-Lun","cumple":null},{"id":"2000481","nombre":"OLIVARES MARTINEZ JULIO BRYAN","tipo":"Agente de tráfico","descansos":"Jue-Vie","cumple":"19/03"},{"id":"2000536","nombre":"ANAYA DUARTE MIRIAM ESTEFANIA","tipo":"Agente de tráfico","descansos":"Jue-Vie","cumple":null},{"id":"2000549","nombre":"HERREJON MARTINEZ ROBERTO MITCHEL","tipo":"Agente de tráfico","descansos":"Vie-Sáb","cumple":null},{"id":"2000544","nombre":"ESTRADA GARCÍA FERNANDO EUGENIO","tipo":"Agente de tráfico","descansos":"Vie-Sáb","cumple":null},{"id":"2000718","nombre":"FRAGA GARCIA NADIA ILEANA","tipo":"Agente de tráfico","descansos":"Mié-Jue","cumple":null},{"id":"2000676","nombre":"LOPEZ LAZCANO RODRIGO","tipo":"Agente de tráfico","descansos":"Vie-Sáb","cumple":null},{"id":"2000607","nombre":"GARCIA FIGUEROA ARGELIA CRISTINA","tipo":"Agente de tráfico","descansos":"Vie-Sáb","cumple":null},{"id":"2000472","nombre":"JIMENEZ NAVARRO LESLIE ENRIQUETA","tipo":"Agente de tráfico","descansos":"Sáb-Dom","cumple":null},{"id":"2000588","nombre":"JUAREZ FLORES ANEL CRISTINA","tipo":"Agente de tráfico","descansos":"Sáb-Dom","cumple":"15/03"},{"id":"2000470","nombre":"MORFIN PEREZ ALEJANDRO","tipo":"Agente de tráfico","descansos":"Sáb-Dom","cumple":"08/03"},{"id":"2000708","nombre":"MORALES PALMA MAURICIO","tipo":"Agente de tráfico","descansos":"Jue-Vie","cumple":null},{"id":"2000185","nombre":"ERIBAN VALENCIA MORALES","tipo":"Agente de tráfico","descansos":"Sáb-Dom","cumple":null},{"id":"2000562","nombre":"ULIBARRI GUERRERO KARINA ITZEL","tipo":"Agente de tráfico","descansos":"Sáb-Dom","cumple":"08/05"},{"id":"2000787","nombre":"LOPEZ ONTIVEROS DIEGO","tipo":"Agente de tráfico","descansos":"Lun-Mar","cumple":null},{"id":"2000788","nombre":"VAZQUEZ CRUZ ALEJANDRO","tipo":"Agente de tráfico","descansos":"Mar-Mié","cumple":null},{"id":"2000789","nombre":"GARCIA ESTRADA CASANDRA VANESSA","tipo":"Agente de tráfico","descansos":"Mar-Mié","cumple":null},{"id":"2000790","nombre":"GAMA MENDOZA ALAN","tipo":"Agente de tráfico","descansos":"Jue-Vie","cumple":null},{"id":"2000191","nombre":"GOMEZ SANCHEZ ALDO GABRIEL","tipo":"Supervisor de tráfico","descansos":"Mar-Mié","cumple":null},{"id":"2000545","nombre":"GALVAN PRIETO DANIELA","tipo":"Supervisor de tráfico","descansos":"Mié-Jue","cumple":null},{"id":"2000462","nombre":"AGUILAR GUERRERO BRENDA LORENA","tipo":"Supervisor de tráfico","descansos":"Jue-Vie","cumple":null},{"id":"2000566","nombre":"SERRANO ARENAS DAVID EDUARDO","tipo":"Supervisor de tráfico","descansos":"Vie-Sáb","cumple":null},{"id":"2000567","nombre":"MORALES FERNANDEZ DIANA KAREN","tipo":"Supervisor de tráfico","descansos":"Dom-Lun","cumple":null},{"id":"2000565","nombre":"PEREZ CARRILLO ALEXIS","tipo":"Supervisor de tráfico","descansos":"Lun-Mar","cumple":null}];
+
+    const horario = {"2000467":{"3":{"1":"R","2":"R","3":"W","4":"W","5":"W","6":"W","7":"W","8":"R","9":"R","10":"W","11":"W","12":"W","13":"W","14":"W","15":"R","16":"R","17":"W","18":"W","19":"W","20":"W","21":"W","22":"R","23":"R","24":"W","25":"W","26":"W","27":"W","28":"W","29":"R","30":"R","31":"W"},"4":{"1":"W","2":"W","3":"W","4":"W","5":"R","6":"R","7":"W","8":"W","9":"W","10":"W","11":"W","12":"R","13":"R","14":"W","15":"W","16":"W","17":"W","18":"W","19":"R","20":"R","21":"W","22":"W","23":"W","24":"W","25":"W","26":"R","27":"R","28":"W","29":"W","30":"W"},"5":{"1":"W","2":"🎂","3":"R","4":"R","5":"W","6":"W","7":"W","8":"W","9":"W","10":"R","11":"R","12":"W","13":"W","14":"W","15":"W","16":"W","17":"R","18":"R","19":"W","20":"W","21":"W","22":"W","23":"W","24":"R","25":"R","26":"W","27":"W","28":"W","29":"W","30":"W","31":"R"}},"2000469":{"3":{"1":"R","2":"R","3":"W","4":"W","5":"W","6":"W","7":"W","8":"R","9":"R","10":"W","11":"W","12":"W","13":"W","14":"W","15":"R","16":"R","17":"W","18":"W","19":"W","20":"W","21":"W","22":"R","23":"R","24":"W","25":"W","26":"W","27":"W","28":"W","29":"R","30":"R","31":"W"},"4":{"1":"W","2":"W","3":"W","4":"W","5":"R","6":"R","7":"W","8":"W","9":"W","10":"W","11":"W","12":"R","13":"R","14":"W","15":"W","16":"W","17":"W","18":"W","19":"R","20":"R","21":"W","22":"W","23":"W","24":"W","25":"W","26":"R","27":"R","28":"W","29":"W","30":"W"},"5":{"1":"W","2":"W","3":"R","4":"R","5":"W","6":"W","7":"W","8":"W","9":"W","10":"R","11":"R","12":"W","13":"W","14":"W","15":"W","16":"W","17":"R","18":"R","19":"W","20":"W","21":"W","22":"W","23":"W","24":"R","25":"R","26":"W","27":"W","28":"W","29":"W","30":"W","31":"R"}},"2000477":{"3":{"1":"R","2":"R","3":"W","4":"W","5":"W","6":"W","7":"W","8":"R","9":"R","10":"W","11":"W","12":"W","13":"W","14":"W","15":"R","16":"R","17":"W","18":"W","19":"W","20":"W","21":"W","22":"R","23":"R","24":"W","25":"W","26":"W","27":"W","28":"W","29":"R","30":"R","31":"W"},"4":{"1":"W","2":"W","3":"W","4":"W","5":"R","6":"R","7":"W","8":"W","9":"W","10":"W","11":"W","12":"R","13":"R","14":"W","15":"W","16":"W","17":"W","18":"W","19":"R","20":"R","21":"W","22":"W","23":"W","24":"W","25":"W","26":"R","27":"R","28":"W","29":"W","30":"W"},"5":{"1":"W","2":"W","3":"R","4":"R","5":"W","6":"W","7":"W","8":"W","9":"W","10":"R","11":"R","12":"W","13":"W","14":"W","15":"W","16":"W","17":"R","18":"R","19":"W","20":"W","21":"W","22":"W","23":"W","24":"R","25":"R","26":"W","27":"W","28":"W","29":"W","30":"W","31":"R"}},"2000587":{"3":{"1":"R","2":"R","3":"W","4":"🎂","5":"W","6":"W","7":"W","8":"R","9":"R","10":"W","11":"W","12":"W","13":"W","14":"W","15":"R","16":"R","17":"W","18":"W","19":"W","20":"W","21":"W","22":"R","23":"R","24":"W","25":"W","26":"W","27":"W","28":"W","29":"R","30":"R","31":"W"},"4":{"1":"W","2":"W","3":"W","4":"W","5":"R","6":"R","7":"W","8":"W","9":"W","10":"W","11":"W","12":"R","13":"R","14":"W","15":"W","16":"W","17":"W","18":"W","19":"R","20":"R","21":"W","22":"W","23":"W","24":"W","25":"W","26":"R","27":"R","28":"W","29":"W","30":"W"},"5":{"1":"W","2":"W","3":"R","4":"R","5":"W","6":"W","7":"W","8":"W","9":"W","10":"R","11":"R","12":"W","13":"W","14":"W","15":"W","16":"W","17":"R","18":"R","19":"W","20":"W","21":"W","22":"W","23":"W","24":"R","25":"R","26":"W","27":"W","28":"W","29":"W","30":"W","31":"R"}},"2000609":{"3":{"1":"W","2":"R","3":"R","4":"W","5":"W","6":"W","7":"W","8":"W","9":"R","10":"R","11":"W","12":"W","13":"W","14":"W","15":"W","16":"R","17":"R","18":"W","19":"W","20":"W","21":"W","22":"W","23":"R","24":"R","25":"W","26":"W","27":"W","28":"W","29":"W","30":"R","31":"R"},"4":{"1":"W","2":"W","3":"W","4":"W","5":"W","6":"R","7":"R","8":"W","9":"W","10":"W","11":"W","12":"W","13":"R","14":"R","15":"W","16":"W","17":"W","18":"W","19":"W","20":"R","21":"R","22":"W","23":"W","24":"W","25":"W","26":"W","27":"R","28":"R","29":"W","30":"W"},"5":{"1":"W","2":"W","3":"W","4":"R","5":"R","6":"W","7":"W","8":"W","9":"W","10":"W","11":"R","12":"R","13":"W","14":"W","15":"W","16":"W","17":"W","18":"R","19":"R","20":"W","21":"W","22":"W","23":"W","24":"W","25":"R","26":"R","27":"W","28":"W","29":"W","30":"W","31":"W"}},"2000675":{"3":{"1":"W","2":"R","3":"R","4":"W","5":"W","6":"W","7":"W","8":"W","9":"R","10":"R","11":"W","12":"W","13":"W","14":"W","15":"W","16":"R","17":"R","18":"W","19":"W","20":"W","21":"W","22":"W","23":"R","24":"R","25":"W","26":"W","27":"W","28":"W","29":"W","30":"R","31":"R"},"4":{"1":"W","2":"W","3":"W","4":"W","5":"W","6":"R","7":"R","8":"W","9":"W","10":"W","11":"W","12":"W","13":"R","14":"R","15":"W","16":"W","17":"W","18":"W","19":"W","20":"R","21":"R","22":"W","23":"W","24":"W","25":"W","26":"W","27":"R","28":"R","29":"W","30":"W"},"5":{"1":"W","2":"W","3":"W","4":"R","5":"R","6":"W","7":"W","8":"W","9":"W","10":"W","11":"R","12":"R","13":"W","14":"W","15":"W","16":"W","17":"W","18":"R","19":"R","20":"W","21":"W","22":"W","23":"W","24":"W","25":"R","26":"R","27":"W","28":"W","29":"W","30":"W","31":"W"}},"2000475":{"3":{"1":"W","2":"R","3":"R","4":"W","5":"W","6":"W","7":"W","8":"W","9":"R","10":"R","11":"W","12":"W","13":"W","14":"W","15":"W","16":"R","17":"R","18":"W","19":"W","20":"W","21":"W","22":"W","23":"R","24":"R","25":"W","26":"W","27":"W","28":"W","29":"W","30":"R","31":"R"},"4":{"1":"W","2":"W","3":"W","4":"W","5":"W","6":"R","7":"R","8":"W","9":"W","10":"W","11":"W","12":"W","13":"R","14":"R","15":"W","16":"W","17":"W","18":"W","19":"W","20":"R","21":"R","22":"W","23":"W","24":"W","25":"W","26":"W","27":"R","28":"R","29":"W","30":"W"},"5":{"1":"W","2":"W","3":"W","4":"R","5":"R","6":"W","7":"W","8":"W","9":"W","10":"W","11":"R","12":"R","13":"W","14":"W","15":"W","16":"W","17":"W","18":"R","19":"R","20":"W","21":"W","22":"W","23":"W","24":"W","25":"R","26":"R","27":"W","28":"W","29":"W","30":"W","31":"W"}},"2000707":{"3":{"1":"W","2":"R","3":"R","4":"W","5":"W","6":"W","7":"W","8":"W","9":"R","10":"R","11":"W","12":"W","13":"W","14":"W","15":"W","16":"R","17":"R","18":"W","19":"W","20":"W","21":"W","22":"W","23":"R","24":"R","25":"W","26":"W","27":"W","28":"W","29":"W","30":"R","31":"R"},"4":{"1":"W","2":"W","3":"W","4":"W","5":"W","6":"R","7":"R","8":"W","9":"W","10":"W","11":"W","12":"W","13":"R","14":"R","15":"W","16":"W","17":"W","18":"W","19":"W","20":"R","21":"R","22":"W","23":"W","24":"W","25":"W","26":"W","27":"R","28":"R","29":"W","30":"W"},"5":{"1":"W","2":"W","3":"W","4":"R","5":"R","6":"W","7":"W","8":"W","9":"W","10":"W","11":"R","12":"R","13":"W","14":"W","15":"W","16":"W","17":"W","18":"R","19":"R","20":"W","21":"W","22":"W","23":"W","24":"W","25":"R","26":"R","27":"W","28":"W","29":"W","30":"W","31":"W"}},"2000682":{"3":{"1":"W","2":"W","3":"R","4":"R","5":"W","6":"W","7":"W","8":"W","9":"W","10":"R","11":"R","12":"W","13":"W","14":"W","15":"W","16":"W","17":"R","18":"R","19":"W","20":"W","21":"W","22":"W","23":"W","24":"R","25":"R","26":"W","27":"W","28":"W","29":"W","30":"W","31":"R"},"4":{"1":"R","2":"W","3":"W","4":"W","5":"W","6":"W","7":"R","8":"R","9":"W","10":"W","11":"W","12":"W","13":"W","14":"R","15":"R","16":"W","17":"W","18":"W","19":"W","20":"W","21":"R","22":"R","23":"W","24":"W","25":"W","26":"W","27":"W","28":"R","29":"R","30":"W"},"5":{"1":"W","2":"W","3":"W","4":"W","5":"R","6":"R","7":"W","8":"W","9":"W","10":"W","11":"W","12":"R","13":"R","14":"W","15":"W","16":"W","17":"W","18":"W","19":"R","20":"R","21":"W","22":"W","23":"W","24":"W","25":"W","26":"R","27":"R","28":"W","29":"W","30":"W","31":"W"}},"2000673":{"3":{"1":"W","2":"W","3":"R","4":"R","5":"W","6":"W","7":"W","8":"W","9":"W","10":"R","11":"R","12":"W","13":"W","14":"W","15":"W","16":"W","17":"R","18":"R","19":"W","20":"W","21":"W","22":"W","23":"W","24":"R","25":"R","26":"W","27":"W","28":"W","29":"W","30":"W","31":"R"},"4":{"1":"R","2":"W","3":"W","4":"W","5":"W","6":"W","7":"R","8":"R","9":"W","10":"W","11":"W","12":"W","13":"W","14":"R","15":"R","16":"W","17":"W","18":"W","19":"W","20":"W","21":"R","22":"R","23":"W","24":"W","25":"W","26":"W","27":"W","28":"R","29":"R","30":"W"},"5":{"1":"W","2":"W","3":"W","4":"W","5":"R","6":"R","7":"W","8":"W","9":"W","10":"W","11":"W","12":"R","13":"R","14":"W","15":"W","16":"W","17":"W","18":"W","19":"R","20":"R","21":"W","22":"W","23":"W","24":"W","25":"W","26":"R","27":"R","28":"W","29":"W","30":"W","31":"W"}},"2000674":{"3":{"1":"W","2":"W","3":"R","4":"R","5":"W","6":"W","7":"W","8":"W","9":"W","10":"R","11":"R","12":"W","13":"W","14":"W","15":"W","16":"W","17":"R","18":"R","19":"W","20":"W","21":"W","22":"W","23":"W","24":"R","25":"R","26":"W","27":"W","28":"W","29":"W","30":"W","31":"R"},"4":{"1":"R","2":"W","3":"W","4":"W","5":"W","6":"W","7":"R","8":"R","9":"W","10":"W","11":"W","12":"W","13":"W","14":"R","15":"R","16":"W","17":"W","18":"W","19":"W","20":"W","21":"R","22":"R","23":"W","24":"W","25":"W","26":"W","27":"W","28":"R","29":"R","30":"W"},"5":{"1":"W","2":"W","3":"W","4":"W","5":"R","6":"R","7":"W","8":"W","9":"W","10":"W","11":"W","12":"R","13":"R","14":"W","15":"W","16":"W","17":"W","18":"W","19":"R","20":"R","21":"W","22":"W","23":"W","24":"W","25":"W","26":"R","27":"R","28":"W","29":"W","30":"W","31":"W"}},"2000706":{"3":{"1":"W","2":"W","3":"W","4":"W","5":"W","6":"R","7":"R","8":"W","9":"W","10":"W","11":"W","12":"W","13":"R","14":"R","15":"W","16":"W","17":"W","18":"W","19":"W","20":"R","21":"R","22":"W","23":"W","24":"W","25":"W","26":"W","27":"R","28":"R","29":"W","30":"W","31":"W"},"4":{"1":"W","2":"W","3":"R","4":"R","5":"W","6":"W","7":"W","8":"W","9":"W","10":"R","11":"R","12":"W","13":"W","14":"W","15":"W","16":"W","17":"R","18":"R","19":"W","20":"W","21":"W","22":"W","23":"W","24":"R","25":"R","26":"W","27":"W","28":"W","29":"W","30":"W"},"5":{"1":"R","2":"R","3":"W","4":"W","5":"W","6":"W","7":"W","8":"R","9":"R","10":"W","11":"W","12":"W","13":"W","14":"W","15":"R","16":"R","17":"W","18":"W","19":"W","20":"🎂","21":"W","22":"R","23":"R","24":"W","25":"W","26":"W","27":"W","28":"W","29":"R","30":"R","31":"W"}},"2000704":{"3":{"1":"W","2":"W","3":"W","4":"R","5":"R","6":"W","7":"W","8":"W","9":"W","10":"W","11":"R","12":"R","13":"W","14":"W","15":"W","16":"W","17":"W","18":"R","19":"R","20":"W","21":"W","22":"W","23":"W","24":"W","25":"R","26":"R","27":"W","28":"W","29":"W","30":"W","31":"W"},"4":{"1":"R","2":"R","3":"W","4":"W","5":"W","6":"W","7":"W","8":"R","9":"R","10":"W","11":"W","12":"W","13":"W","14":"W","15":"R","16":"R","17":"W","18":"W","19":"W","20":"W","21":"W","22":"R","23":"R","24":"W","25":"W","26":"W","27":"W","28":"W","29":"R","30":"R"},"5":{"1":"W","2":"W","3":"W","4":"W","5":"W","6":"R","7":"R","8":"W","9":"W","10":"W","11":"W","12":"W","13":"R","14":"R","15":"W","16":"W","17":"W","18":"W","19":"W","20":"R","21":"R","22":"W","23":"W","24":"W","25":"W","26":"W","27":"R","28":"R","29":"W","30":"W","31":"W"}},"2000701":{"3":{"1":"W","2":"W","3":"W","4":"R","5":"R","6":"W","7":"W","8":"W","9":"W","10":"W","11":"R","12":"R","13":"W","14":"W","15":"W","16":"W","17":"W","18":"R","19":"R","20":"W","21":"W","22":"W","23":"W","24":"W","25":"R","26":"R","27":"W","28":"W","29":"W","30":"W","31":"W"},"4":{"1":"R","2":"R","3":"W","4":"W","5":"W","6":"W","7":"W","8":"R","9":"R","10":"W","11":"W","12":"W","13":"W","14":"W","15":"R","16":"R","17":"W","18":"W","19":"W","20":"W","21":"W","22":"R","23":"R","24":"W","25":"W","26":"W","27":"W","28":"W","29":"R","30":"R"},"5":{"1":"W","2":"W","3":"W","4":"W","5":"W","6":"R","7":"R","8":"W","9":"W","10":"W","11":"W","12":"W","13":"R","14":"R","15":"W","16":"W","17":"🎂","18":"W","19":"W","20":"R","21":"R","22":"W","23":"W","24":"W","25":"W","26":"W","27":"R","28":"R","29":"W","30":"W","31":"W"}},"2000683":{"3":{"1":"W","2":"W","3":"W","4":"R","5":"R","6":"W","7":"W","8":"W","9":"W","10":"W","11":"R","12":"R","13":"W","14":"W","15":"W","16":"W","17":"W","18":"R","19":"R","20":"W","21":"W","22":"W","23":"W","24":"W","25":"R","26":"R","27":"W","28":"W","29":"W","30":"W","31":"W"},"4":{"1":"R","2":"R","3":"W","4":"W","5":"W","6":"W","7":"W","8":"R","9":"R","10":"W","11":"W","12":"W","13":"W","14":"W","15":"R","16":"R","17":"W","18":"W","19":"W","20":"W","21":"W","22":"R","23":"R","24":"W","25":"W","26":"W","27":"W","28":"W","29":"R","30":"R"},"5":{"1":"W","2":"W","3":"W","4":"W","5":"W","6":"R","7":"R","8":"W","9":"W","10":"W","11":"W","12":"W","13":"R","14":"R","15":"W","16":"W","17":"W","18":"W","19":"W","20":"R","21":"R","22":"W","23":"W","24":"W","25":"W","26":"W","27":"R","28":"R","29":"W","30":"W","31":"W"}},"2000677":{"3":{"1":"W","2":"W","3":"W","4":"R","5":"R","6":"W","7":"W","8":"W","9":"W","10":"W","11":"R","12":"R","13":"W","14":"W","15":"W","16":"W","17":"W","18":"R","19":"R","20":"W","21":"W","22":"W","23":"W","24":"W","25":"R","26":"R","27":"W","28":"W","29":"W","30":"W","31":"W"},"4":{"1":"R","2":"R","3":"W","4":"W","5":"W","6":"W","7":"W","8":"R","9":"R","10":"W","11":"W","12":"W","13":"W","14":"W","15":"R","16":"R","17":"W","18":"W","19":"W","20":"W","21":"W","22":"R","23":"R","24":"W","25":"W","26":"W","27":"W","28":"🎂","29":"R","30":"R"},"5":{"1":"W","2":"W","3":"W","4":"W","5":"W","6":"R","7":"R","8":"W","9":"W","10":"W","11":"W","12":"W","13":"R","14":"R","15":"W","16":"W","17":"W","18":"W","19":"W","20":"R","21":"R","22":"W","23":"W","24":"W","25":"W","26":"W","27":"R","28":"R","29":"W","30":"W","31":"W"}},"2000681":{"3":{"1":"W","2":"W","3":"W","4":"W","5":"R","6":"R","7":"W","8":"W","9":"W","10":"W","11":"W","12":"R","13":"R","14":"W","15":"W","16":"W","17":"W","18":"W","19":"R","20":"R","21":"W","22":"W","23":"W","24":"W","25":"W","26":"R","27":"R","28":"W","29":"W","30":"W","31":"W"},"4":{"1":"W","2":"R","3":"R","4":"W","5":"W","6":"W","7":"W","8":"W","9":"R","10":"R","11":"W","12":"W","13":"W","14":"W","15":"W","16":"R","17":"R","18":"W","19":"W","20":"W","21":"W","22":"W","23":"R","24":"R","25":"W","26":"W","27":"W","28":"W","29":"W","30":"R"},"5":{"1":"R","2":"W","3":"W","4":"W","5":"W","6":"W","7":"R","8":"R","9":"W","10":"W","11":"W","12":"W","13":"W","14":"R","15":"R","16":"W","17":"W","18":"W","19":"W","20":"W","21":"R","22":"R","23":"W","24":"W","25":"W","26":"W","27":"W","28":"R","29":"R","30":"W","31":"W"}},"2000734":{"3":{"1":"R","2":"R","3":"W","4":"W","5":"W","6":"W","7":"W","8":"R","9":"R","10":"W","11":"W","12":"W","13":"W","14":"W","15":"R","16":"R","17":"W","18":"W","19":"W","20":"W","21":"W","22":"R","23":"R","24":"W","25":"W","26":"W","27":"W","28":"W","29":"R","30":"R","31":"W"},"4":{"1":"W","2":"W","3":"W","4":"W","5":"R","6":"R","7":"W","8":"W","9":"W","10":"W","11":"W","12":"R","13":"R","14":"W","15":"W","16":"W","17":"W","18":"W","19":"R","20":"R","21":"W","22":"W","23":"W","24":"W","25":"W","26":"R","27":"R","28":"W","29":"W","30":"W"},"5":{"1":"W","2":"W","3":"R","4":"R","5":"W","6":"W","7":"W","8":"W","9":"W","10":"R","11":"R","12":"W","13":"W","14":"W","15":"W","16":"W","17":"R","18":"R","19":"W","20":"W","21":"W","22":"W","23":"W","24":"R","25":"R","26":"W","27":"W","28":"W","29":"W","30":"W","31":"R"}},"2000481":{"3":{"1":"W","2":"W","3":"W","4":"W","5":"R","6":"R","7":"W","8":"W","9":"W","10":"W","11":"W","12":"R","13":"R","14":"W","15":"W","16":"W","17":"W","18":"🎂","19":"R","20":"R","21":"W","22":"W","23":"W","24":"W","25":"W","26":"R","27":"R","28":"W","29":"W","30":"W","31":"W"},"4":{"1":"W","2":"R","3":"R","4":"W","5":"W","6":"W","7":"W","8":"W","9":"R","10":"R","11":"W","12":"W","13":"W","14":"W","15":"W","16":"R","17":"R","18":"W","19":"W","20":"W","21":"W","22":"W","23":"R","24":"R","25":"W","26":"W","27":"W","28":"W","29":"W","30":"R"},"5":{"1":"R","2":"W","3":"W","4":"W","5":"W","6":"W","7":"R","8":"R","9":"W","10":"W","11":"W","12":"W","13":"W","14":"R","15":"R","16":"W","17":"W","18":"W","19":"W","20":"W","21":"R","22":"R","23":"W","24":"W","25":"W","26":"W","27":"W","28":"R","29":"R","30":"W","31":"W"}},"2000536":{"3":{"1":"W","2":"W","3":"W","4":"W","5":"R","6":"R","7":"W","8":"W","9":"W","10":"W","11":"W","12":"R","13":"R","14":"W","15":"W","16":"W","17":"W","18":"W","19":"R","20":"R","21":"W","22":"W","23":"W","24":"W","25":"W","26":"R","27":"R","28":"W","29":"W","30":"W","31":"W"},"4":{"1":"W","2":"R","3":"R","4":"W","5":"W","6":"W","7":"W","8":"W","9":"R","10":"R","11":"W","12":"W","13":"W","14":"W","15":"W","16":"R","17":"R","18":"W","19":"W","20":"W","21":"W","22":"W","23":"R","24":"R","25":"W","26":"W","27":"W","28":"W","29":"W","30":"R"},"5":{"1":"R","2":"W","3":"W","4":"W","5":"W","6":"W","7":"R","8":"R","9":"W","10":"W","11":"W","12":"W","13":"W","14":"R","15":"R","16":"W","17":"W","18":"W","19":"W","20":"W","21":"R","22":"R","23":"W","24":"W","25":"W","26":"W","27":"W","28":"R","29":"R","30":"W","31":"W"}},"2000549":{"3":{"1":"W","2":"W","3":"W","4":"W","5":"W","6":"R","7":"R","8":"W","9":"W","10":"W","11":"W","12":"W","13":"R","14":"R","15":"W","16":"W","17":"W","18":"W","19":"W","20":"R","21":"R","22":"W","23":"W","24":"W","25":"W","26":"W","27":"R","28":"R","29":"W","30":"W","31":"W"},"4":{"1":"W","2":"W","3":"R","4":"R","5":"W","6":"W","7":"W","8":"W","9":"W","10":"R","11":"R","12":"W","13":"W","14":"W","15":"W","16":"W","17":"R","18":"R","19":"W","20":"W","21":"W","22":"W","23":"W","24":"R","25":"R","26":"W","27":"W","28":"W","29":"W","30":"W"},"5":{"1":"R","2":"R","3":"W","4":"W","5":"W","6":"W","7":"W","8":"R","9":"R","10":"W","11":"W","12":"W","13":"W","14":"W","15":"R","16":"R","17":"W","18":"W","19":"W","20":"W","21":"W","22":"R","23":"R","24":"W","25":"W","26":"W","27":"W","28":"W","29":"R","30":"R","31":"W"}},"2000544":{"3":{"1":"W","2":"W","3":"W","4":"W","5":"W","6":"R","7":"R","8":"W","9":"W","10":"W","11":"W","12":"W","13":"R","14":"R","15":"W","16":"W","17":"W","18":"W","19":"W","20":"R","21":"R","22":"W","23":"W","24":"W","25":"W","26":"W","27":"R","28":"R","29":"W","30":"W","31":"W"},"4":{"1":"W","2":"W","3":"R","4":"R","5":"W","6":"W","7":"W","8":"W","9":"W","10":"R","11":"R","12":"W","13":"W","14":"W","15":"W","16":"W","17":"R","18":"R","19":"W","20":"W","21":"W","22":"W","23":"W","24":"R","25":"R","26":"W","27":"W","28":"W","29":"W","30":"W"},"5":{"1":"R","2":"R","3":"W","4":"W","5":"W","6":"W","7":"W","8":"R","9":"R","10":"W","11":"W","12":"W","13":"W","14":"W","15":"R","16":"R","17":"W","18":"W","19":"W","20":"W","21":"W","22":"R","23":"R","24":"W","25":"W","26":"W","27":"W","28":"W","29":"R","30":"R","31":"W"}},"2000718":{"3":{"1":"W","2":"W","3":"W","4":"R","5":"R","6":"W","7":"W","8":"W","9":"W","10":"W","11":"R","12":"R","13":"W","14":"W","15":"W","16":"W","17":"W","18":"R","19":"R","20":"W","21":"W","22":"W","23":"W","24":"W","25":"R","26":"R","27":"W","28":"W","29":"W","30":"W","31":"W"},"4":{"1":"R","2":"R","3":"W","4":"W","5":"W","6":"W","7":"W","8":"R","9":"R","10":"W","11":"W","12":"W","13":"W","14":"W","15":"R","16":"R","17":"W","18":"W","19":"W","20":"W","21":"W","22":"R","23":"R","24":"W","25":"W","26":"W","27":"W","28":"W","29":"R","30":"R"},"5":{"1":"W","2":"W","3":"W","4":"W","5":"W","6":"R","7":"R","8":"W","9":"W","10":"W","11":"W","12":"W","13":"R","14":"R","15":"W","16":"W","17":"W","18":"W","19":"W","20":"R","21":"R","22":"W","23":"W","24":"W","25":"W","26":"W","27":"R","28":"R","29":"W","30":"W","31":"W"}},"2000676":{"3":{"1":"W","2":"W","3":"W","4":"W","5":"W","6":"R","7":"R","8":"W","9":"W","10":"W","11":"W","12":"W","13":"R","14":"R","15":"W","16":"W","17":"W","18":"W","19":"W","20":"R","21":"R","22":"W","23":"W","24":"W","25":"W","26":"W","27":"R","28":"R","29":"W","30":"W","31":"W"},"4":{"1":"W","2":"W","3":"R","4":"R","5":"W","6":"W","7":"W","8":"W","9":"W","10":"R","11":"R","12":"W","13":"W","14":"W","15":"W","16":"W","17":"R","18":"R","19":"W","20":"W","21":"W","22":"W","23":"W","24":"R","25":"R","26":"W","27":"W","28":"W","29":"W","30":"W"},"5":{"1":"R","2":"R","3":"W","4":"W","5":"W","6":"W","7":"W","8":"R","9":"R","10":"W","11":"W","12":"W","13":"W","14":"W","15":"R","16":"R","17":"W","18":"W","19":"W","20":"W","21":"W","22":"R","23":"R","24":"W","25":"W","26":"W","27":"W","28":"W","29":"R","30":"R","31":"W"}},"2000607":{"3":{"1":"W","2":"W","3":"W","4":"W","5":"W","6":"R","7":"R","8":"W","9":"W","10":"W","11":"W","12":"W","13":"R","14":"R","15":"W","16":"W","17":"W","18":"W","19":"W","20":"R","21":"R","22":"W","23":"W","24":"W","25":"W","26":"W","27":"R","28":"R","29":"W","30":"W","31":"W"},"4":{"1":"W","2":"W","3":"R","4":"R","5":"W","6":"W","7":"W","8":"W","9":"W","10":"R","11":"R","12":"W","13":"W","14":"W","15":"W","16":"W","17":"R","18":"R","19":"W","20":"W","21":"W","22":"W","23":"W","24":"R","25":"R","26":"W","27":"W","28":"W","29":"W","30":"W"},"5":{"1":"R","2":"R","3":"W","4":"W","5":"W","6":"W","7":"W","8":"R","9":"R","10":"W","11":"W","12":"W","13":"W","14":"W","15":"R","16":"R","17":"W","18":"W","19":"W","20":"W","21":"W","22":"R","23":"R","24":"W","25":"W","26":"W","27":"W","28":"W","29":"R","30":"R","31":"W"}},"2000472":{"3":{"1":"R","2":"W","3":"W","4":"W","5":"W","6":"W","7":"R","8":"R","9":"W","10":"W","11":"W","12":"W","13":"W","14":"R","15":"R","16":"W","17":"W","18":"W","19":"W","20":"W","21":"R","22":"R","23":"W","24":"W","25":"W","26":"W","27":"W","28":"R","29":"R","30":"W","31":"W"},"4":{"1":"W","2":"W","3":"W","4":"R","5":"R","6":"W","7":"W","8":"W","9":"W","10":"W","11":"R","12":"R","13":"W","14":"W","15":"W","16":"W","17":"W","18":"R","19":"R","20":"W","21":"W","22":"W","23":"W","24":"W","25":"R","26":"R","27":"W","28":"W","29":"W","30":"W"},"5":{"1":"W","2":"R","3":"R","4":"W","5":"W","6":"W","7":"W","8":"W","9":"R","10":"R","11":"W","12":"W","13":"W","14":"W","15":"W","16":"R","17":"R","18":"W","19":"W","20":"W","21":"W","22":"W","23":"R","24":"R","25":"W","26":"W","27":"W","28":"W","29":"W","30":"R","31":"R"}},"2000588":{"3":{"1":"R","2":"W","3":"W","4":"W","5":"W","6":"W","7":"R","8":"R","9":"W","10":"W","11":"W","12":"W","13":"W","14":"R","15":"R","16":"🎂","17":"W","18":"W","19":"W","20":"W","21":"R","22":"R","23":"W","24":"W","25":"W","26":"W","27":"W","28":"R","29":"R","30":"W","31":"W"},"4":{"1":"W","2":"W","3":"W","4":"R","5":"R","6":"W","7":"W","8":"W","9":"W","10":"W","11":"R","12":"R","13":"W","14":"W","15":"W","16":"W","17":"W","18":"R","19":"R","20":"W","21":"W","22":"W","23":"W","24":"W","25":"R","26":"R","27":"W","28":"W","29":"W","30":"W"},"5":{"1":"W","2":"R","3":"R","4":"W","5":"W","6":"W","7":"W","8":"W","9":"R","10":"R","11":"W","12":"W","13":"W","14":"W","15":"W","16":"R","17":"R","18":"W","19":"W","20":"W","21":"W","22":"W","23":"R","24":"R","25":"W","26":"W","27":"W","28":"W","29":"W","30":"R","31":"R"}},"2000470":{"3":{"1":"R","2":"W","3":"W","4":"W","5":"W","6":"W","7":"R","8":"R","9":"🎂","10":"W","11":"W","12":"W","13":"W","14":"R","15":"R","16":"W","17":"W","18":"W","19":"W","20":"W","21":"R","22":"R","23":"W","24":"W","25":"W","26":"W","27":"W","28":"R","29":"R","30":"W","31":"W"},"4":{"1":"W","2":"W","3":"W","4":"R","5":"R","6":"W","7":"W","8":"W","9":"W","10":"W","11":"R","12":"R","13":"W","14":"W","15":"W","16":"W","17":"W","18":"R","19":"R","20":"W","21":"W","22":"W","23":"W","24":"W","25":"R","26":"R","27":"W","28":"W","29":"W","30":"W"},"5":{"1":"W","2":"R","3":"R","4":"W","5":"W","6":"W","7":"W","8":"W","9":"R","10":"R","11":"W","12":"W","13":"W","14":"W","15":"W","16":"R","17":"R","18":"W","19":"W","20":"W","21":"W","22":"W","23":"R","24":"R","25":"W","26":"W","27":"W","28":"W","29":"W","30":"R","31":"R"}},"2000708":{"3":{"1":"W","2":"W","3":"W","4":"W","5":"R","6":"R","7":"W","8":"W","9":"W","10":"W","11":"W","12":"R","13":"R","14":"W","15":"W","16":"W","17":"W","18":"W","19":"R","20":"R","21":"W","22":"W","23":"W","24":"W","25":"W","26":"R","27":"R","28":"W","29":"W","30":"W","31":"W"},"4":{"1":"W","2":"R","3":"R","4":"W","5":"W","6":"W","7":"W","8":"W","9":"R","10":"R","11":"W","12":"W","13":"W","14":"W","15":"W","16":"R","17":"R","18":"W","19":"W","20":"W","21":"W","22":"W","23":"R","24":"R","25":"W","26":"W","27":"W","28":"W","29":"W","30":"R"},"5":{"1":"R","2":"W","3":"W","4":"W","5":"W","6":"W","7":"R","8":"R","9":"W","10":"W","11":"W","12":"W","13":"W","14":"R","15":"R","16":"W","17":"W","18":"W","19":"W","20":"W","21":"R","22":"R","23":"W","24":"W","25":"W","26":"W","27":"W","28":"R","29":"R","30":"W","31":"W"}},"2000562":{"3":{"1":"R","2":"W","3":"W","4":"W","5":"W","6":"W","7":"R","8":"R","9":"W","10":"W","11":"W","12":"W","13":"W","14":"R","15":"R","16":"W","17":"W","18":"W","19":"W","20":"W","21":"R","22":"R","23":"W","24":"W","25":"W","26":"W","27":"W","28":"R","29":"R","30":"W","31":"W"},"4":{"1":"W","2":"W","3":"W","4":"R","5":"R","6":"W","7":"W","8":"W","9":"W","10":"W","11":"R","12":"R","13":"W","14":"W","15":"W","16":"W","17":"W","18":"R","19":"R","20":"W","21":"W","22":"W","23":"W","24":"W","25":"R","26":"R","27":"W","28":"W","29":"W","30":"W"},"5":{"1":"W","2":"R","3":"R","4":"W","5":"W","6":"W","7":"W","8":"🎂","9":"R","10":"R","11":"W","12":"W","13":"W","14":"W","15":"W","16":"R","17":"R","18":"W","19":"W","20":"W","21":"W","22":"W","23":"R","24":"R","25":"W","26":"W","27":"W","28":"W","29":"W","30":"R","31":"R"}},"2000191":{"3":{"1":"W","2":"W","3":"R","4":"R","5":"W","6":"W","7":"W","8":"W","9":"W","10":"R","11":"R","12":"W","13":"W","14":"W","15":"W","16":"W","17":"R","18":"R","19":"W","20":"W","21":"W","22":"W","23":"W","24":"R","25":"R","26":"W","27":"W","28":"W","29":"W","30":"W","31":"R"},"4":{"1":"R","2":"W","3":"W","4":"W","5":"W","6":"W","7":"R","8":"R","9":"W","10":"W","11":"W","12":"W","13":"W","14":"R","15":"R","16":"W","17":"W","18":"W","19":"W","20":"W","21":"R","22":"R","23":"W","24":"W","25":"W","26":"W","27":"W","28":"R","29":"R","30":"W"},"5":{"1":"W","2":"W","3":"W","4":"W","5":"R","6":"R","7":"W","8":"W","9":"W","10":"W","11":"W","12":"R","13":"R","14":"W","15":"W","16":"W","17":"W","18":"W","19":"R","20":"R","21":"W","22":"W","23":"W","24":"W","25":"W","26":"R","27":"R","28":"W","29":"W","30":"W","31":"W"}},"2000545":{"3":{"1":"W","2":"W","3":"W","4":"R","5":"R","6":"W","7":"W","8":"W","9":"W","10":"W","11":"R","12":"R","13":"W","14":"W","15":"W","16":"W","17":"W","18":"R","19":"R","20":"W","21":"W","22":"W","23":"W","24":"W","25":"R","26":"R","27":"W","28":"W","29":"W","30":"W","31":"W"},"4":{"1":"R","2":"R","3":"W","4":"W","5":"W","6":"W","7":"W","8":"R","9":"R","10":"W","11":"W","12":"W","13":"W","14":"W","15":"R","16":"R","17":"W","18":"W","19":"W","20":"W","21":"W","22":"R","23":"R","24":"W","25":"W","26":"W","27":"W","28":"W","29":"R","30":"R"},"5":{"1":"W","2":"W","3":"W","4":"W","5":"W","6":"R","7":"R","8":"W","9":"W","10":"W","11":"W","12":"W","13":"R","14":"R","15":"W","16":"W","17":"W","18":"W","19":"W","20":"R","21":"R","22":"W","23":"W","24":"W","25":"W","26":"W","27":"R","28":"R","29":"W","30":"W","31":"W"}},"2000462":{"3":{"1":"W","2":"W","3":"W","4":"W","5":"R","6":"R","7":"W","8":"W","9":"W","10":"W","11":"W","12":"R","13":"R","14":"W","15":"W","16":"W","17":"W","18":"W","19":"R","20":"R","21":"W","22":"W","23":"W","24":"W","25":"W","26":"R","27":"R","28":"W","29":"W","30":"W","31":"W"},"4":{"1":"W","2":"R","3":"R","4":"W","5":"W","6":"W","7":"W","8":"W","9":"R","10":"R","11":"W","12":"W","13":"W","14":"W","15":"W","16":"R","17":"R","18":"W","19":"W","20":"W","21":"W","22":"W","23":"R","24":"R","25":"W","26":"W","27":"W","28":"W","29":"W","30":"R"},"5":{"1":"R","2":"W","3":"W","4":"W","5":"W","6":"W","7":"R","8":"R","9":"W","10":"W","11":"W","12":"W","13":"W","14":"R","15":"R","16":"W","17":"W","18":"W","19":"W","20":"W","21":"R","22":"R","23":"W","24":"W","25":"W","26":"W","27":"W","28":"R","29":"R","30":"W","31":"W"}},"2000566":{"3":{"1":"W","2":"W","3":"W","4":"W","5":"W","6":"R","7":"R","8":"W","9":"W","10":"W","11":"W","12":"W","13":"R","14":"R","15":"W","16":"W","17":"W","18":"W","19":"W","20":"R","21":"R","22":"W","23":"W","24":"W","25":"W","26":"W","27":"R","28":"R","29":"W","30":"W","31":"W"},"4":{"1":"W","2":"W","3":"R","4":"R","5":"W","6":"W","7":"W","8":"W","9":"W","10":"R","11":"R","12":"W","13":"W","14":"W","15":"W","16":"W","17":"R","18":"R","19":"W","20":"W","21":"W","22":"W","23":"W","24":"R","25":"R","26":"W","27":"W","28":"W","29":"W","30":"W"},"5":{"1":"R","2":"R","3":"W","4":"W","5":"W","6":"W","7":"W","8":"R","9":"R","10":"W","11":"W","12":"W","13":"W","14":"W","15":"R","16":"R","17":"W","18":"W","19":"W","20":"W","21":"W","22":"R","23":"R","24":"W","25":"W","26":"W","27":"W","28":"W","29":"R","30":"R","31":"W"}},"2000567":{"3":{"1":"R","2":"R","3":"W","4":"W","5":"W","6":"W","7":"W","8":"R","9":"R","10":"W","11":"W","12":"W","13":"W","14":"W","15":"R","16":"R","17":"W","18":"W","19":"W","20":"W","21":"W","22":"R","23":"R","24":"W","25":"W","26":"W","27":"W","28":"W","29":"R","30":"R","31":"W"},"4":{"1":"W","2":"W","3":"W","4":"W","5":"R","6":"R","7":"W","8":"W","9":"W","10":"W","11":"W","12":"R","13":"R","14":"W","15":"W","16":"W","17":"W","18":"W","19":"R","20":"R","21":"W","22":"W","23":"W","24":"W","25":"W","26":"R","27":"R","28":"W","29":"W","30":"W"},"5":{"1":"W","2":"W","3":"R","4":"R","5":"W","6":"W","7":"W","8":"W","9":"W","10":"R","11":"R","12":"W","13":"W","14":"W","15":"W","16":"W","17":"R","18":"R","19":"W","20":"W","21":"W","22":"W","23":"W","24":"R","25":"R","26":"W","27":"W","28":"W","29":"W","30":"W","31":"R"}},"2000565":{"3":{"1":"W","2":"R","3":"R","4":"W","5":"W","6":"W","7":"W","8":"W","9":"R","10":"R","11":"W","12":"W","13":"W","14":"W","15":"W","16":"R","17":"R","18":"W","19":"W","20":"W","21":"W","22":"W","23":"R","24":"R","25":"W","26":"W","27":"W","28":"W","29":"W","30":"R","31":"R"},"4":{"1":"W","2":"W","3":"W","4":"W","5":"W","6":"R","7":"R","8":"W","9":"W","10":"W","11":"W","12":"W","13":"R","14":"R","15":"W","16":"W","17":"W","18":"W","19":"W","20":"R","21":"R","22":"W","23":"W","24":"W","25":"W","26":"W","27":"R","28":"R","29":"W","30":"W"},"5":{"1":"W","2":"W","3":"W","4":"R","5":"R","6":"W","7":"W","8":"W","9":"W","10":"W","11":"R","12":"R","13":"W","14":"W","15":"W","16":"W","17":"W","18":"R","19":"R","20":"W","21":"W","22":"W","23":"W","24":"W","25":"R","26":"R","27":"W","28":"W","29":"W","30":"W","31":"W"}},"2000185":{"3":{"1":"R","2":"W","3":"W","4":"W","5":"W","6":"W","7":"R","8":"R","9":"W","10":"W","11":"W","12":"W","13":"W","14":"R","15":"R","16":"W","17":"W","18":"W","19":"W","20":"W","21":"R","22":"R","23":"W","24":"W","25":"W","26":"W","27":"W","28":"R","29":"R","30":"W","31":"W"},"4":{"1":"W","2":"W","3":"W","4":"R","5":"R","6":"W","7":"W","8":"W","9":"W","10":"W","11":"R","12":"R","13":"W","14":"W","15":"W","16":"W","17":"W","18":"R","19":"R","20":"W","21":"W","22":"W","23":"W","24":"W","25":"R","26":"R","27":"W","28":"W","29":"W","30":"W"},"5":{"1":"W","2":"R","3":"R","4":"W","5":"W","6":"W","7":"W","8":"W","9":"R","10":"R","11":"W","12":"W","13":"W","14":"W","15":"W","16":"R","17":"R","18":"W","19":"W","20":"W","21":"W","22":"W","23":"R","24":"R","25":"W","26":"W","27":"W","28":"W","29":"W","30":"R","31":"R"}},"2000787":{"3":{"1":"W","2":"R","3":"R","4":"W","5":"W","6":"W","7":"W","8":"W","9":"R","10":"R","11":"W","12":"W","13":"W","14":"W","15":"W","16":"R","17":"R","18":"W","19":"W","20":"W","21":"W","22":"W","23":"R","24":"R","25":"W","26":"W","27":"W","28":"W","29":"W","30":"R","31":"R"},"4":{"1":"W","2":"W","3":"W","4":"W","5":"W","6":"R","7":"R","8":"W","9":"W","10":"W","11":"W","12":"W","13":"R","14":"R","15":"W","16":"W","17":"W","18":"W","19":"W","20":"R","21":"R","22":"W","23":"W","24":"W","25":"W","26":"W","27":"R","28":"R","29":"W","30":"W"},"5":{"1":"W","2":"W","3":"W","4":"R","5":"R","6":"W","7":"W","8":"W","9":"W","10":"W","11":"R","12":"R","13":"W","14":"W","15":"W","16":"W","17":"W","18":"R","19":"R","20":"W","21":"W","22":"W","23":"W","24":"W","25":"R","26":"R","27":"W","28":"W","29":"W","30":"W","31":"W"}},"2000788":{"3":{"1":"W","2":"W","3":"R","4":"R","5":"W","6":"W","7":"W","8":"W","9":"W","10":"R","11":"R","12":"W","13":"W","14":"W","15":"W","16":"W","17":"R","18":"R","19":"W","20":"W","21":"W","22":"W","23":"W","24":"R","25":"R","26":"W","27":"W","28":"W","29":"W","30":"W","31":"R"},"4":{"1":"R","2":"W","3":"W","4":"W","5":"W","6":"W","7":"R","8":"R","9":"W","10":"W","11":"W","12":"W","13":"W","14":"R","15":"R","16":"W","17":"W","18":"W","19":"W","20":"W","21":"R","22":"R","23":"W","24":"W","25":"W","26":"W","27":"W","28":"R","29":"R","30":"W"},"5":{"1":"W","2":"W","3":"W","4":"W","5":"R","6":"R","7":"W","8":"W","9":"W","10":"W","11":"W","12":"R","13":"R","14":"W","15":"W","16":"W","17":"W","18":"W","19":"R","20":"R","21":"W","22":"W","23":"W","24":"W","25":"W","26":"R","27":"R","28":"W","29":"W","30":"W","31":"W"}},"2000789":{"3":{"1":"W","2":"W","3":"R","4":"R","5":"W","6":"W","7":"W","8":"W","9":"W","10":"R","11":"R","12":"W","13":"W","14":"W","15":"W","16":"W","17":"R","18":"R","19":"W","20":"W","21":"W","22":"W","23":"W","24":"R","25":"R","26":"W","27":"W","28":"W","29":"W","30":"W","31":"R"},"4":{"1":"R","2":"W","3":"W","4":"W","5":"W","6":"W","7":"R","8":"R","9":"W","10":"W","11":"W","12":"W","13":"W","14":"R","15":"R","16":"W","17":"W","18":"W","19":"W","20":"W","21":"R","22":"R","23":"W","24":"W","25":"W","26":"W","27":"W","28":"R","29":"R","30":"W"},"5":{"1":"W","2":"W","3":"W","4":"W","5":"R","6":"R","7":"W","8":"W","9":"W","10":"W","11":"W","12":"R","13":"R","14":"W","15":"W","16":"W","17":"W","18":"W","19":"R","20":"R","21":"W","22":"W","23":"W","24":"W","25":"W","26":"R","27":"R","28":"W","29":"W","30":"W","31":"W"}},"2000790":{"3":{"1":"W","2":"W","3":"W","4":"W","5":"R","6":"R","7":"W","8":"W","9":"W","10":"W","11":"W","12":"R","13":"R","14":"W","15":"W","16":"W","17":"W","18":"W","19":"R","20":"R","21":"W","22":"W","23":"W","24":"W","25":"W","26":"R","27":"R","28":"W","29":"W","30":"W","31":"W"},"4":{"1":"W","2":"R","3":"R","4":"W","5":"W","6":"W","7":"W","8":"W","9":"R","10":"R","11":"W","12":"W","13":"W","14":"W","15":"W","16":"R","17":"R","18":"W","19":"W","20":"W","21":"W","22":"W","23":"R","24":"R","25":"W","26":"W","27":"W","28":"W","29":"W","30":"R"},"5":{"1":"R","2":"W","3":"W","4":"W","5":"W","6":"W","7":"R","8":"R","9":"W","10":"W","11":"W","12":"W","13":"W","14":"R","15":"R","16":"W","17":"W","18":"W","19":"W","20":"W","21":"R","22":"R","23":"W","24":"W","25":"W","26":"W","27":"W","28":"R","29":"R","30":"W","31":"W"}}};
+
+    // ═══════════════════════════════════════════════════
+    // MODIFICACIONES ESPECIALES
+    // ═══════════════════════════════════════════════════
+
+    // Agentes con Curso Aduana AF — 03 y 04 de marzo, 11:00-15:00
+    // cursoDates eliminado — usa window.ROSTER.cursosAduana
+
+    // ══════════════════════════════════════════
+    // CURSOS RECURRENTES AF-KL (Entrenamiento de Tráfico y Procedimientos)
+    // 7 grupos, 3 días de curso cada uno — horario 11:00-15:00, luego reincorporación 16:00-22:00
+    // Break de lonche: 15:00-16:00
+    // ══════════════════════════════════════════
+    // cursosRecurrentes eliminado — usa window.ROSTER.cursosRecurrentes
+
+    function isCursoRecurrente(agId, mes, dia) { return window.ROSTER.isCursoRecurrente(agId, mes, dia); }
+
+    function getCursoRecurrenteGrupo(a,m,d) { return window.ROSTER.getCursoRecurrenteGrupo(a,m,d); }
+
+    // Jonathan Sanchez — 06 marzo Descanso por ajuste
+    // Rey Belman — 19 y 20 marzo Descanso por ajuste (semana 16–22 mar, ajuste único especial)
+    // descansosAjuste eliminado — usa window.ROSTER.descansosAjuste
+
+    // ══════════════════════════════════════════
+    // PERMUTAS
+    // Cada entrada define un intercambio entre dos agentes en fechas específicas.
+    // "trabaja" = día en que el agente trabaja en lugar de su descanso original.
+    // "descansa" = día en que el agente descansa en lugar de su día de trabajo original.
+    // ══════════════════════════════════════════
+    // permutas eliminado — usa window.ROSTER.permutas
+
+    // Argelia Garcia — 04 marzo: Posible entrada tarde (Permiso)
+    // permisoEntradaTarde eliminado — usa window.ROSTER.permisoEntradaTarde
+
+    // ══════════════════════════════════════════
+    // INCAPACIDADES
+    // Cada entrada cubre un rango de días (diaInicio..diaFin) en el mes indicado.
+    // ══════════════════════════════════════════
+    // incapacidades eliminado — usa window.ROSTER.incapacidades
+
+    function isCurso(agId, mes, dia) { return window.ROSTER.isCurso(agId, mes, dia); }
+
+    function getCursoHorario(agId, mes, dia) { return window.ROSTER.getCursoHorario(agId, mes, dia); }
+
+    function isDescAjuste(agId, mes, dia) { return window.ROSTER.isDescAjuste(agId, mes, dia); }
+
+    function getDescAjusteNota(agId, mes, dia) { return window.ROSTER.getDescAjusteNota(agId, mes, dia); }
+
+    function getPermisoNota(agId, mes, dia) { return window.ROSTER.getPermisoNota(agId, mes, dia); }
+
+    function isPermisoTarde(agId, mes, dia) { return window.ROSTER.isPermisoTarde(agId, mes, dia); }
+
+    function isIncapacidad(agId, mes, dia) { return window.ROSTER.isIncapacidad(agId, mes, dia); }
+
+    function getPermutaInfo(agId, mes, dia) { return window.ROSTER.getPermutaInfo(agId, mes, dia); }
+
+    // ═══════════════════════════════════════════════════
+    // MESES
+    // ═══════════════════════════════════════════════════
+    const MONTHS = {
+        3: { name:'Marzo', year:2026, days:31, firstDow:0 },
+        4: { name:'Abril', year:2026, days:30, firstDow:3 },
+        5: { name:'Mayo', year:2026, days:31, firstDow:5 }
+    };
+    const diasArr = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+    const mesesArr = ['','Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+
+    let currentMonth = 3;
+    let selectedDay = 1;
+    let activeFilter = 'all';
+    let searchQuery = '';
+    let weekOffset = 0;
+    let subView = 'list';
+    const MIN_COVERAGE = 20;
+
+    const todayRaw = new Date();
+    const todayM = todayRaw.getMonth()+1;
+    const todayD = todayRaw.getDate();
+    const todayY = todayRaw.getFullYear();
+    if(todayY===2026 && todayM>=3 && todayM<=5) {
+        currentMonth = todayM;
+        selectedDay = todayD;
+    }
+
+    // ═══════════════════════════════════════════════════
+    // LÓGICA DE ESTADO
+    // ═══════════════════════════════════════════════════
+    function getStatus(agId, month, day) {
+        // Incapacidad: prioridad máxima (sobreescribe todo)
+        if(isIncapacidad(agId, month, day)) return 'incapacidad';
+        // Modificaciones especiales primero
+        if(isDescAjuste(agId, month, day)) return 'descanso-ajuste';
+        // Permiso sin goce de sueldo
+        if(window.ROSTER.isPermisoSinGoce && window.ROSTER.isPermisoSinGoce(agId, month, day)) return 'permiso-sin-goce';
+        // Permiso entrada tarde: se muestra como permiso (adicional al curso ese día)
+        // Si tiene nota de pago, se marca como trabajo pero con alerta de permiso
+        if(isPermisoTarde(agId, month, day)) {
+            const notaPermiso = getPermisoNota(agId, month, day);
+            if(notaPermiso) return 'trabajo';
+            return 'permiso-tarde';
+        }
+        if(isCurso(agId, month, day)) return 'curso';
+        if(isCursoRecurrente(agId, month, day)) return 'curso-recurrente';
+        // Permutas
+        const perm = getPermutaInfo(agId, month, day);
+        if(perm) return perm.tipo;
+        // Horario base
+        const h = horario[agId];
+        if(!h) return 'trabajo';
+        const mData = h[String(month)];
+        if(!mData) return 'trabajo';
+        const val = mData[String(day)];
+        if(val === 'R') return 'descanso';
+        if(val && val !== 'W') return 'cumpleanos';
+        return 'trabajo';
+    }
+
+    function isToday(month, day) {
+        return todayY===2026 && todayM===month && todayD===day;
+    }
+
+    function getDayCoverage(month, day) {
+        let w=0;
+        agentes.forEach(a => {
+            const st=getStatus(a.id,month,day);
+            if(st==='trabajo'||st==='curso'||st==='curso-recurrente'||st==='permiso-tarde'||st==='permuta-trabajo') w++;
+        });
+        return w;
+    }
+
+    // Nombre corto por ID: primer nombre + primer apellido (orden mexicano: apellidos primero en datos)
+    const nombreCortoMap = {
+        '2000467':'Elizabeth Cruz','2000469':'Katia Peña','2000477':'Thania Rivera',
+        '2000587':'Alejandra Becerril','2000609':'Tania Butanda','2000675':'Fernanda Galvez',
+        '2000475':'Alessia Taddei','2000707':'Liliana Solares',
+        '2000682':'Fernanda Moreno',
+        '2000673':'Fatima Moreno','2000674':'Kenji Jurado','2000706':'Karol Salinas',
+        '2000704':'Dylan Rivera','2000701':'Angel Ledezma','2000683':'Janeth Hernandez',
+        '2000677':'Rey Belman','2000681':'Monserrat Guzman','2000734':'Jonathan Sánchez',
+        '2000481':'Julio Olivares','2000536':'Miriam Anaya',
+        '2000549':'Mitchel Herrejon','2000544':'Fernando Estrada','2000718':'Nadia Fraga',
+        '2000676':'Rodrigo Lopez','2000607':'Argelia Garcia','2000472':'Leslie Jimenez',
+        '2000588':'Anel Juarez','2000470':'Alejandro Morfin',
+        '2000708':'Mauricio Morales','2000185':'Eriban Morales','2000562':'Karina Ulibarri',
+        '2000787':'Diego López','2000788':'Alejandro Vázquez',
+        '2000789':'Cassandra García','2000790':'Alan Gama',
+        '2000191':'Aldo Gomez',
+        '2000545':'Daniela Galván','2000462':'Brenda Aguilar','2000566':'David Serrano',
+        '2000567':'Karen Morales','2000565':'Alexis Perez'
+    };
+
+    function formatNombre(n) {
+        return n.split(' ').map(w=>w.charAt(0).toUpperCase()+w.slice(1).toLowerCase()).join(' ');
+    }
+
+    function getNombreCorto(id) {
+        return nombreCortoMap[id] || formatNombre(agentes.find(a=>a.id===id)?.nombre||'');
+    }
+
+    function formatNombreShort(n) {
+        const parts = n.split(' ');
+        return parts.slice(0,2).join(' ');
+    }
+
+    // ═══════════════════════════════════════════════════
+    // NAVEGACIÓN MESES
+    // ═══════════════════════════════════════════════════
+    function setMonth(m) {
+        currentMonth = m;
+        weekOffset = 0;
+        selectedDay = 1;
+        [3,4,5].forEach(n => document.getElementById('tab-'+n).classList.toggle('active', n===m));
+        document.getElementById('prev-btn').disabled = (m===3);
+        document.getElementById('next-btn').disabled = (m===5);
+        renderCal();
+        renderAgents();
+        if(subView==='week') renderWeekly();
+    }
+
+    function previousMonth() { if(currentMonth>3) setMonth(currentMonth-1); }
+    function nextMonth() { if(currentMonth<5) setMonth(currentMonth+1); }
+
+    // ═══════════════════════════════════════════════════
+    // DARK MODE
+    // ═══════════════════════════════════════════════════
+    function toggleDark() {
+        const html = document.documentElement;
+        const isDark = html.getAttribute('data-theme')==='dark';
+        const next = isDark ? 'light' : 'dark';
+        html.setAttribute('data-theme', next);
+        const icon = isDark ? '🌙' : '☀️';
+        document.getElementById('theme-btn').textContent = icon;
+        const navBtn = document.getElementById('stbc-theme-nav-btn');
+        if(navBtn) navBtn.textContent = icon;
+        try{ localStorage.setItem('stbc-theme', next); }catch(e){}
+    }
+    function loadThemeCalendario(){
+        try{
+            const t = localStorage.getItem('stbc-theme');
+            if(t){ document.documentElement.setAttribute('data-theme',t);
+                   const icon = t==='dark'?'☀️':'🌙';
+                   const btn = document.getElementById('theme-btn');
+                   const nav = document.getElementById('stbc-theme-nav-btn');
+                   if(btn) btn.textContent=icon;
+                   if(nav) nav.textContent=icon;
+            }
+        }catch(e){}
+    }
+
+    // ═══════════════════════════════════════════════════
+    // FILTROS Y BÚSQUEDA
+    // ═══════════════════════════════════════════════════
+    function setFilter(f) {
+        activeFilter = f;
+        document.querySelectorAll('.chip').forEach(c => {
+            c.classList.toggle('active-filter', c.dataset.filter===f);
+        });
+        renderAgents();
+        if(subView==='week') renderWeekly();
+    }
+
+    function onSearch(val) {
+        searchQuery = val.toLowerCase();
+        document.getElementById('search-clear').style.display = val ? 'block' : 'none';
+        renderAgents();
+        if(subView==='week') renderWeekly();
+    }
+
+    function clearSearch() {
+        document.getElementById('search-input').value = '';
+        onSearch('');
+    }
+
+    function matchesSearch(a) {
+        if(!searchQuery) return true;
+        return formatNombre(a.nombre).toLowerCase().includes(searchQuery) || a.id.includes(searchQuery);
+    }
+
+    function matchesFilter(a, st) {
+        if(activeFilter==='all') return true;
+        if(activeFilter==='supervisor') return a.tipo.includes('Supervisor');
+        if(activeFilter==='permiso') return st==='permiso-tarde';
+        if(activeFilter==='sin-goce') return st==='permiso-sin-goce';
+        if(activeFilter==='curso') return st==='curso' || st==='curso-recurrente';
+        if(activeFilter==='descanso') return st==='descanso'||st==='descanso-ajuste'||st==='permuta-descanso';
+        if(activeFilter==='trabajo') return st==='trabajo'||st==='permuta-trabajo';
+        return st===activeFilter;
+    }
+
+    // ═══════════════════════════════════════════════════
+    // CALENDARIO
+    // ═══════════════════════════════════════════════════
+    function renderCal() {
+        const mi = MONTHS[currentMonth];
+        document.getElementById('month-name').textContent = `${mi.name} ${mi.year}`;
+        document.getElementById('current-date-display').textContent =
+            new Date().toLocaleDateString('es-MX',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+
+        document.getElementById('prev-btn').disabled = (currentMonth===3);
+        document.getElementById('next-btn').disabled = (currentMonth===5);
+
+        const cal = document.getElementById('calendar-days');
+        cal.innerHTML = '';
+
+        for(let i=0;i<mi.firstDow;i++) {
+            const e = document.createElement('div');
+            e.className = 'day empty';
+            cal.appendChild(e);
+        }
+
+        for(let d=1;d<=mi.days;d++) {
+            const e = document.createElement('div');
+            e.className = 'day';
+            const cov = getDayCoverage(currentMonth, d);
+            e.innerHTML = `<span>${d}</span><span class="day-coverage ${cov<MIN_COVERAGE?'coverage-low':'coverage-ok'}">${cov}</span>`;
+            if(isToday(currentMonth,d)) e.classList.add('today');
+            if(d===selectedDay) e.classList.add('selected');
+            e.onclick = (function(day){ return function(){ selectDay(day); }; })(d);
+            cal.appendChild(e);
+        }
+    }
+
+    function selectDay(d) {
+        selectedDay = d;
+        weekOffset = 0;
+        renderCal();
+        renderAgents();
+        if(subView==='week') renderWeekly();
+    }
+
+    // ═══════════════════════════════════════════════════
+    // VISTA LISTA Y SEMANA
+    // ═══════════════════════════════════════════════════
+    function setSubView(v) {
+        subView = v;
+        document.getElementById('sub-tab-list').classList.toggle('active', v==='list');
+        document.getElementById('sub-tab-week').classList.toggle('active', v==='week');
+        document.getElementById('agents-content').style.display = v==='list' ? 'block' : 'none';
+        document.getElementById('sub-view-weekly').style.display = v==='week' ? 'block' : 'none';
+        if(v==='week') renderWeekly();
+    }
+
+    function renderAgents() {
+        const mi = MONTHS[currentMonth];
+        const cont = document.getElementById('agents-content');
+        const title = document.getElementById('selected-date-title');
+        const dow = new Date(2026, currentMonth-1, selectedDay).getDay();
+        title.textContent = (diasArr[dow]+' '+selectedDay+' '+mi.name+' '+mi.year).toUpperCase();
+
+        let count=0, countAgentes=0, countSupervisores=0;
+        agentes.forEach(a => {
+            const st = getStatus(a.id, currentMonth, selectedDay);
+            if(st==='trabajo'||st==='curso'||st==='curso-recurrente'||st==='permiso-tarde'||st==='permuta-trabajo') {
+                count++;
+                if(a.tipo.includes('Supervisor')) countSupervisores++; else countAgentes++;
+            }
+        });
+
+        cont.innerHTML = '';
+
+        // Counter
+        const counter = document.createElement('div');
+        counter.className = 'service-counter';
+        counter.innerHTML = `
+            <div class="counter-main">
+                <div class="counter-label">Personal en servicio</div>
+                <div class="counter-right">
+                    <div class="counter-value">${count}</div>
+                    <div class="expand-indicator" id="expand-indicator">▼</div>
+                </div>
+            </div>
+            <div class="counter-detail" id="counter-detail">
+                <div class="counter-breakdown">
+                    <div class="counter-item"><span>🎫 Agentes de tráfico</span><span class="counter-item-value">${countAgentes}</span></div>
+                    <div class="counter-item"><span>👔 Supervisores</span><span class="counter-item-value">${countSupervisores}</span></div>
+                </div>
+            </div>`;
+        counter.onclick = () => {
+            document.getElementById('counter-detail').classList.toggle('expanded');
+            document.getElementById('expand-indicator').classList.toggle('expanded');
+        };
+        cont.appendChild(counter);
+
+        // Legend
+        const legend = document.createElement('div');
+        legend.className = 'legend';
+        legend.innerHTML = `
+            <div class="legend-title">Leyenda</div>
+            <div class="legend-items">
+                <div class="legend-item"><div class="legend-dot" style="background:var(--c-trabajo)"></div>En servicio</div>
+                <div class="legend-item"><div class="legend-dot" style="background:var(--c-descanso)"></div>Descanso</div>
+                <div class="legend-item"><div class="legend-dot" style="background:var(--c-curso)"></div>Curso Aduana AF</div>
+                <div class="legend-item"><div class="legend-dot" style="background:#eab308"></div>Curso AF-KL</div>
+                <div class="legend-item"><div class="legend-dot" style="background:var(--c-permiso)"></div>Permiso</div>
+                <div class="legend-item"><div class="legend-dot" style="background:var(--c-sin-goce)"></div>S/Goce</div>
+                <div class="legend-item"><div class="legend-dot" style="background:var(--c-permuta-t)"></div>Permuta · Trabaja</div>
+                <div class="legend-item"><div class="legend-dot" style="background:var(--c-permuta-d)"></div>Permuta · Descansa</div>
+                <div class="legend-item"><div class="legend-dot" style="background:var(--c-desc-ajuste)"></div>Desc. Ajuste</div>
+                <div class="legend-item"><div class="legend-dot" style="background:var(--c-cumple)"></div>Cumpleaños</div>
+            </div>`;
+        cont.appendChild(legend);
+
+        const list = document.createElement('div');
+        list.className = 'agents-list';
+
+        const statusOrder = {'trabajo':1,'curso':2,'permiso-tarde':3,'permiso-sin-goce':3,'permuta-trabajo':4,'descanso-ajuste':5,'descanso':6,'permuta-descanso':7,'cumpleanos':8,'incapacidad':9};
+
+        const sorted = [...agentes].sort((a,b) => {
+            const supA = a.tipo.includes('Supervisor')?1:0;  // supervisores al FINAL
+            const supB = b.tipo.includes('Supervisor')?1:0;
+            if(supA!==supB) return supA-supB;
+            const stA = getStatus(a.id,currentMonth,selectedDay);
+            const stB = getStatus(b.id,currentMonth,selectedDay);
+            const oA=statusOrder[stA]||99, oB=statusOrder[stB]||99;
+            if(oA!==oB) return oA-oB;
+            return a.nombre.localeCompare(b.nombre);
+        });
+
+        const shortLabel = {
+            'trabajo':'Servicio','descanso':'Descanso','cumpleanos':'🎂 Feliz cumpleaños, disfruta tu día libre',
+            'curso':'📚 Curso Aduana AF','permiso-tarde':'⚠️ Posible entrada tarde',
+            'permiso-sin-goce':'🟣 Permiso sin goce de sueldo',
+            'descanso-ajuste':'Descanso por ajuste',
+            'permuta-trabajo':'🔁 Permuta · Trabajas',
+            'permuta-descanso':'🔁 Permuta · Descansas',
+            'incapacidad':'🏥 Incapacidad médica',
+            'curso-recurrente':'🎓 Curso AF-KL'
+        };
+
+        let shown = 0;
+        sorted.forEach(a => {
+            if(!matchesSearch(a)) return;
+            const st = getStatus(a.id, currentMonth, selectedDay);
+            if(!matchesFilter(a, st)) return;
+            shown++;
+            const isSup = a.tipo.includes('Supervisor');
+            const card = document.createElement('div');
+            const cardClass = st==='permiso-tarde' ? 'permiso' : (st==='permiso-sin-goce' ? 'sin-goce' : (st==='descanso-ajuste' ? 'descanso-ajuste' : st));
+            card.className = `agent-card ${cardClass}`;
+            const nombreCorto = getNombreCorto(a.id);
+
+            // Permuta sub-label
+            let permutaSubLabel = '';
+            if(st === 'permuta-trabajo' || st === 'permuta-descanso') {
+                const pInfo = getPermutaInfo(a.id, currentMonth, selectedDay);
+                if(pInfo) {
+                    const accion = st === 'permuta-trabajo'
+                        ? 'Hoy trabajas por'
+                        : 'Hoy descansas por';
+                    permutaSubLabel = `<div style="font-size:10px;color:var(--c-permuta-t);font-weight:700;margin-top:3px;display:flex;align-items:center;gap:4px;"><span>🔁</span><span>Permuta · ${accion} <strong>${pInfo.conQuien}</strong></span></div>`;
+                    if(st === 'permuta-descanso') {
+                        permutaSubLabel = `<div style="font-size:10px;color:var(--c-permuta-d);font-weight:700;margin-top:3px;display:flex;align-items:center;gap:4px;"><span>🔁</span><span>Permuta · ${accion} <strong>${pInfo.conQuien}</strong></span></div>`;
+                    }
+                }
+            }
+            // Curso recurrente AF-KL sub-label
+            if(st === 'curso-recurrente') {
+                const grp = getCursoRecurrenteGrupo(a.id, currentMonth, selectedDay);
+                permutaSubLabel = `<div style="font-size:10px;color:#854d0e;font-weight:700;margin-top:3px;display:flex;align-items:center;gap:4px;"><span>🎓</span><span>Entrenamiento AF-KL · Grupo ${grp} · 11:00–15:00 → 16:00–22:00</span></div>`;
+            }
+
+            // Badge class resolver
+            const badgeClass = st==='permiso-tarde'?'permiso'
+                :(st==='permiso-sin-goce'?'sin-goce'
+                :(st==='descanso-ajuste'?'descanso-ajuste'
+                :(st==='permuta-trabajo'?'permuta-trabajo'
+                :(st==='permuta-descanso'?'permuta-descanso':st))));
+
+            // Icon for curso-recurrente
+            const agentIcon = st==='curso-recurrente'
+                ? '<span style="font-size:13px;margin-right:2px">🎓</span>'
+                : (isSup ? '<span style="font-size:13px;margin-right:2px">👔</span>' : '<span style="font-size:13px;margin-right:2px">🎫</span>');
+
+            card.innerHTML = `
+                <div class="agent-left">
+                    <div class="agent-name">
+                        ${agentIcon}
+                        ${nombreCorto}
+                    </div>
+                    <div class="agent-id">${a.id}</div>
+                    ${permutaSubLabel}
+                </div>
+                <div class="agent-right">
+                    <span class="agent-status-badge badge-${badgeClass}">${shortLabel[st]||st}</span>
+                </div>`;
+            card.onclick = () => showModal(a, st, selectedDay);
+            list.appendChild(card);
+        });
+
+        if(shown===0) {
+            const empty = document.createElement('div');
+            empty.className = 'no-results';
+            empty.textContent = '🔍 Sin resultados para los filtros aplicados.';
+            list.appendChild(empty);
+        }
+
+        cont.appendChild(list);
+    }
+
+    // ═══════════════════════════════════════════════════
+    // VISTA SEMANAL
+    // ═══════════════════════════════════════════════════
+    function getWeekDates() {
+        const base = new Date(2026, currentMonth-1, selectedDay);
+        const dow = base.getDay();
+        const sunday = new Date(base);
+        sunday.setDate(base.getDate() - dow + weekOffset*7);
+        const dates = [];
+        for(let i=0;i<7;i++) {
+            const d = new Date(sunday);
+            d.setDate(d.getDate()+i);
+            dates.push(d);
+        }
+        return dates;
+    }
+
+    function prevWeek() { weekOffset--; renderWeekly(); }
+    function nextWeek() { weekOffset++; renderWeekly(); }
+
+    const weekDotLabels = {
+        'trabajo':'T','descanso':'D','cumpleanos':'🎂','curso':'CRS','permiso-tarde':'PT','descanso-ajuste':'DA',
+        'permiso-sin-goce':'SG','permuta-trabajo':'🔁T','permuta-descanso':'🔁D','incapacidad':'INC','curso-recurrente':'🎓'
+    };
+
+    function renderWeekly() {
+        const dates = getWeekDates();
+        const today = new Date();
+
+        document.getElementById('week-prev-btn').disabled = false;
+        document.getElementById('week-next-btn').disabled = false;
+
+        const mi = MONTHS[currentMonth];
+        const startD = dates[0];
+        const endD = dates[dates.length-1];
+        document.getElementById('week-label').textContent =
+            `${startD.getDate()} ${mesesArr[startD.getMonth()+1]} — ${endD.getDate()} ${mesesArr[endD.getMonth()+1]} ${endD.getFullYear()}`;
+
+        const table = document.getElementById('weekly-table');
+        table.innerHTML = '';
+
+        const thead = document.createElement('thead');
+        let thRow = '<tr><th>Agente</th>';
+        dates.forEach(d => {
+            const isT = (d.getFullYear()===todayY && d.getMonth()+1===todayM && d.getDate()===todayD);
+            const isSel = (d.getMonth()+1===currentMonth && d.getDate()===selectedDay);
+            thRow += `<th class="${isT?'today-col':''}" style="${isSel?'color:var(--accent2);':''}">${['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'][d.getDay()]}<br>${d.getDate()}/${d.getMonth()+1}</th>`;
+        });
+        thRow += '</tr>';
+        thead.innerHTML = thRow;
+        table.appendChild(thead);
+
+        const covRow = document.createElement('tr');
+        covRow.innerHTML = '<td style="font-size:10px;color:var(--text3);font-family:JetBrains Mono,monospace;padding-left:16px;">COB.</td>';
+        dates.forEach(d => {
+            const m = d.getMonth()+1;
+            const day = d.getDate();
+            const validMonth = (m>=3&&m<=5&&d.getFullYear()===2026);
+            const isT = (d.getFullYear()===todayY && m===todayM && day===todayD);
+            if(validMonth) {
+                const cov = getDayCoverage(m, day);
+                covRow.innerHTML += `<td class="${isT?'today-col':''}"><span style="font-family:JetBrains Mono,monospace;font-size:12px;font-weight:700;color:${cov<MIN_COVERAGE?'var(--c-incapacidad)':'var(--c-trabajo)'}">${cov}</span></td>`;
+            } else {
+                covRow.innerHTML += '<td>—</td>';
+            }
+        });
+        table.appendChild(covRow);
+
+        const tbody = document.createElement('tbody');
+
+        const filtered = [...agentes]
+            .filter(a => {
+                if(!matchesSearch(a)) return false;
+                const st = getStatus(a.id, currentMonth, selectedDay);
+                return matchesFilter(a, st);
+            })
+            .sort((a,b) => {
+                const supA = a.tipo.includes('Supervisor')?1:0;  // supervisores al FINAL
+                const supB = b.tipo.includes('Supervisor')?1:0;
+                if(supA!==supB) return supA-supB;
+                return a.nombre.localeCompare(b.nombre);
+            });
+
+        filtered.forEach(a => {
+            const isSup = a.tipo.includes('Supervisor');
+            const tr = document.createElement('tr');
+            tr.innerHTML = `<td><span class="agent-name-cell">${isSup?'👔 ':'🎫 '}${getNombreCorto(a.id)}</span></td>`;
+            dates.forEach(d => {
+                const m = d.getMonth()+1;
+                const day = d.getDate();
+                const validMonth = (m>=3&&m<=5&&d.getFullYear()===2026);
+                const isT = (d.getFullYear()===todayY && m===todayM && day===todayD);
+                const isSel = (m===currentMonth && day===selectedDay);
+                const td = document.createElement('td');
+                if(isT) td.classList.add('today-col');
+                if(isSel) td.style.background = 'rgba(124,58,237,0.06)';
+                if(validMonth) {
+                    const st = getStatus(a.id, m, day);
+                    const label = weekDotLabels[st]||'?';
+                    const dotClass = st==='permiso-tarde'?'wd-permiso':(st==='permiso-sin-goce'?'wd-sin-goce':(st==='descanso-ajuste'?'wd-descanso-ajuste':(st==='permuta-trabajo'?'wd-permuta-t':(st==='permuta-descanso'?'wd-permuta-d':(st==='curso-recurrente'?'wd-curso-recurrente':`wd-${st}`)))));
+                    td.innerHTML = `<span class="weekly-dot ${dotClass}" title="${formatNombre(a.nombre)}" onclick="showModal(agentes.find(x=>x.id==='${a.id}'),'${st}',${day},${m})">${label}</span>`;
+                } else {
+                    td.innerHTML = '<span style="color:var(--text3);font-size:11px">—</span>';
+                }
+                tr.appendChild(td);
+            });
+            tbody.appendChild(tr);
+        });
+
+        table.appendChild(tbody);
+    }
+
+    // ═══════════════════════════════════════════════════
+    // MODAL
+    // ═══════════════════════════════════════════════════
+    function showModal(a, st, day, mon) {
+        if(!a) return;
+        const mes = mon || currentMonth;
+        const dia = day || selectedDay;
+        const mi = MONTHS[mes] || MONTHS[3];
+        const dow = new Date(2026, mes-1, dia).getDay();
+
+        // Calcular días trabajados en el mes
+        let worked=0;
+        for(let dd=1;dd<=mi.days;dd++){
+            const s=getStatus(a.id,mes,dd);
+            if(s==='trabajo'||s==='curso'||s==='curso-recurrente'||s==='permiso-tarde'||s==='permuta-trabajo') worked++;
+        }
+        const pct = Math.min(100,Math.round((worked/mi.days)*100));
+
+        // Próximo descanso
+        let nextRest='Fuera de rango';
+        for(let dd=dia+1;dd<=mi.days;dd++){
+            const ns=getStatus(a.id,mes,dd);
+            if(ns==='descanso'||ns==='cumpleanos'||ns==='descanso-ajuste'){
+                const diff=dd-dia;
+                nextRest=diff===1?'Mañana':diff<7?'En '+diff+' días':dd+' de '+mi.name;
+                break;
+            }
+        }
+
+        const isSup = a.tipo.includes('Supervisor');
+
+        const statusLabels = {
+            'trabajo':'En servicio','descanso':'Descanso','cumpleanos':'🎂 Feliz cumpleaños, disfruta tu día libre',
+            'curso':'📚 Curso Aduana AF','permiso-tarde':'⚠️ Permiso · Posible entrada tarde',
+            'permiso-sin-goce':'🟣 Permiso sin goce de sueldo',
+            'descanso-ajuste':'🔄 Descanso por ajuste',
+            'permuta-trabajo':'🔁 Permuta · En servicio',
+            'permuta-descanso':'🔁 Permuta · Descansa',
+            'incapacidad':'🏥 Incapacidad médica',
+            'curso-recurrente':'🎓 Curso recurrente AF-KL'
+        };
+
+        // Alertas especiales
+        let alertHtml = '';
+        if(st==='curso') {
+            const horarioCurso = getCursoHorario(a.id, mes, dia);
+            alertHtml = `<div class="curso-alert"><span class="alert-icon">📚</span><span>Curso Aduana AF — Horario especial <strong>${horarioCurso}</strong></span></div>`;
+        } else if(st==='descanso-ajuste') {
+            const notaAjuste = getDescAjusteNota(a.id, mes, dia);
+            if(notaAjuste === 'ajuste-unico-especial') {
+                alertHtml = `<div class="desc-ajuste-alert"><span class="alert-icon">🔄</span><span><strong>Ajuste único especial de descansos</strong> — Semana 16–22 Mar 2026. Descansa Jue 19 y Vie 20. Continúa secuencia programada normal a partir del 21.</span></div>`;
+            } else {
+                alertHtml = `<div class="desc-ajuste-alert"><span class="alert-icon">🔄</span><span>Este día es <strong>Descanso por Ajuste</strong> de días de descanso. No se presentará a trabajar.</span></div>`;
+            }
+        } else if(st==='permiso-tarde') {
+            alertHtml = `<div class="permiso-entrada-alert"><span class="alert-icon">⚠️</span><span>Agente con <strong>posible entrada tarde</strong> este día. Categoría: <strong>Permiso</strong>. Además tiene Curso Aduana AF 11:00–15:00.</span></div>`;
+        } else if(st==='permiso-sin-goce') {
+            alertHtml = `<div class="permiso-entrada-alert" style="background:var(--c-sin-goce);color:#fff;"><span class="alert-icon">🟣</span><span><strong>Permiso sin goce de sueldo</strong> — El agente no se presentará este día y no percibe salario por esta jornada.</span></div>`;
+        } else if(st==='trabajo') {
+            // Check if there's a permiso with nota for this agent on this day
+            const notaPermiso = getPermisoNota(a.id, mes, dia);
+            if(notaPermiso) {
+                alertHtml = `<div class="permiso-entrada-alert"><span class="alert-icon">⚠️</span><span>Agente con <strong>Permiso</strong> este día. <strong>${notaPermiso}</strong>.</span></div>`;
+            }
+        } else if(st==='permuta-trabajo') {
+            const pInfo = getPermutaInfo(a.id, mes, dia);
+            const partnerName = pInfo ? pInfo.conQuien : '—';
+            alertHtml = `<div class="permuta-trabajo-alert"><span class="alert-icon">🔁</span><span><strong>Permuta · Hoy trabajas por ${partnerName}</strong><br><span style="font-weight:400;font-size:12px;">Este día no es de tu descanso base, pero por permuta te corresponde trabajar.</span></span></div>`;
+        } else if(st==='permuta-descanso') {
+            const pInfo = getPermutaInfo(a.id, mes, dia);
+            const partnerName = pInfo ? pInfo.conQuien : '—';
+            alertHtml = `<div class="permuta-descanso-alert"><span class="alert-icon">🔁</span><span><strong>Permuta · Hoy descansas por ${partnerName}</strong><br><span style="font-weight:400;font-size:12px;">Este día corresponde a tu turno de trabajo, pero por permuta descansas.</span></span></div>`;
+        } else if(st==='incapacidad') {
+            const inc = incapacidades.find(i => i.id === a.id && i.mes === mes && dia >= i.diaInicio && dia <= i.diaFin);
+            const rango = inc ? `${inc.diaInicio} al ${inc.diaFin} de ${MONTHS[inc.mes]?.name||''}` : '';
+            alertHtml = `<div style="background:var(--c-incapacidad-bg);border:1px solid var(--c-incapacidad-border);color:var(--c-incapacidad);border-radius:var(--radius-sm);padding:12px 14px;font-weight:700;font-size:13px;line-height:1.4;margin-bottom:14px;display:flex;gap:10px;align-items:flex-start"><span class="alert-icon">🏥</span><span><strong>Incapacidad médica</strong>${rango ? ` — Periodo: ${rango}` : ''}<br><span style="font-weight:400;font-size:12px;">El agente no se presentará a trabajar durante este periodo.</span></span></div>`;
+        } else if(st==='curso-recurrente') {
+            const grp = getCursoRecurrenteGrupo(a.id, mes, dia);
+            alertHtml = `<div style="background:#fef9c3;border:1px solid #fde047;color:#713f12;border-radius:var(--radius-sm);padding:14px 16px;font-size:13px;line-height:1.6;margin-bottom:14px;">
+                <div style="font-weight:800;font-size:14px;margin-bottom:6px;display:flex;align-items:center;gap:8px;"><span>🎓</span> Curso recurrente AF-KL — Grupo ${grp}</div>
+                <div style="font-weight:700;color:#854d0e;margin-bottom:4px;">Horario especial</div>
+                <div style="display:flex;flex-direction:column;gap:3px;font-size:12px;">
+                    <div>⚠️ <strong>No olvides asistir</strong> — Curso inicia <strong>11:00 a 15:00</strong></div>
+                    <div>☕ Break de lonche: <strong>15:00 – 16:00</strong></div>
+                    <div>✈️ Reincorporación a operación: <strong>16:00 – 22:00</strong></div>
+                </div>
+            </div>`;
+        }
+
+        // Nota especial para Argelia Garcia si es curso + permiso
+        let notaCurso = '';
+        if(a.id==='2000607' && mes===3 && dia===4) {
+            notaCurso = `<div class="info-row"><div class="info-label">Nota del día</div><div class="info-value" style="font-size:13px">📚 Curso Aduana AF — 11:00 a 15:00<br>⚠️ Posible entrada tarde · Permiso</div></div>`;
+        } else if(st==='curso') {
+            const horarioCurso = getCursoHorario(a.id, mes, dia);
+            notaCurso = `<div class="info-row"><div class="info-label">Horario Curso Aduana AF</div><div class="info-value">${horarioCurso} hrs</div></div>`;
+        } else if(st==='descanso-ajuste') {
+            const notaAjuste = getDescAjusteNota(a.id, mes, dia);
+            if(notaAjuste === 'ajuste-unico-especial') {
+                notaCurso = `<div class="info-row"><div class="info-label">Motivo descanso</div><div class="info-value">⚠️ Ajuste único especial — Descansa Jue 19 y Vie 20 Mar.<br><span style="font-size:11px;color:var(--text3)">Secuencia de descansos programada continúa sin cambios a partir del 21 Mar.</span></div></div>`;
+            } else {
+                notaCurso = `<div class="info-row"><div class="info-label">Motivo descanso</div><div class="info-value">Ajuste por cambio de días de descanso</div></div>`;
+            }
+        } else if(st==='trabajo') {
+            const notaPermiso = getPermisoNota(a.id, mes, dia);
+            if(notaPermiso) {
+                notaCurso = `<div class="info-row"><div class="info-label">Nota del día</div><div class="info-value" style="font-size:13px">⚠️ <strong>Permiso</strong><br>${notaPermiso}</div></div>`;
+            }
+        } else if(st==='permuta-trabajo' || st==='permuta-descanso') {
+            const pInfo = getPermutaInfo(a.id, mes, dia);
+            if(pInfo) {
+                const accion = st==='permuta-trabajo' ? 'Trabajas por' : 'Descansas por';
+                notaCurso = `<div class="info-row"><div class="info-label">Detalle de Permuta</div><div class="info-value" style="font-size:13px">🔁 ${accion}: <strong>${pInfo.conQuien}</strong><br><span style="font-size:11px;color:var(--text3)">Intercambio de día autorizado por operaciones</span></div></div>`;
+            }
+        } else if(st==='incapacidad') {
+            const inc = incapacidades.find(i => i.id === a.id && i.mes === mes && dia >= i.diaInicio && dia <= i.diaFin);
+            if(inc) {
+                notaCurso = `<div class="info-row"><div class="info-label">Periodo de incapacidad</div><div class="info-value" style="font-size:13px">🏥 Del <strong>${inc.diaInicio}</strong> al <strong>${inc.diaFin} de ${MONTHS[inc.mes]?.name||''}</strong><br><span style="font-size:11px;color:var(--text3)">Ausencia por incapacidad médica registrada</span></div></div>`;
+            }
+        } else if(st==='curso-recurrente') {
+            const grp = getCursoRecurrenteGrupo(a.id, mes, dia);
+            notaCurso = `<div class="info-row"><div class="info-label">Entrenamiento de Tráfico y Procedimientos</div><div class="info-value" style="font-size:13px">🎓 Grupo ${grp} · Horario: <strong>11:00 – 15:00</strong><br>☕ Break lonche: <strong>15:00 – 16:00</strong><br>✈️ Reincorporación a operación: <strong>16:00 – 22:00</strong></div></div>`;
+        }
+
+        document.getElementById('modal-agent-name').textContent = formatNombre(a.nombre);
+        document.getElementById('modal-body').innerHTML = `
+            ${alertHtml}
+            ${isSup ? '<div style="margin-bottom:14px"><span class="supervisor-badge" style="font-size:10px;padding:4px 10px;">SUPERVISOR DE TRÁFICO</span></div>' : ''}
+            <div class="info-row">
+                <div class="info-label">Estado — ${diasArr[dow]} ${dia} ${mi.name}</div>
+                <span class="modal-status-badge badge-${st==='permiso-tarde'?'permiso':(st==='descanso-ajuste'?'descanso-ajuste':(st==='permuta-trabajo'?'permuta-trabajo':(st==='permuta-descanso'?'permuta-descanso':(st==='curso-recurrente'?'curso-recurrente':st))))}">${statusLabels[st]||st}</span>
+            </div>
+            <div class="info-row">
+                <div class="info-label">Días en servicio en ${mi.name}</div>
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+                    <span class="info-value">${worked} días</span>
+                    <span class="progress-label">${pct}%</span>
+                </div>
+                <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:${pct}%"></div></div>
+            </div>
+            <div class="info-row">
+                <div class="info-label">Días de descanso base</div>
+                <div class="info-value">${a.descansos}</div>
+            </div>
+            <div class="info-row">
+                <div class="info-label">Próximo descanso en ${mi.name}</div>
+                <div class="info-value">${nextRest}</div>
+            </div>
+            ${notaCurso}
+            ${a.cumple?`<div class="info-row"><div class="info-label">Cumpleaños</div><div class="info-value">🎂 ${a.cumple}</div></div>`:''}
+            <div class="info-row">
+                <div class="info-label">ID Empleado</div>
+                <div class="info-value" style="font-family:'JetBrains Mono',monospace">${a.id}</div>
+            </div>
+        `;
+        document.getElementById('agent-modal').classList.add('active');
+    }
+
+    function closeModal() {
+        document.getElementById('agent-modal').classList.remove('active');
+    }
+
+    document.getElementById('agent-modal').onclick = e => {
+        if(e.target===document.getElementById('agent-modal')) closeModal();
+    };
+
+    // INIT
+    loadThemeCalendario();
+    document.getElementById('prev-btn').disabled = true;
+    renderCal();
+    renderAgents();
+</script>
+</body>
+</html>
