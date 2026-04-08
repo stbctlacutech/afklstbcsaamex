@@ -849,7 +849,6 @@
         .modal {
             display: none;
             position: fixed;
-            /* descuenta la nav sticky para que el modal no quede oculto debajo */
             top: 46px;
             left: 0; right: 0; bottom: 0;
             background: rgba(0,0,0,0.6);
@@ -871,7 +870,6 @@
             width: 100%;
             box-shadow: var(--shadow-lg);
             animation: slideUp 0.2s ease;
-            /* sin max-height fija: el overlay es el que scrollea */
             flex-shrink: 0;
         }
 
@@ -1091,7 +1089,7 @@
 
     <!-- MONTH TABS -->
     <div class="view-tabs">
-        <button class="view-tab active" id="tab-3" onclick="setMonth(3)">Marzo</button>
+        <button class="view-tab" id="tab-3" onclick="setMonth(3)">Marzo</button>
         <button class="view-tab" id="tab-4" onclick="setMonth(4)">Abril</button>
         <button class="view-tab" id="tab-5" onclick="setMonth(5)">Mayo</button>
     </div>
@@ -1362,7 +1360,12 @@
     function setMonth(m) {
         currentMonth = m;
         weekOffset = 0;
-        selectedDay = 1;
+        // Si el usuario navega al mes actual, seleccionar hoy; si no, el día 1
+        if (todayY === 2026 && todayM === m) {
+            selectedDay = todayD;
+        } else {
+            selectedDay = 1;
+        }
         [3,4,5].forEach(n => document.getElementById('tab-'+n).classList.toggle('active', n===m));
         document.getElementById('prev-btn').disabled = (m===3);
         document.getElementById('next-btn').disabled = (m===5);
@@ -1928,7 +1931,10 @@
 
     // INIT
     loadThemeCalendario();
-    document.getElementById('prev-btn').disabled = true;
+    // Activar el tab del mes correcto desde el arranque
+    [3,4,5].forEach(n => document.getElementById('tab-'+n).classList.toggle('active', n===currentMonth));
+    document.getElementById('prev-btn').disabled = (currentMonth===3);
+    document.getElementById('next-btn').disabled = (currentMonth===5);
     renderCal();
     renderAgents();
 </script>
