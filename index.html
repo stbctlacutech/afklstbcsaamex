@@ -56,12 +56,14 @@ html,body{height:100%;font-family:'DM Sans',sans-serif;background:var(--bg);colo
 @keyframes pulse-dot{0%,100%{box-shadow:0 0 0 2px rgba(34,197,94,.25);}50%{box-shadow:0 0 0 5px rgba(34,197,94,.08);}}
 
 /* CARDS */
-.cards-wrap{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:16px;width:100%;max-width:660px;margin-bottom:44px;}
+.cards-wrap{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:16px;width:100%;max-width:900px;margin-bottom:44px;}
 .nav-card{position:relative;overflow:hidden;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:26px 22px;display:flex;flex-direction:column;gap:13px;text-decoration:none;color:inherit;cursor:pointer;transition:border-color .2s,box-shadow .2s,transform .2s;box-shadow:var(--shadow);}
 .nav-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;border-radius:var(--radius-lg) var(--radius-lg) 0 0;}
 .nav-card.calendario::before{background:linear-gradient(90deg,var(--accent),var(--accent2));}
 .nav-card.asignaciones::before{background:linear-gradient(90deg,#16a34a,#00a1de);}
 [data-theme="dark"] .nav-card.asignaciones::before{background:linear-gradient(90deg,#4ade80,#00a1de);}
+.nav-card.distribucion::before{background:linear-gradient(90deg,#7c3aed,#2563eb);}
+[data-theme="dark"] .nav-card.distribucion::before{background:linear-gradient(90deg,#bc8cff,#58a6ff);}
 .nav-card:hover{border-color:var(--text3);box-shadow:var(--shadow-xl);transform:translateY(-3px);}
 .nav-card:active{transform:translateY(0) scale(.984);box-shadow:var(--shadow);transition:transform .08s,box-shadow .08s;}
 
@@ -75,6 +77,8 @@ html,body{height:100%;font-family:'DM Sans',sans-serif;background:var(--bg);colo
 .nav-card.asignaciones .card-tag{color:#16a34a;background:rgba(22,163,74,.08);border:1px solid rgba(22,163,74,.2);}
 [data-theme="dark"] .nav-card.calendario .card-tag{color:var(--accent);background:rgba(88,166,255,.1);border-color:rgba(88,166,255,.2);}
 [data-theme="dark"] .nav-card.asignaciones .card-tag{color:#4ade80;background:rgba(74,222,128,.08);border-color:rgba(74,222,128,.2);}
+.nav-card.distribucion .card-tag{color:var(--accent2);background:rgba(124,58,237,.08);border:1px solid rgba(124,58,237,.2);}
+[data-theme="dark"] .nav-card.distribucion .card-tag{color:#bc8cff;background:rgba(188,140,255,.08);border-color:rgba(188,140,255,.2);}
 
 .card-icon-row{display:flex;align-items:center;gap:10px;}
 .card-title{font-family:'JetBrains Mono',monospace;font-size:20px;font-weight:700;color:var(--text);letter-spacing:-.4px;}
@@ -85,6 +89,8 @@ html,body{height:100%;font-family:'DM Sans',sans-serif;background:var(--bg);colo
 .nav-card.calendario .card-cta{color:var(--accent);}
 .nav-card.asignaciones .card-cta{color:#16a34a;}
 [data-theme="dark"] .nav-card.asignaciones .card-cta{color:#4ade80;}
+.nav-card.distribucion .card-cta{color:var(--accent2);}
+[data-theme="dark"] .nav-card.distribucion .card-cta{color:#bc8cff;}
 .cta-arrow{display:inline-block;transition:transform .2s;}
 .nav-card:hover .cta-arrow{transform:translateX(4px);}
 
@@ -115,7 +121,7 @@ html,body{height:100%;font-family:'DM Sans',sans-serif;background:var(--bg);colo
   .stbc-nav-links .stbc-nav-link:not(.nav-active){display:none;}
 }
 @media(min-width:860px){
-  .cards-wrap{grid-template-columns:1fr 1fr;max-width:660px;}
+  .cards-wrap{grid-template-columns:1fr 1fr 1fr;max-width:900px;}
 }
 </style>
 </head>
@@ -129,6 +135,7 @@ html,body{height:100%;font-family:'DM Sans',sans-serif;background:var(--bg);colo
     <a href="index.html" class="stbc-nav-link nav-active">⌂ Inicio</a>
     <a href="calendario_stbc.html" class="stbc-nav-link">📅 Calendario</a>
     <a href="abril_stbc_map.html" class="stbc-nav-link">📋 Asignaciones</a>
+    <a href="distribucion_supervisores.html" class="stbc-nav-link">👥 Distribución</a>
   </div>
   <div class="stbc-nav-right">
     <button class="stbc-theme-btn" id="themeBtn" onclick="toggleTheme()" title="Cambiar tema">🌙</button>
@@ -225,6 +232,40 @@ html,body{height:100%;font-family:'DM Sans',sans-serif;background:var(--bg);colo
         <span class="item-pill">◈ Posición</span>
       </div>
       <div class="card-cta">Ver asignaciones <span class="cta-arrow">→</span></div>
+    </a>
+
+    <!-- DISTRIBUCIÓN DE SUPERVISORES -->
+    <a href="distribucion_supervisores.html" class="nav-card distribucion">
+      <svg class="card-bg-deco" width="120" height="120" viewBox="0 0 120 120" fill="none">
+        <circle cx="60" cy="32" r="18" stroke="currentColor" stroke-width="2.5" fill="none"/>
+        <circle cx="24" cy="90" r="14" stroke="currentColor" stroke-width="2" fill="none"/>
+        <circle cx="96" cy="90" r="14" stroke="currentColor" stroke-width="2" fill="none"/>
+        <circle cx="60" cy="90" r="14" stroke="currentColor" stroke-width="2" fill="none"/>
+        <line x1="60" y1="50" x2="60" y2="76" stroke="currentColor" stroke-width="1.5"/>
+        <line x1="60" y1="60" x2="24" y2="76" stroke="currentColor" stroke-width="1.5"/>
+        <line x1="60" y1="60" x2="96" y2="76" stroke="currentColor" stroke-width="1.5"/>
+      </svg>
+      <div class="card-tag">Turno · 8 Abr 2026</div>
+      <div class="card-icon-row">
+        <svg width="30" height="30" viewBox="0 0 30 30" fill="none">
+          <circle cx="15" cy="8" r="5" stroke="var(--accent2)" stroke-width="1.5" fill="none"/>
+          <circle cx="6"  cy="23" r="4" stroke="var(--accent2)" stroke-width="1.5" fill="none"/>
+          <circle cx="15" cy="23" r="4" stroke="var(--accent2)" stroke-width="1.5" fill="none"/>
+          <circle cx="24" cy="23" r="4" stroke="var(--accent2)" stroke-width="1.5" fill="none"/>
+          <line x1="15" y1="13" x2="15" y2="19" stroke="var(--accent2)" stroke-width="1.2"/>
+          <line x1="15" y1="16" x2="6"  y2="19" stroke="var(--accent2)" stroke-width="1.2"/>
+          <line x1="15" y1="16" x2="24" y2="19" stroke="var(--accent2)" stroke-width="1.2"/>
+        </svg>
+        <div class="card-title">Distribución</div>
+      </div>
+      <p class="card-desc">Ver qué agentes están asignados a cada supervisor en el turno del día.</p>
+      <div class="card-items">
+        <span class="item-pill">👤 Supervisores</span>
+        <span class="item-pill">✦ Activos</span>
+        <span class="item-pill">⊟ Vacantes</span>
+        <span class="item-pill">🔍 Búsqueda</span>
+      </div>
+      <div class="card-cta">Ver distribución <span class="cta-arrow">→</span></div>
     </a>
 
   </div>

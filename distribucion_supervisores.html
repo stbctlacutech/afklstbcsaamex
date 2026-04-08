@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>STBC · Distribución de Agentes · 8/4/2026</title>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:        #f0f2f5;
+      --surface:   #ffffff;
+      --surface2:  #f7f8fa;
+      --surface3:  #eef0f4;
+      --border:    #e2e5eb;
+      --text:      #0f1923;
+      --text2:     #4a5568;
+      --text3:     #8898aa;
+      --accent:    #2563eb;
+      --accent2:   #7c3aed;
+      --shadow:    0 2px 12px rgba(0,0,0,0.08);
+      --shadow-lg: 0 8px 32px rgba(0,0,0,0.12);
+      --radius:    12px;
+      --radius-sm: 8px;
+      --c-activo:        #16a34a;
+      --c-activo-bg:     #dcfce7;
+      --c-activo-border: #86efac;
+      --c-vacante:       #d97706;
+      --c-vacante-bg:    #fef3c7;
+      --c-vacante-border:#fcd34d;
+    }
+
+    [data-theme="dark"] {
+      --bg:        #0d1117;
+      --surface:   #161b22;
+      --surface2:  #1c2128;
+      --surface3:  #21262d;
+      --border:    #30363d;
+      --text:      #e6edf3;
+      --text2:     #8b949e;
+      --text3:     #484f58;
+      --accent:    #58a6ff;
+      --accent2:   #bc8cff;
+      --shadow:    0 2px 12px rgba(0,0,0,0.4);
+      --shadow-lg: 0 8px 32px rgba(0,0,0,0.5);
+      --c-activo:        #4ade80;
+      --c-activo-bg:     #052e16;
+      --c-activo-border: #166534;
+      --c-vacante:       #fbbf24;
+      --c-vacante-bg:    #3d2600;
+      --c-vacante-border:#92400e;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      transition: background 0.25s, color 0.25s;
+    }
+
+    /* ── TOP BAR ─────────────────────────────── */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      padding: 12px 16px;
+    }
+    .topbar-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .topbar-title {
+      flex: 0 0 auto;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+      white-space: nowrap;
+    }
+    .topbar-title span {
+      color: var(--accent);
+    }
+    .topbar-date {
+      font-size: 0.78rem;
+      color: var(--text3);
+      font-family: 'JetBrains Mono', monospace;
+      white-space: nowrap;
+      display: none;
+    }
+    @media (min-width: 480px) { .topbar-date { display: block; } }
+
+    .search-wrap {
+      flex: 1;
+      position: relative;
+    }
+    .search-icon {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text3);
+      pointer-events: none;
+      font-size: 0.9rem;
+    }
+    #search-input {
+      width: 100%;
+      padding: 8px 12px 8px 32px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    #search-input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(37,99,235,0.12);
+    }
+    #search-input::placeholder { color: var(--text3); }
+
+    .controls-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex: 0 0 auto;
+    }
+    .btn-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      background: var(--surface2);
+      color: var(--text2);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      transition: background 0.2s, color 0.2s;
+    }
+    .btn-icon:hover { background: var(--surface3); color: var(--text); }
+
+    .btn-expand {
+      padding: 7px 12px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      background: var(--surface2);
+      color: var(--text2);
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 500;
+      white-space: nowrap;
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+    }
+    .btn-expand:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
+    .btn-expand.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+    /* ── STATS ───────────────────────────────── */
+    .stats-row {
+      max-width: 900px;
+      margin: 20px auto 0;
+      padding: 0 16px;
+      display: flex;
+      gap: 10px;
+    }
+    .stat-pill {
+      flex: 1;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 10px 14px;
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+    .stat-num {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--accent);
+      font-family: 'JetBrains Mono', monospace;
+      line-height: 1;
+    }
+    .stat-lbl {
+      font-size: 0.72rem;
+      color: var(--text3);
+      margin-top: 2px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* ── SEARCH RESULT NOTICE ────────────────── */
+    .search-notice {
+      max-width: 900px;
+      margin: 12px auto 0;
+      padding: 0 16px;
+      font-size: 0.82rem;
+      color: var(--text3);
+      display: none;
+    }
+    .search-notice.visible { display: block; }
+    .search-notice strong { color: var(--accent); }
+
+    /* ── SUPERVISOR LIST ─────────────────────── */
+    .sup-list {
+      max-width: 900px;
+      margin: 16px auto 0;
+      padding: 0 16px 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .sup-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .sup-card.hidden { display: none; }
+
+    /* supervisor row — always visible, clickable */
+    .sup-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.15s;
+    }
+    .sup-row:hover { background: var(--surface2); }
+
+    .sup-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.85rem;
+      font-family: 'JetBrains Mono', monospace;
+      flex-shrink: 0;
+    }
+
+    .sup-info { flex: 1; min-width: 0; }
+    .sup-name {
+      font-size: 0.97rem;
+      font-weight: 700;
+      color: var(--text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .sup-meta {
+      font-size: 0.73rem;
+      color: var(--text3);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-top: 1px;
+    }
+
+    .sup-counter {
+      font-size: 0.75rem;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--text3);
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 3px 10px;
+      white-space: nowrap;
+    }
+
+    .sup-chevron {
+      color: var(--text3);
+      font-size: 0.8rem;
+      transition: transform 0.25s;
+      flex-shrink: 0;
+    }
+    .sup-card.open .sup-chevron { transform: rotate(180deg); }
+
+    /* agent list inside card */
+    .agentes-panel {
+      display: none;
+      border-top: 1px solid var(--border);
+    }
+    .sup-card.open .agentes-panel { display: block; }
+
+    .agente-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 16px;
+      border-bottom: 1px solid var(--border);
+      transition: background 0.15s;
+    }
+    .agente-row:last-child { border-bottom: none; }
+    .agente-row:hover { background: var(--surface2); }
+    .agente-row.vacancy { background: var(--c-vacante-bg); }
+    .agente-row.hidden-by-search { display: none; }
+
+    .agente-num {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--surface3);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--text3);
+      font-family: 'JetBrains Mono', monospace;
+      flex-shrink: 0;
+    }
+    .agente-row.vacancy .agente-num {
+      background: var(--c-vacante-bg);
+      border-color: var(--c-vacante-border);
+      color: var(--c-vacante);
+    }
+
+    .agente-name-txt {
+      flex: 1;
+      font-size: 0.9rem;
+      color: var(--text);
+    }
+    .agente-name-txt.vacancy-txt {
+      color: var(--c-vacante);
+      font-style: italic;
+    }
+
+    .badge {
+      padding: 2px 9px;
+      border-radius: 20px;
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      border: 1px solid transparent;
+    }
+    .badge-activo {
+      background: var(--c-activo-bg);
+      color: var(--c-activo);
+      border-color: var(--c-activo-border);
+    }
+    .badge-vacante {
+      background: var(--c-vacante-bg);
+      color: var(--c-vacante);
+      border-color: var(--c-vacante-border);
+    }
+
+    /* ── SEARCH: highlight ───────────────────── */
+    mark {
+      background: rgba(37,99,235,0.18);
+      color: var(--accent);
+      border-radius: 2px;
+      padding: 0 1px;
+    }
+
+    /* ── NO RESULTS ──────────────────────────── */
+    .no-results {
+      display: none;
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--text3);
+      font-size: 0.9rem;
+    }
+    .no-results.visible { display: block; }
+
+    /* ── FOOTER / BRANDING ───────────────────── */
+    .brand-strip {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 16px 32px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-top: 1px solid var(--border);
+      padding-top: 16px;
+      margin-top: 8px;
+    }
+    .brand-icon { font-size: 1.1rem; flex-shrink: 0; }
+    .brand-text {
+      font-size: 0.72rem;
+      color: var(--text3);
+      line-height: 1.5;
+    }
+    .brand-text strong {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--text3);
+      font-weight: 600;
+    }
+
+    /* ── RESPONSIVE ──────────────────────────── */
+    .topbar-nav {
+      display: flex;
+      gap: 4px;
+      align-items: center;
+      overflow-x: auto;
+      scrollbar-width: none;
+      flex-shrink: 0;
+    }
+    .topbar-nav::-webkit-scrollbar { display: none; }
+    .topbar-nav-link {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      font-weight: 600;
+      padding: 5px 9px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: var(--surface2);
+      color: var(--text2);
+      text-decoration: none;
+      white-space: nowrap;
+      transition: background 0.15s, color 0.15s;
+    }
+    .topbar-nav-link:hover { background: var(--surface3); color: var(--text); }
+    .topbar-nav-link.nav-here { background: var(--accent2); border-color: var(--accent2); color: #fff; }
+
+    @media (max-width: 520px) {
+      .topbar-nav .topbar-nav-link:not(.nav-here) { display: none; }
+    }
+
+    @media (min-width: 640px) {
+      .topbar-inner { gap: 14px; }
+      .topbar-title { font-size: 1.05rem; }
+    }
+
+    @media print {
+      body { background: #fff; }
+      .topbar { position: static; box-shadow: none; border-bottom: 1px solid #ccc; }
+      .btn-icon, .btn-expand, .search-wrap { display: none; }
+      .sup-card { box-shadow: none; }
+      .agentes-panel { display: block !important; }
+      .sup-chevron { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══ TOP BAR ════════════════════════════════════════ -->
+<div class="topbar">
+  <div class="topbar-inner">
+    <!-- brand / home link -->
+    <a href="index.html" class="topbar-title" style="text-decoration:none;display:flex;align-items:center;gap:6px;flex-shrink:0;">
+      🦝 <span style="color:var(--accent);font-family:'JetBrains Mono',monospace;font-size:0.78rem;font-weight:700;">WFM STBC</span>
+    </a>
+
+    <!-- nav links (hidden on very small screens except active) -->
+    <div class="topbar-nav">
+      <a href="index.html" class="topbar-nav-link">⌂ Inicio</a>
+      <a href="calendario_stbc.html" class="topbar-nav-link">📅 Calendario</a>
+      <a href="abril_stbc_map.html" class="topbar-nav-link">📋 Asignaciones</a>
+      <a href="distribucion_supervisores.html" class="topbar-nav-link nav-here">👥 Distribución</a>
+    </div>
+
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input id="search-input" type="search" placeholder="Buscar agente o supervisor…" autocomplete="off">
+    </div>
+
+    <div class="controls-right">
+      <button class="btn-expand" id="btn-expand-all" title="Expandir / colapsar todo">Mostrar todo</button>
+      <button class="btn-icon" id="btn-theme" title="Cambiar tema">🌙</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ STATS ══════════════════════════════════════════ -->
+<div class="stats-row">
+  <div class="stat-pill">
+    <div class="stat-num">6</div>
+    <div class="stat-lbl">Supervisores</div>
+  </div>
+  <div class="stat-pill">
+    <div class="stat-num">34</div>
+    <div class="stat-lbl">Agentes</div>
+  </div>
+  <div class="stat-pill">
+    <div class="stat-num">2</div>
+    <div class="stat-lbl">Vacantes</div>
+  </div>
+</div>
+
+<!-- search notice -->
+<div class="search-notice" id="search-notice"></div>
+
+<!-- ══ SUPERVISORS LIST ════════════════════════════════ -->
+<div class="sup-list" id="sup-list">
+
+  <!-- ── Aldo Gomez ── -->
+  <div class="sup-card" data-sup="Aldo Gomez">
+    <div class="sup-row" onclick="toggleCard(this)">
+      <div class="sup-avatar">AG</div>
+      <div class="sup-info">
+        <div class="sup-name">Aldo Gomez</div>
+        <div class="sup-meta">Supervisor de Tráfico</div>
+      </div>
+      <div class="sup-counter">6 agentes</div>
+      <div class="sup-chevron">▼</div>
+    </div>
+    <div class="agentes-panel">
+      <div class="agente-row" data-name="Elizabeth Cruz">
+        <div class="agente-num">1</div>
+        <span class="agente-name-txt">Elizabeth Cruz</span>
+        <span class="badge badge-activo">Activo</span>
+      </div>
+      <div class="agente-row" data-name="Katia Peña">
+        <div class="agente-num">2</div>
+        <span class="agente-name-txt">Katia Peña</span>
+        <span class="badge badge-activo">Activo</span>
+      </div>
+      <div class="agente-row" data-name="Thania Rivera">
+        <div class="agente-num">3</div>
+        <span class="agente-name-txt">Thania Rivera</span>
+        <span class="badge badge-activo">Activo</span>
+      </div>
+      <div class="agente-row vacancy" data-name="VC-1">
+        <div class="agente-num">4</div>
+        <span class="agente-name-txt vacancy-txt">VC-1</span>
+        <span class="badge badge-vacante">Vacante</span>
+      </div>
+      <div class="agente-row" data-name="Fernando Estrada">
+        <div class="agente-num">5</div>
+        <span class="agente-name-txt">Fernando Estrada</span>
+        <span class="badge badge-activo">Activo</span>
+      </div>
+      <div class="agente-row" data-name="Anel Juarez">
+        <div class="agente-num">6</div>
+        <span class="agente-name-txt">Anel Juarez</span>
+        <span class="badge badge-activo">Activo</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Daniela Galván ── -->
+  <div class="sup-card" data-sup="Daniela Galván">
+    <div class="sup-row" onclick="toggleCard(this)">
+      <div class="sup-avatar">DG</div>
+      <div class="sup-info">
+        <div class="sup-name">Daniela Galván</div>
+        <div class="sup-meta">Supervisor de Tráfico</div>
+      </div>
+      <div class="sup-counter">6 agentes</div>
+      <div class="sup-chevron">▼</div>
+    </div>
+    <div class="agentes-panel">
+      <div class="agente-row" data-name="Alejandra Becerril">
+        <div class="agente-num">1</div>
+        <span class="agente-name-txt">Alejandra Becerril</span>
+        <span class="badge badge-activo">Activo</span>
+      </div>
+      <div class="agente-row" data-name="Tania Butanda">
+        <div class="agente-num">2</div>
+        <span class="agente-name-txt">Tania Butanda</span>
+        <span class="badge badge-activo">Activo</span>
+      </div>
+      <div class="agente-row" data-name="Fernanda Galvez">
+        <div class="agente-num">3</div>
+        <span class="agente-name-txt">Fernanda Galvez</span>
+        <span class="badge badge-activo">Activo</span>
+      </div>
+      <div class="agente-row" data-name="Cassandra García">
+        <div class="agente-num">4</div>
+        <span class="agente-name-txt">Cassandra García</span>
+        <span class="badge badge-activo">Activo</span>
+      </div>
+      <div class="agente-row" data-name="Nadia Fraga">
+        <div class="agente-num">5</div>
+        <span class="agente-name-txt">Nadia Fraga</span>
+        <span class="badge badge-activo">Activo</span>
+      </div>
+      <div class="agente-row" data-name="Fernanda Moreno">
+        <div class="agente-num">6</div>
+        <span class="agente-name-txt">Fernanda Moreno</span>
+        <span class="badge badge-activo">Activo</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Brenda Aguilar ── -->
+  <div class="sup-card" data-sup="Brenda Aguilar">
+    <div class="sup-row" onclick="toggleCard(this)">
+      <div class="sup-avatar">BA</div>
+      <div class="sup-info">
+        <div class="sup-name">Brenda Aguilar</div>
+        <div class="sup-meta">Supervisor de Tráfico</div>
+      </div>
+      <div class="sup-counter">6 agentes</div>
+      <div class="sup-chevron">▼</div>
+    </div>
+    <div class="agentes-panel">
+      <div class="agente-row" data-name="Liliana Solares">
+        <div class="agente-num">1</div>
+        <span class="agente-name-txt">Liliana Solares</span>
+        <span class="badge badge-activo">Activo</span>
+      </div>
+      <div class="agente-row" data-name="Alan Gama">
+        <div class="agente-num">2</div>
+        <span class="agente-name-txt">Alan Gama</span>
+        <span class="badge badge-activo">Activo</span>
+      </div>
+      <div class="agente-row vacancy" data-name="VC-4">
+        <div class="agente-num">3</div>
+        <span class="agente-name-txt vacancy-txt">VC-4</span>
+        <span class="badge badge-vacante">Vacante</span>
+      </div>
+      <div class="agente-row" data-name="Karina Ulibarri">
+        <div class="agente-num">4</div>
+        <span class="agente-name-txt">Karina Ulibarri</span>
+        <span class="badge badge-activo">Activo</span>
+      </div>
+      <div class="agente-row" data-name="Fatima Moreno">
+        <div class="agente-num">5</div>
+        <span class="agente-name-txt">Fatima Moreno</span>
+        <span class="badge badge-activo">Activo</span>
+      </div>
+      <div class="agente-row" data-name="Alejandro Morfin">
+        <div class="agente-num">6</div>
+        <span class="agente-name-txt">Alejandro Morfin</span>
+        <span class="badge badge-activo">Activo</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── David Serrano ── -->
+  <div class="sup-card" data-sup="David Serrano">
+    <div class="sup-row" onclick="toggleCard(this)">
+      <div class="sup-avatar">DS</div>
+      <div class="sup-info">
+        <div class="sup-name">David Serrano</div>
+        <div class="sup-meta">Supervisor de Tráfico</div>
+      </div>
+      <div class="sup-counter">6 agentes</div>
+      <div class="sup-chevron">▼</div>
+    </div>
+    <div class="agentes-panel">
+      <div class="agente-row" data-name="Kenji Jurado">
+        <div class="agente-num">1</div>
+        <span class="agente-name-txt">Kenji Jurado</span>
+        <span class="badge badge-activo">Activo</span>
+      </div>
+      <div class="agente-row" data-name="Karol Salinas">
+        <div class="agente-num">2</div>
+        <span class="agente-name-txt">Karol Salinas</span>
+        <span class="badge badge-activo">Activo</span>
+      </div>
+      <div class="agente-row" data-name="Dylan Rivera">
+        <div class="agente-num">3</div>
+        <span class="agente-name-txt">Dylan Rivera</span>
+        <span class="badge badge-activo">Activo</span>
+      </div>
+      <div class="agente-row" data-name="Argelia Garcia">
+        <div class="agente-num">4</div>
+        <span class="agente-name-txt">Argelia Garcia</span>
+        <span class="badge badge-activo">Activo</span>
+      </div>
+      <div class="agente-row" data-name="Diego López">
+        <div class="agente-num">5</div>
+        <span class="agente-name-txt">Diego López</span>
+        <span class="badge badge-activo">Activo</span>
+      </div>
+      <div class="agente-row" data-name="Rodrigo Lopez">
+        <div class="agente-num">6</div>
+        <span class="agente-name-txt">Rodrigo Lopez</span>
+        <span class="badge badge-activo">Activo</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Karen Morales ── -->
+  <div class="sup-card" data-sup="Karen Morales">
+    <div class="sup-row" onclick="toggleCard(this)">
+      <div class="sup-avatar">KM</div>
+      <div class="sup-info">
+        <div class="sup-name">Karen Morales</div>
+        <div class="sup-meta">Supervisor de Tráfico</div>
+      </div>
+      <div class="sup-counter">6 agentes</div>
+      <div class="sup-chevron">▼</div>
+    </div>
+    <div class="agentes-panel">
+      <div class="agente-row" data-name="Angel Ledezma">
+        <div class="agente-num">1</div>
+        <span class="agente-name-txt">Angel Ledezma</span>
+        <span class="badge badge-activo">Activo</span>
+      </div>
+      <div class="agente-row" data-name="Janeth Hernandez">
+        <div class="agente-num">2</div>
+        <span class="agente-name-txt">Janeth Hernandez</span>
+        <span class="badge badge-activo">Activo</span>
+      </div>
+      <div class="agente-row" data-name="Rey Belman">
+        <div class="agente-num">3</div>
+        <span class="agente-name-txt">Rey Belman</span>
+        <span class="badge badge-activo">Activo</span>
+      </div>
+      <div class="agente-row" data-name="Monserrat Guzman">
+        <div class="agente-num">4</div>
+        <span class="agente-name-txt">Monserrat Guzman</span>
+        <span class="badge badge-activo">Activo</span>
+      </div>
+      <div class="agente-row" data-name="Jonathan Sánchez">
+        <div class="agente-num">5</div>
+        <span class="agente-name-txt">Jonathan Sánchez</span>
+        <span class="badge badge-activo">Activo</span>
+      </div>
+      <div class="agente-row" data-name="Leslie Jimenez">
+        <div class="agente-num">6</div>
+        <span class="agente-name-txt">Leslie Jimenez</span>
+        <span class="badge badge-activo">Activo</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Alexis Perez ── -->
+  <div class="sup-card" data-sup="Alexis Perez">
+    <div class="sup-row" onclick="toggleCard(this)">
+      <div class="sup-avatar">AP</div>
+      <div class="sup-info">
+        <div class="sup-name">Alexis Perez</div>
+        <div class="sup-meta">Supervisor de Tráfico</div>
+      </div>
+      <div class="sup-counter">6 agentes</div>
+      <div class="sup-chevron">▼</div>
+    </div>
+    <div class="agentes-panel">
+      <div class="agente-row" data-name="Julio Olivares">
+        <div class="agente-num">1</div>
+        <span class="agente-name-txt">Julio Olivares</span>
+        <span class="badge badge-activo">Activo</span>
+      </div>
+      <div class="agente-row" data-name="Miriam Anaya">
+        <div class="agente-num">2</div>
+        <span class="agente-name-txt">Miriam Anaya</span>
+        <span class="badge badge-activo">Activo</span>
+      </div>
+      <div class="agente-row" data-name="Mitchel Herrejon">
+        <div class="agente-num">3</div>
+        <span class="agente-name-txt">Mitchel Herrejon</span>
+        <span class="badge badge-activo">Activo</span>
+      </div>
+      <div class="agente-row" data-name="Alejandro Vázquez">
+        <div class="agente-num">4</div>
+        <span class="agente-name-txt">Alejandro Vázquez</span>
+        <span class="badge badge-activo">Activo</span>
+      </div>
+      <div class="agente-row" data-name="Eriban Valencia">
+        <div class="agente-num">5</div>
+        <span class="agente-name-txt">Eriban Valencia</span>
+        <span class="badge badge-activo">Activo</span>
+      </div>
+      <div class="agente-row" data-name="Mauricio Morales">
+        <div class="agente-num">6</div>
+        <span class="agente-name-txt">Mauricio Morales</span>
+        <span class="badge badge-activo">Activo</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- no results -->
+  <div class="no-results" id="no-results">
+    Sin resultados para la búsqueda
+  </div>
+
+</div><!-- /sup-list -->
+
+<!-- ══ BRANDING ════════════════════════════════════════ -->
+<div class="brand-strip">
+  <div class="brand-icon">🦝</div>
+  <div class="brand-text">
+    Sistema de Todo Bajo Control (según)<br>
+    <strong>con tecnología de Tlacuache Ops · V 2.32 beta 1</strong>
+  </div>
+</div>
+
+<script>
+  /* ── THEME ───────────────────────────────── */
+  const html = document.documentElement;
+  const btnTheme = document.getElementById('btn-theme');
+
+  function applyTheme(t) {
+    html.setAttribute('data-theme', t);
+    btnTheme.textContent = t === 'dark' ? '☀️' : '🌙';
+    try { localStorage.setItem('stbc-theme', t); } catch(e){}
+  }
+
+  (function initTheme() {
+    let saved;
+    try { saved = localStorage.getItem('stbc-theme'); } catch(e){}
+    applyTheme(saved || 'light');
+  })();
+
+  btnTheme.addEventListener('click', () => {
+    applyTheme(html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+  });
+
+  /* ── EXPAND / COLLAPSE ───────────────────── */
+  function toggleCard(row) {
+    const card = row.closest('.sup-card');
+    card.classList.toggle('open');
+    syncExpandBtn();
+  }
+
+  const btnExpand = document.getElementById('btn-expand-all');
+  let allExpanded = false;
+
+  function syncExpandBtn() {
+    const cards = document.querySelectorAll('.sup-card:not(.hidden)');
+    const openCount = [...cards].filter(c => c.classList.contains('open')).length;
+    allExpanded = openCount === cards.length && cards.length > 0;
+    btnExpand.textContent = allExpanded ? 'Colapsar todo' : 'Mostrar todo';
+    btnExpand.classList.toggle('active', allExpanded);
+  }
+
+  btnExpand.addEventListener('click', () => {
+    const cards = document.querySelectorAll('.sup-card:not(.hidden)');
+    const shouldOpen = !allExpanded;
+    cards.forEach(c => c.classList.toggle('open', shouldOpen));
+    syncExpandBtn();
+  });
+
+  /* ── SEARCH ──────────────────────────────── */
+  const searchInput = document.getElementById('search-input');
+  const notice      = document.getElementById('search-notice');
+  const noResults   = document.getElementById('no-results');
+
+  function normalize(s) {
+    return s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
+  }
+
+  function highlight(text, q) {
+    if (!q) return text;
+    const re = new RegExp(`(${q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')})`, 'gi');
+    return text.replace(re, '<mark>$1</mark>');
+  }
+
+  searchInput.addEventListener('input', () => {
+    const raw = searchInput.value.trim();
+    const q   = normalize(raw);
+
+    const cards = document.querySelectorAll('.sup-card');
+    let totalVisible = 0;
+
+    cards.forEach(card => {
+      const supName = card.getAttribute('data-sup') || '';
+      const supMatch = q && normalize(supName).includes(q);
+      const rows = card.querySelectorAll('.agente-row');
+      let cardHasMatch = false;
+
+      rows.forEach(row => {
+        const name = row.getAttribute('data-name') || '';
+        const match = !q || normalize(name).includes(q) || supMatch;
+        row.classList.toggle('hidden-by-search', !match);
+        if (match) cardHasMatch = true;
+
+        // highlight
+        const span = row.querySelector('.agente-name-txt');
+        if (span) span.innerHTML = highlight(name, raw);
+      });
+
+      // supervisor name highlight
+      const supNameEl = card.querySelector('.sup-name');
+      if (supNameEl) supNameEl.innerHTML = highlight(supName, raw);
+
+      const visible = !q || cardHasMatch || supMatch;
+      card.classList.toggle('hidden', !visible);
+      if (visible) totalVisible++;
+
+      // auto-open when searching
+      if (q && (cardHasMatch || supMatch)) {
+        card.classList.add('open');
+      } else if (!q) {
+        // restore closed state on clear? keep user's state
+      }
+    });
+
+    noResults.classList.toggle('visible', totalVisible === 0);
+
+    if (q) {
+      notice.classList.add('visible');
+      notice.innerHTML = `Mostrando resultados para <strong>"${raw}"</strong>`;
+    } else {
+      notice.classList.remove('visible');
+    }
+
+    syncExpandBtn();
+  });
+</script>
+</body>
+</html>
