@@ -1,0 +1,3048 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STBC — Altéa Referencia Rápida</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+/* ── THEME VARIABLES ── */
+:root {
+  --bg: #f0f2f5;
+  --surface: #ffffff;
+  --surface2: #f7f8fa;
+  --surface3: #eef0f4;
+  --border: #e2e5eb;
+  --border2: #d0d4dd;
+  --text: #0f1923;
+  --text2: #4a5568;
+  --text3: #8898aa;
+  --accent: #2563eb;
+  --accent-hover: #1d4ed8;
+  --accent2: #7c3aed;
+  --cmd-color: #0369a1;
+  --cmd-bg: #e0f2fe;
+  --cmd-border: #7dd3fc;
+  --shadow: 0 2px 12px rgba(0,0,0,0.07);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,0.10);
+  --shadow-xl: 0 16px 48px rgba(0,0,0,0.13);
+  --radius: 14px;
+  --radius-sm: 9px;
+  --nav-h: 52px;
+  --header-h: 140px;
+}
+[data-theme="dark"] {
+  --bg: #0d1117;
+  --surface: #161b22;
+  --surface2: #1c2128;
+  --surface3: #21262d;
+  --border: #30363d;
+  --border2: #3d444d;
+  --text: #e6edf3;
+  --text2: #8b949e;
+  --text3: #484f58;
+  --accent: #58a6ff;
+  --accent-hover: #79b8ff;
+  --accent2: #bc8cff;
+  --cmd-color: #38bdf8;
+  --cmd-bg: rgba(56,189,248,0.10);
+  --cmd-border: #0369a1;
+  --shadow: 0 2px 12px rgba(0,0,0,0.4);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,0.5);
+  --shadow-xl: 0 16px 48px rgba(0,0,0,0.6);
+}
+
+/* ── RESET ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100dvh;
+  transition: background 0.25s, color 0.25s;
+  overflow-x: hidden;
+}
+
+/* ── TOP NAV BAR ── */
+.stbc-nav {
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  height: var(--nav-h);
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  gap: 4px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.stbc-nav::-webkit-scrollbar { display: none; }
+
+.stbc-nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--accent);
+  text-decoration: none;
+  white-space: nowrap;
+  margin-right: 8px;
+  flex-shrink: 0;
+  padding: 6px 10px;
+  border-radius: var(--radius-sm);
+  transition: background 0.15s;
+}
+.stbc-nav-brand:hover { background: var(--surface3); }
+.stbc-nav-brand span { font-size: 11px; }
+
+.stbc-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text2);
+  text-decoration: none;
+  white-space: nowrap;
+  padding: 6px 10px;
+  border-radius: var(--radius-sm);
+  transition: all 0.15s;
+  flex-shrink: 0;
+}
+.stbc-nav-link:hover { background: var(--surface3); color: var(--text); }
+.stbc-nav-link.nav-active { background: var(--accent); color: #fff; }
+
+.nav-sep { width: 1px; height: 20px; background: var(--border); flex-shrink: 0; margin: 0 4px; }
+
+.theme-btn {
+  margin-left: auto;
+  flex-shrink: 0;
+  background: var(--surface3);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 5px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text2);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.theme-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+/* ── APP HEADER ── */
+.app-header {
+  background: linear-gradient(135deg, #1e3a6e 0%, #0f2040 60%, #162032 100%);
+  padding: 20px 16px 0;
+  position: relative;
+  overflow: hidden;
+}
+[data-theme="dark"] .app-header {
+  background: linear-gradient(135deg, #0d1a2e 0%, #0a1525 60%, #0d1117 100%);
+}
+.app-header::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 80% 20%, rgba(37,99,235,0.18) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.header-branding {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+.header-logo-pill {
+  background: #fff;
+  border-radius: 6px;
+  padding: 3px 9px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  color: #001f5b;
+  letter-spacing: 0.5px;
+  flex-shrink: 0;
+}
+.header-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.2px;
+}
+.header-sub {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: rgba(255,255,255,0.45);
+  margin-bottom: 14px;
+  margin-left: 2px;
+}
+
+/* ── SEARCH HERO ── */
+.search-hero {
+  position: relative;
+  background: rgba(255,255,255,0.06);
+  border: 1.5px solid rgba(255,255,255,0.14);
+  border-radius: 16px 16px 0 0;
+  padding: 14px 14px 0;
+  margin-top: 4px;
+}
+.search-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.5);
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.search-wrap {
+  position: relative;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding-bottom: 14px;
+}
+.search-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgba(255,255,255,0.35);
+  font-size: 17px;
+  pointer-events: none;
+  transition: color 0.2s;
+}
+#searchInput {
+  flex: 1;
+  background: rgba(255,255,255,0.10);
+  border: 1.5px solid rgba(255,255,255,0.18);
+  border-radius: 12px;
+  padding: 12px 42px 12px 44px;
+  color: #fff;
+  font-size: 16px;
+  font-family: 'DM Sans', sans-serif;
+  outline: none;
+  transition: border-color 0.2s, background 0.2s;
+  caret-color: var(--accent);
+  -webkit-appearance: none;
+}
+#searchInput::placeholder { color: rgba(255,255,255,0.3); }
+#searchInput:focus {
+  border-color: rgba(255,255,255,0.4);
+  background: rgba(255,255,255,0.14);
+}
+#searchInput:focus ~ .search-icon,
+.search-wrap:focus-within .search-icon { color: rgba(255,255,255,0.6); }
+
+.clear-search-btn {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255,255,255,0.15);
+  border: none;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  color: rgba(255,255,255,0.6);
+  font-size: 13px;
+  cursor: pointer;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s;
+  line-height: 1;
+}
+.clear-search-btn.visible { display: flex; }
+.clear-search-btn:hover { background: rgba(255,255,255,0.25); }
+
+/* ── CATEGORY FILTER PILLS ── */
+.cat-pills {
+  display: flex;
+  gap: 6px;
+  padding: 10px 16px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+.cat-pills::-webkit-scrollbar { display: none; }
+
+.cat-pill {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  border: 1.5px solid var(--border);
+  background: var(--surface2);
+  color: var(--text2);
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.18s;
+  flex-shrink: 0;
+}
+.cat-pill:hover { border-color: var(--accent); color: var(--accent); }
+.cat-pill.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+.cat-pill .dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* ── MAIN CONTENT ── */
+.main {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 12px 12px 80px;
+}
+
+/* ── SEARCH RESULTS ── */
+.results-area {
+  display: none;
+}
+.results-area.active { display: block; }
+
+.results-header {
+  font-size: 12px;
+  color: var(--text3);
+  font-family: 'JetBrains Mono', monospace;
+  padding: 10px 4px 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.results-header strong { color: var(--accent); }
+
+.result-card {
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: border-color 0.18s, box-shadow 0.18s, transform 0.12s;
+  position: relative;
+  overflow: hidden;
+}
+.result-card::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: var(--card-color, var(--accent));
+  border-radius: 3px 0 0 3px;
+}
+.result-card:hover {
+  border-color: var(--card-color, var(--accent));
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-1px);
+}
+.result-card:active { transform: scale(0.99); }
+
+.result-cat-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--card-color, var(--accent));
+  background: color-mix(in srgb, var(--card-color, var(--accent)) 12%, transparent);
+  padding: 2px 7px;
+  border-radius: 20px;
+  margin-bottom: 6px;
+}
+.result-es {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text);
+  line-height: 1.4;
+  margin-bottom: 8px;
+}
+.result-cmds {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.cmd-chip {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--cmd-color);
+  background: var(--cmd-bg);
+  border: 1px solid var(--cmd-border);
+  padding: 4px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.15s;
+  user-select: none;
+  -webkit-user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.cmd-chip:hover {
+  background: var(--cmd-color);
+  color: #fff;
+  border-color: var(--cmd-color);
+}
+.cmd-chip:active { transform: scale(0.96); }
+.cmd-chip .copy-icon { font-size: 11px; opacity: 0.7; }
+
+/* ── BROWSE MODE ── */
+.browse-area {}
+
+.section-block {
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 10px;
+  overflow: hidden;
+  transition: border-color 0.18s;
+}
+.section-block:hover { border-color: var(--border2); }
+
+.section-header-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px;
+  background: var(--surface);
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.15s;
+}
+.section-header-btn:hover { background: var(--surface2); }
+.section-header-btn:active { background: var(--surface3); }
+
+.section-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.section-name-es {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  flex: 1;
+  text-align: left;
+}
+.section-name-en {
+  font-size: 11px;
+  color: var(--text3);
+  font-family: 'JetBrains Mono', monospace;
+  text-align: right;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 40%;
+}
+.section-count {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--text3);
+  background: var(--surface3);
+  border-radius: 10px;
+  padding: 2px 8px;
+  flex-shrink: 0;
+}
+.section-chevron {
+  color: var(--text3);
+  font-size: 12px;
+  transition: transform 0.25s;
+  flex-shrink: 0;
+}
+.section-block.open .section-chevron { transform: rotate(180deg); }
+
+.section-body {
+  display: none;
+  border-top: 1px solid var(--border);
+}
+.section-block.open .section-body { display: block; }
+
+.entry-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  transition: background 0.12s;
+  cursor: pointer;
+}
+.entry-row:last-child { border-bottom: none; }
+.entry-row:hover { background: var(--surface2); }
+.entry-row:active { background: var(--surface3); }
+
+.entry-text { flex: 1; min-width: 0; }
+.entry-es-text {
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.4;
+  margin-bottom: 6px;
+}
+.entry-cmds-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+.entry-cmd-chip {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--cmd-color);
+  background: var(--cmd-bg);
+  border: 1px solid var(--cmd-border);
+  padding: 3px 8px;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.entry-cmd-chip:hover {
+  background: var(--cmd-color);
+  color: #fff;
+  border-color: var(--cmd-color);
+}
+.entry-cmd-chip:active { transform: scale(0.96); }
+
+/* ── DETAIL MODAL ── */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  background: rgba(0,0,0,0.55);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  align-items: flex-end;
+  justify-content: center;
+  padding: 0;
+}
+.modal-overlay.open { display: flex; }
+
+@media (min-width: 600px) {
+  .modal-overlay { align-items: center; padding: 20px; }
+}
+
+.modal-sheet {
+  background: var(--surface);
+  border-radius: 20px 20px 0 0;
+  width: 100%;
+  max-width: 600px;
+  max-height: 92dvh;
+  overflow-y: auto;
+  animation: slideUp 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+@media (min-width: 600px) {
+  .modal-sheet {
+    border-radius: 20px;
+    max-height: 80dvh;
+    box-shadow: var(--shadow-xl);
+  }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(100%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.modal-drag-handle {
+  width: 36px;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--border2);
+  margin: 10px auto 0;
+}
+
+@media (min-width: 600px) {
+  .modal-drag-handle { display: none; }
+}
+
+.modal-header {
+  padding: 14px 20px 12px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+.modal-cat-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 3px 9px;
+  border-radius: 20px;
+  margin-bottom: 6px;
+}
+.modal-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.4;
+}
+.modal-close {
+  background: var(--surface3);
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  color: var(--text2);
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.15s;
+}
+.modal-close:hover { background: var(--border); }
+
+.modal-body { padding: 16px 20px 20px; }
+
+.modal-cmds-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--text3);
+  margin-bottom: 10px;
+  font-family: 'JetBrains Mono', monospace;
+}
+.modal-cmds {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.modal-cmd-chip {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--cmd-color);
+  background: var(--cmd-bg);
+  border: 1.5px solid var(--cmd-border);
+  padding: 10px 18px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.15s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.modal-cmd-chip:hover {
+  background: var(--cmd-color);
+  color: #fff;
+  border-color: var(--cmd-color);
+}
+.modal-cmd-chip:active { transform: scale(0.97); }
+.modal-cmd-chip .tap-hint {
+  font-size: 10px;
+  opacity: 0.55;
+  font-weight: 400;
+}
+
+.modal-en {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  margin-bottom: 14px;
+}
+.modal-en-label {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--text3);
+  font-family: 'JetBrains Mono', monospace;
+  margin-bottom: 4px;
+}
+.modal-en-text {
+  font-size: 12px;
+  color: var(--text2);
+  line-height: 1.5;
+  font-style: italic;
+}
+
+.modal-related-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--text3);
+  margin-bottom: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.related-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  margin-bottom: 6px;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+.related-card:hover { border-color: var(--accent); background: var(--surface3); }
+.related-card:active { transform: scale(0.99); }
+.related-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+.related-es { font-size: 12px; color: var(--text); flex: 1; }
+.related-cmd { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; color: var(--cmd-color); }
+
+/* ── COPY TOAST ── */
+.copy-toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(8px);
+  background: #16a34a;
+  color: #fff;
+  padding: 9px 20px;
+  border-radius: 24px;
+  font-size: 13px;
+  font-weight: 600;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s, transform 0.25s;
+  z-index: 1000;
+  white-space: nowrap;
+  box-shadow: 0 4px 16px rgba(22,163,74,0.35);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.copy-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* ── FOOTER ── */
+.app-footer {
+  text-align: center;
+  padding: 16px 16px 32px;
+  border-top: 1px solid var(--border);
+  margin-top: 8px;
+}
+.footer-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  color: var(--text3);
+  opacity: 0.65;
+}
+.footer-brand .raccoon { font-size: 14px; opacity: 1; }
+
+/* ── EMPTY STATE ── */
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--text3);
+}
+.empty-state .icon { font-size: 40px; margin-bottom: 10px; display: block; }
+.empty-state p { font-size: 13px; line-height: 1.6; }
+.empty-state strong { color: var(--accent); }
+
+/* ── HIDDEN ── */
+.hidden { display: none !important; }
+
+/* ── RESPONSIVE ── */
+@media (min-width: 600px) {
+  .main { padding: 16px 16px 80px; }
+  .cat-pills { padding: 12px 16px; }
+  .section-name-en { display: block; }
+  .modal-cmd-chip { font-size: 20px; }
+}
+
+@media (min-width: 900px) {
+  .main { padding: 20px 24px 80px; }
+  .app-header { padding: 24px 24px 0; }
+}
+</style>
+</head>
+<body>
+
+<!-- TOP NAV -->
+<nav class="stbc-nav">
+  <a href="index.html" class="stbc-nav-brand">🦝 <span>WFM STBC</span></a>
+  <div class="nav-sep"></div>
+  <a href="index.html" class="stbc-nav-link">⌂ Inicio</a>
+  <a href="calendario_stbc.html" class="stbc-nav-link">📅 Calendario</a>
+  <a href="abril_stbc_map.html" class="stbc-nav-link">📋 Asignaciones</a>
+  <a href="distribucion_supervisores.html" class="stbc-nav-link">👥 Distribución</a>
+  <a href="altea_qrc.html" class="stbc-nav-link nav-active">✈️ Altéa QRC</a>
+  <button class="theme-btn" id="themeBtn" onclick="toggleTheme()">☀️ Claro</button>
+</nav>
+
+<!-- APP HEADER -->
+<header class="app-header">
+  <div class="header-branding">
+    <div class="header-logo-pill">AF/KL</div>
+    <div>
+      <div class="header-title">STBC · Altéa Referencia Rápida</div>
+    </div>
+  </div>
+  <div class="header-sub">MEX T1 — Comandos Altéa Reservation &amp; Ticketing</div>
+
+  <!-- SEARCH HERO -->
+  <div class="search-hero">
+    <div class="search-label">🔍 Buscar comando</div>
+    <div class="search-wrap">
+      <span class="search-icon">⌕</span>
+      <input 
+        type="search" 
+        id="searchInput" 
+        placeholder="PNR, disponibilidad, AN15JUL, cotizar tarifa…" 
+        autocomplete="off" 
+        autocorrect="off" 
+        autocapitalize="off" 
+        spellcheck="false"
+        inputmode="search"
+      >
+      <button class="clear-search-btn" id="clearSearchBtn" onclick="clearSearch()" aria-label="Limpiar búsqueda">✕</button>
+    </div>
+  </div>
+</header>
+
+<!-- CATEGORY FILTER PILLS -->
+<div class="cat-pills" id="catPills">
+  <button class="cat-pill active" data-cat="all" onclick="filterCat(this, 'all')">Todos</button>
+</div>
+
+<!-- MAIN -->
+<main class="main">
+
+  <!-- RESULTS -->
+  <div class="results-area" id="resultsArea">
+    <div class="results-header" id="resultsHeader"></div>
+    <div id="resultsList"></div>
+  </div>
+
+  <!-- BROWSE -->
+  <div class="browse-area" id="browseArea">
+  </div>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="app-footer">
+  <div class="footer-brand">
+    <span class="raccoon">🦝</span>
+    Sistema de Todo Bajo Control (según) con tecnología de Tlacuache Ops · V 2.32 beta 1
+  </div>
+</footer>
+
+<!-- DETAIL MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModalOnOverlay(event)">
+  <div class="modal-sheet" id="modalSheet">
+    <div class="modal-drag-handle"></div>
+    <div class="modal-header">
+      <div style="flex:1;min-width:0;">
+        <div class="modal-cat-badge" id="modalCatBadge"></div>
+        <div class="modal-title" id="modalTitle"></div>
+      </div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-cmds-label">📋 Toca para copiar</div>
+      <div class="modal-cmds" id="modalCmds"></div>
+      <div id="modalEnWrap">
+        <div class="modal-en" id="modalEn"></div>
+      </div>
+      <div class="modal-related-label" id="modalRelatedLabel"></div>
+      <div id="modalRelated"></div>
+    </div>
+  </div>
+</div>
+
+<!-- COPY TOAST -->
+<div class="copy-toast" id="copyToast">✓ Copiado</div>
+
+<script>
+// ── DATA ──
+const SECTIONS = [
+  {
+    "name_es": "Acceso al Sistema",
+    "name_en": "Signing in and out",
+    "color": "#4f9cf9",
+    "entries": [
+      {
+        "es": "Entrar a área de trabajo 1",
+        "en": "Sign-in to 1 working area → JI0001AA/GS",
+        "cmds": [
+          "JI0001AA/GS"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Entrar a todas las áreas de trabajo",
+        "en": "Sign-in to all working areas → JI*0001AA/GS",
+        "cmds": [
+          "JI*0001AA/GS"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Entrar a páginas de capacitación",
+        "en": "Sign-in to Training pages → JJ0001AA/SU",
+        "cmds": [
+          "JJ0001AA/SU"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Salir del área de trabajo actual",
+        "en": "Sign-out from current working area → JO",
+        "cmds": [
+          "JO"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Salir de todas las áreas de trabajo",
+        "en": "Sign-out from all working areas → JO*",
+        "cmds": [
+          "JO*"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Cambiar al área de trabajo B",
+        "en": "Switch to working area B → JMB",
+        "cmds": [
+          "JMB"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Ver áreas de trabajo activas",
+        "en": "Overview active working areas → JD",
+        "cmds": [
+          "JD"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Lista de palabras clave de ayuda",
+        "en": "List of all Help keywords → HE",
+        "cmds": [
+          "HE"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Ayuda por tema (ej: PNR, FARES, AVAILABILITY)",
+        "en": "Help per keyword (subject) → HE PNR / HE FARES / HE AVAILABILITY",
+        "cmds": [
+          "HE PNR",
+          "HE FARES",
+          "HE AVAILABILITY"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Ayuda por código de entrada (ej: RT, JI)",
+        "en": "Help per entry code → HE RT / HE JI",
+        "cmds": [
+          "HE RT",
+          "HE JI"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Ayuda sobre el último error",
+        "en": "Help on last entry after an error response → HE/",
+        "cmds": [
+          "HE/"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Bajar pantalla",
+        "en": "Move down → MD",
+        "cmds": [
+          "MD"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Subir pantalla",
+        "en": "Move up → MU",
+        "cmds": [
+          "MU"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Ir al final del resultado",
+        "en": "Move to bottom of output → MB",
+        "cmds": [
+          "MB"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Ir al inicio del resultado",
+        "en": "Move to top of output → MT",
+        "cmds": [
+          "MT"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Regresar a la pantalla anterior (ej: Disponibilidad)",
+        "en": "Move to previous output (e.g. Availability) → MPAN",
+        "cmds": [
+          "MPAN"
+        ],
+        "note": ""
+      }
+    ]
+  },
+  {
+    "name_es": "Sistema Amadeus / Información",
+    "name_en": "Amadeus Information System",
+    "color": "#a78bfa",
+    "entries": [
+      {
+        "es": "Ver todos los temas disponibles",
+        "en": "Overview of all available subjects → GGAIS",
+        "cmds": [
+          "GGAIS"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Información sobre aerolíneas (ej: KLM)",
+        "en": "Information on airlines (e.g. KLM) → GGAIRKL",
+        "cmds": [
+          "GGAIRKL"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Info adicional de aerolínea — lista después de GGAIRKL",
+        "en": "Extra information on airline (choose from list after GGAIRKL) → GP...",
+        "cmds": [
+          "GP..."
+        ],
+        "note": ""
+      },
+      {
+        "es": "Info de oficina AF en RIO",
+        "en": "Information on airline office (AF in RIO) → GGAIRAF RIO",
+        "cmds": [
+          "GGAIRAF RIO"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Información sobre aeropuertos",
+        "en": "Information on airports → GGAPTLHR",
+        "cmds": [
+          "GGAPTLHR"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Comidas especiales disponibles en KLM",
+        "en": "Information on special meals at KLM → GGAIRKL MEX",
+        "cmds": [
+          "GGAIRKL MEX"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Codificar ciudad / aeropuerto / país / aerolínea / estado EE.UU.",
+        "en": "Encode City→DANROME / Airport→DAN HEATHROW / Country→DCITALY / Airline→DNA AIR FRANCE / US state→DNSTEXAS",
+        "cmds": [
+          "DANROME",
+          "DAN HEATHROW",
+          "DCITALY",
+          "DNA AIR FRANCE",
+          "DNSTEXAS"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Decodificar ciudad / aeropuerto / país / aerolínea / estado EE.UU.",
+        "en": "Decode City→DACROM / Airport→DACLHR / Country→DCIT / Airline→DNAKL or DNA074 / US state→DNBSUSTX",
+        "cmds": [
+          "DACROM",
+          "DACLHR",
+          "DCIT",
+          "DNAKL",
+          "DNBSUSTX"
+        ],
+        "note": ""
+      }
+    ]
+  },
+  {
+    "name_es": "Disponibilidad de Vuelos",
+    "name_en": "Availability",
+    "color": "#00e5a0",
+    "entries": [
+      {
+        "es": "Disponibilidad neutral (básica)",
+        "en": "Neutral Availability → AN",
+        "cmds": [
+          "AN"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Disponibilidad por fecha de salida",
+        "en": "Availability on departure time → AD",
+        "cmds": [
+          "AD"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Disponibilidad por hora de llegada",
+        "en": "Availability on arrival time → AA",
+        "cmds": [
+          "AA"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Disponibilidad por tiempo de viaje",
+        "en": "Availability on travel time → AE",
+        "cmds": [
+          "AE"
+        ],
+        "note": ""
+      },
+      {
+        "es": "De ciudad actual a Roma (hoy)",
+        "en": "From own city today to Rome → ANROM",
+        "cmds": [
+          "ANROM"
+        ],
+        "note": ""
+      },
+      {
+        "es": "De ciudad actual a Roma el 15 de julio",
+        "en": "From own city on specific date to Rome → AN15JULROM",
+        "cmds": [
+          "AN15JULROM"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Entre dos ciudades distintas el 15 JUL",
+        "en": "Between two other cities → AN15JULBUDROM",
+        "cmds": [
+          "AN15JULBUDROM"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Con especificación de aerolínea (KLM)",
+        "en": "With airline specification (KL) → AN15JULROM/A KL",
+        "cmds": [
+          "AN15JULROM/A KL"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Con punto de conexión (CDG)",
+        "en": "With transfer point specification (CDG) → AN5JULXMX CDG",
+        "cmds": [
+          "AN5JULXMX CDG✓"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Con especificación de clase (B)",
+        "en": "With class specification (B) → AN15JULROMC B",
+        "cmds": [
+          "AN15JULROMC B"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Con hora de salida específica",
+        "en": "With specified departure time → AN15JULROM1100",
+        "cmds": [
+          "AN15JULROM1100"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Solo vuelos Skyteam el 15 JUL",
+        "en": "Skyteam flights only → AN*S15JULROM",
+        "cmds": [
+          "AN*S15JULROM"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Vuelo redondo, mismo día de regreso el 15 JUL",
+        "en": "Roundtrip, same day return → AN15JULROM*",
+        "cmds": [
+          "AN15JULROM*"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Vuelo redondo, regreso el 18 JUL",
+        "en": "Roundtrip, return on 18JUL → AN15JULROM*18JUL",
+        "cmds": [
+          "AN15JULROM*18JUL"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Open Jaw, regreso desde MXP",
+        "en": "Open Jaw, return from MXP → AN15JULROM*MXP",
+        "cmds": [
+          "AN15JULROM*MXP"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Acceso directo a portadora",
+        "en": "Direct carrier access → 1AZAN15JULAMSSTO",
+        "cmds": [
+          "1AZAN15JULAMSSTO"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Acceso directo a portadora (scroll)",
+        "en": "Scrolling entry direct carrier access → 1SKMD",
+        "cmds": [
+          "1SKMD"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Salidas mañana",
+        "en": "Departures next day → MN",
+        "cmds": [
+          "MN"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Salidas ayer",
+        "en": "Departures yesterday → MY",
+        "cmds": [
+          "MY"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Regresar a solicitud original",
+        "en": "Return to original request → MO",
+        "cmds": [
+          "MO"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Cambiar a vuelo redondo, mismo día regreso",
+        "en": "Change to roundtrip, same day return → AC*",
+        "cmds": [
+          "AC*"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Cambiar fecha de salida",
+        "en": "Change departure time → AC1400",
+        "cmds": [
+          "AC1400"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Cambiar par de ciudades",
+        "en": "Change city pair → ACPARMIL",
+        "cmds": [
+          "ACPARMIL"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Salir 3 días más tarde",
+        "en": "Change to departure 3 days later → AC3",
+        "cmds": [
+          "AC3"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Salir 3 días antes",
+        "en": "Change to departure 3 days earlier → AC-3",
+        "cmds": [
+          "AC-3"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Cambiar vuelos de regreso al mismo día",
+        "en": "Change to return flights same day → ACR",
+        "cmds": [
+          "ACR"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Cambiar vuelos de regreso al 18 JUL",
+        "en": "Change to return flights on 18JUL → ACR18JUL",
+        "cmds": [
+          "ACR18JUL"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Cambiar a otra aerolínea (IB)",
+        "en": "Change to different carrier (IB) → AC/AIB",
+        "cmds": [
+          "AC/AIB"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Horario Netraul",
+        "en": "Netraul Timetable → TN &nbsp;|&nbsp; HE TD",
+        "cmds": [
+          "TN"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Horario por hora de salida / llegada / viaje",
+        "en": "Timetable by departure→TD / arrival→TA / travel time→TE",
+        "cmds": [
+          "TD",
+          "TA",
+          "TE"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Mostrar horario de ciudad actual a Roma",
+        "en": "From own city today to Rome (timetable display) → TDROM",
+        "cmds": [
+          "TDROM"
+        ],
+        "note": ""
+      }
+    ]
+  },
+  {
+    "name_es": "Reservar Vuelos",
+    "name_en": "Book Flights",
+    "color": "#00d4ff",
+    "entries": [
+      {
+        "es": "1 asiento clase B vuelo en línea 2",
+        "en": "1 seat in B-class for flight on line 2 → SS1B2",
+        "cmds": [
+          "SS1B2"
+        ],
+        "note": ""
+      },
+      {
+        "es": "2 asientos clase B y M para vuelos de conexión en línea 3",
+        "en": "2 seats for connecting flights on line 3 in B and M class → SS2BM3",
+        "cmds": [
+          "SS2BM3"
+        ],
+        "note": ""
+      },
+      {
+        "es": "1 asiento para UM edad 8 en clase M, vuelo línea 4",
+        "en": "1 seat for UM aged 8 in M-class for flight on line 2 → SS1M2/UM8",
+        "cmds": [
+          "SS1M2/UM8"
+        ],
+        "note": ""
+      },
+      {
+        "es": "2 asientos en lista de espera clase M vuelo línea 3",
+        "en": "2 seats on wait list in M-class for flight on line 3 → SS2M3/PE",
+        "cmds": [
+          "SS2M3/PE"
+        ],
+        "note": ""
+      },
+      {
+        "es": "1 asiento clase M vuelo de salida en línea 2, entrada en línea 11",
+        "en": "1 seat M-class outbound flight on line 2 and inbound on line 11 → SS1M2*11",
+        "cmds": [
+          "SS1M2*11"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Mismo con diferentes clases",
+        "en": "Same with different classes → SS1M2*B11",
+        "cmds": [
+          "SS1M2*B11"
+        ],
+        "note": ""
+      },
+      {
+        "es": "1 asiento clase M (directo)",
+        "en": "1 seat in M-class → SSKL1021M12JANAMSLHR1",
+        "cmds": [
+          "SSKL1021M12JANAMSLHR1"
+        ],
+        "note": ""
+      },
+      {
+        "es": "1 asiento lista espera clase M (directo)",
+        "en": "1 seat on wait list in M-class → SSKL1021M12JANAMSLHRPE1",
+        "cmds": [
+          "SSKL1021M12JANAMSLHRPE1"
+        ],
+        "note": ""
+      },
+      {
+        "es": "1 segmento abierto clase S",
+        "en": "1 open segment in S-class → SOKLSLHRAMS",
+        "cmds": [
+          "SOKLSLHRAMS"
+        ],
+        "note": ""
+      },
+      {
+        "es": "1 segmento ARNK (superficie)",
+        "en": "1 Arunk segment → SIARNK29JAN &nbsp;|&nbsp; SOKLS29JANLHRAMS (same incl. date)",
+        "cmds": [
+          "SIARNK29JAN"
+        ],
+        "note": ""
+      }
+    ]
+  },
+  {
+    "name_es": "Crear PNR",
+    "name_en": "Create PNR",
+    "color": "#ff8c42",
+    "entries": [
+      {
+        "es": "1 pasajero",
+        "en": "1 passenger → NM1VINK/ERICMR",
+        "cmds": [
+          "NM1VINK/ERICMR"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Más pasajeros, mismo apellido",
+        "en": "more passengers, same name → NM2VINK/ERICMR/DIAN",
+        "cmds": [
+          "NM2VINK/ERICMR/DIAN"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Más pasajeros, apellidos distintos",
+        "en": "more passengers, different names → NM1VINK/ERICMR 1BACH/JOHNMR",
+        "cmds": [
+          "NM1VINK/ERICMR 1BACH/JOHNMR"
+        ],
+        "note": ""
+      },
+      {
+        "es": "1 adulto, 1 infante mismo apellido, 7 meses",
+        "en": "1 adult, 1 infant same last name, 7 months → NM1VINK/BEAMRS(INF/ROBMSTR/7)",
+        "cmds": [
+          "NM1VINK/BEAMRS(INF/ROBMSTR/7)"
+        ],
+        "note": ""
+      },
+      {
+        "es": "1 adulto, 1 infante apellido diferente, 7 meses",
+        "en": "1 adult, 1 infant different last name, 7 months → NM1VINK/BEAMRS(INF/ROBMSTR/7)",
+        "cmds": [
+          "NM1VINK/BEAMRS(INF/ROBMSTR/7)"
+        ],
+        "note": ""
+      },
+      {
+        "es": "1 adulto, 1 niño mismo apellido",
+        "en": "1 adult, 1 child same name → NM2VINK/DIANAMRS/LO TTEMISS(CHD)",
+        "cmds": [
+          "NM2VINK/DIANAMRS/LO TTEMISS(CHD)"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Contacto de empresa",
+        "en": "Business contact → APB 020-6201715",
+        "cmds": [
+          "APB 020-6201715"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Contacto domicilio",
+        "en": "Home contact → APH 020-6350771",
+        "cmds": [
+          "APH 020-6350771"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Contacto domicilio pasajero 1",
+        "en": "Home contact of passenger 1 → APH 023-5640991/P1",
+        "cmds": [
+          "APH 023-5640991/P1"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Sin contacto conocido",
+        "en": "No contact known → APNC",
+        "cmds": [
+          "APNC"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Ayuda límite de tiempo",
+        "en": "Add ticketing / time limit → HE AF",
+        "cmds": [
+          "HE AF"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Boleto emitido",
+        "en": "Ticket issued → TKOK",
+        "cmds": [
+          "TKOK"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Boleto a emitir el 16DEC",
+        "en": "Ticket to be issued on 16DEC → TKTL16DEC",
+        "cmds": [
+          "TKTL16DEC"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Boleto a enviar por correo el 16DEC",
+        "en": "Ticket to be mailed on 16DEC → TKMA16DEC",
+        "cmds": [
+          "TKMA16DEC"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Cancelación automática si no se emite boleto",
+        "en": "Automatic cancellation if no ticket issued → TKXL16DEC",
+        "cmds": [
+          "TKXL16DEC"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Nombre de quien hizo la reserva",
+        "en": "Name of person who made booking → RF MR VINK",
+        "cmds": [
+          "RF MR VINK"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Reserva recibida de agencia de viajes",
+        "en": "Booking received from travel agent → RFAGT",
+        "cmds": [
+          "RFAGT"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Archivar y cerrar PNR",
+        "en": "File and close PNR → ET",
+        "cmds": [
+          "ET"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Archivar, cerrar y recuperar PNR",
+        "en": "File, close and retrieve PNR → ER",
+        "cmds": [
+          "ER"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Cancelar PNR al momento de creación (ignorar)",
+        "en": "Cancel PNR at time of creation (ignore) → IG",
+        "cmds": [
+          "IG"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Ignorar transacciones y resetear PNR",
+        "en": "Ignore transactions and reset PNR → IR",
+        "cmds": [
+          "IR"
+        ],
+        "note": ""
+      }
+    ]
+  },
+  {
+    "name_es": "Observaciones y Solicitudes Especiales",
+    "name_en": "Remarks / OSI / Special Service Request",
+    "color": "#ffd166",
+    "entries": [
+      {
+        "es": "Observación general",
+        "en": "General remarks → RM Free text",
+        "cmds": [
+          "RM Free text"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Observación confidencial",
+        "en": "Confidential remarks → RC Free text",
+        "cmds": [
+          "RC Free text"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Observación en itinerario (impresa)",
+        "en": "Itinerary remark (printed on itinerary) → RIR Free text",
+        "cmds": [
+          "RIR Free text"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Info específica para aerolínea NW",
+        "en": "Specific info for airline NW → OS NW Free text",
+        "cmds": [
+          "OS NW Free text"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Info específica para AF pasajero 2",
+        "en": "Specific info for airline AF for psgr 2 → OS AF Free text/P2",
+        "cmds": [
+          "OS AF Free text/P2"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Insertar número Flying Blue",
+        "en": "Insert FB number → SRFQTVKL-KL1234567",
+        "cmds": [
+          "SRFQTVKL-KL1234567"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Solicitar silla de ruedas (WCHR)",
+        "en": "Request WCHR → SRWCHR",
+        "cmds": [
+          "SRWCHR"
+        ],
+        "note": ""
+      },
+      {
+        "es": "WCHR para pasajero 1",
+        "en": "Request WCHR for Passenger 1 → SRWCHR/P1",
+        "cmds": [
+          "SRWCHR/P1"
+        ],
+        "note": ""
+      },
+      {
+        "es": "WCHR para vuelo segmento 2",
+        "en": "Request WCHR for Flight segment 2 → SRWCHR/S2",
+        "cmds": [
+          "SRWCHR/S2"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Solicitar XBAG (25 kg)",
+        "en": "Request XBAG → SRXBAG-25KG",
+        "cmds": [
+          "SRXBAG-25KG"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Comida vegetariana general",
+        "en": "VGML → SRVGML",
+        "cmds": [
+          "SRVGML"
+        ],
+        "note": ""
+      },
+      {
+        "es": "VGML solo vuelos KLM",
+        "en": "VGML KL-flights only → SRVGMLKL",
+        "cmds": [
+          "SRVGMLKL"
+        ],
+        "note": ""
+      },
+      {
+        "es": "VGML pasajero 1, segmentos 2 y 4",
+        "en": "VGML for passenger 1, segment 2 and 4 → SRVGML/P1/S2,4",
+        "cmds": [
+          "SRVGML/P1/S2,4"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Mapa de asientos PNR con 1 segmento",
+        "en": "For PNR with 1 flight segment → SM",
+        "cmds": [
+          "SM"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Mapa de asientos segmento 3",
+        "en": "For flight segment 3 → SM3",
+        "cmds": [
+          "SM3"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Solicitar asiento 12A",
+        "en": "Request seat 12A → ST/12A",
+        "cmds": [
+          "ST/12A"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Solicitar asientos 12A y 12B",
+        "en": "Request seat 12A and 12B → ST/12AB",
+        "cmds": [
+          "ST/12AB"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Asiento no fumador, pasillo (otras aerolíneas)",
+        "en": "Non-smoking, aisle seat → ST/NSSA",
+        "cmds": [
+          "ST/NSSA"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Asiento no fumador, primera fila, pasajero 1",
+        "en": "Non smoking, bulkhead seat for passenger 1 → ST/NSSB/P1",
+        "cmds": [
+          "ST/NSSB/P1"
+        ],
+        "note": ""
+      }
+    ]
+  },
+  {
+    "name_es": "Modificación y Cancelación",
+    "name_en": "Modification and Cancellation",
+    "color": "#ff4d6d",
+    "entries": [
+      {
+        "es": "Cambiar todos los segmentos a clase C",
+        "en": "Switch all segments to C-class → SBC",
+        "cmds": [
+          "SBC"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Cambiar clase de reserva del segmento 3 a C",
+        "en": "Switch bkng class of segment 3 to C-class → SBC3",
+        "cmds": [
+          "SBC3"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Cambiar fecha de viaje en todos los segmentos al 9 NOV",
+        "en": "Switch travel date on all segments → SB09NOV",
+        "cmds": [
+          "SB09NOV"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Cambiar clase y fecha de segmentos 3 y 4",
+        "en": "Switch class and date of segments 3, 4 → SBC09NOV3,4",
+        "cmds": [
+          "SBC09NOV3,4"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Cambiar número de vuelo del segmento 2",
+        "en": "Switch flight number of segment 2 → SBKL1101*2",
+        "cmds": [
+          "SBKL1101*2"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Cambiar código de estado del segmento 5 a Confirmado",
+        "en": "Change status code of segment 5 into Reconfirmed → S/RR",
+        "cmds": [
+          "S/RR"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Cancelar segmento 3",
+        "en": "Cancel segment 3 → XE3",
+        "cmds": [
+          "XE3"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Actualizar nombre elemento 1 (era MES) a ANTONMR",
+        "en": "Update name element 1 (was MES) into → NU1/MEES/ANTONMR",
+        "cmds": [
+          "NU1/MEES/ANTONMR"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Actualizar título en nombre elemento 1",
+        "en": "Update title in name element 1 → NU1/ANNAMRS",
+        "cmds": [
+          "NU1/ANNAMRS"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Cambiar tipo PSGR del elemento 3 a CHD",
+        "en": "Change or add PSGR type of element 2 into → 2(CHD)",
+        "cmds": [
+          "2(CHD)"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Cancelar tipo PSGR del elemento 3",
+        "en": "Cancel PSGR type of element 3 → 3/",
+        "cmds": [
+          "3/"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Cambiar apellido del elemento 2 (era DOG) a JAMESMR",
+        "en": "Change family name of element 2 (was DOG) → 2/1BIRD/JAMESMR",
+        "cmds": [
+          "2/1BIRD/JAMESMR"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Cancelar pasajero 1",
+        "en": "Cancel passenger 1 → XE1",
+        "cmds": [
+          "XE1"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Cancelar elemento de línea 5",
+        "en": "Cancel element line 5 → XE5",
+        "cmds": [
+          "XE5"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Separar pasajero 3 del PNR",
+        "en": "Split passenger 3 from PNR → SP3",
+        "cmds": [
+          "SP3"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Separar pasajeros 3 y 4",
+        "en": "Split passengers 3 and 4 from PNR → SP3,4",
+        "cmds": [
+          "SP3,4"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Archivar nuevo PNR / Recuperar PNR dividido",
+        "en": "File the new PNR → EF &nbsp;|&nbsp; Retrieve the split PNR → RT AXR",
+        "cmds": [
+          "EF",
+          "RT AXR"
+        ],
+        "note": ""
+      }
+    ]
+  },
+  {
+    "name_es": "Recuperar PNR",
+    "name_en": "Retrieve PNR — HE RT",
+    "color": "#00e5a0",
+    "entries": [
+      {
+        "es": "Por localizador",
+        "en": "By record locator → RT 2BD3AF",
+        "cmds": [
+          "RT 2BD3AF"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Por fecha y nombre",
+        "en": "By flight, date, name → RTKL1597/22SEP-HANSEN",
+        "cmds": [
+          "RTKL1597/22SEP-HANSEN"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Desde la lista mostrada",
+        "en": "From displayed list → RT3",
+        "cmds": [
+          "RT3"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Información de vuelo para segmento 3",
+        "en": "Flight information for PNR segment 3 → DO3",
+        "cmds": [
+          "DO3"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Por número Flying Blue",
+        "en": "By Flying Blue number → RTM/KL-1020001234",
+        "cmds": [
+          "RTM/KL-1020001234"
+        ],
+        "note": ""
+      },
+      {
+        "es": "PNRs en KL1597 del 15 FEB",
+        "en": "Retrieve Flight list → LM/KL1597/15FEB",
+        "cmds": [
+          "LM/KL1597/15FEB"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Todos los PNRs KL741/15FEB de BON a LIM",
+        "en": "All PNR's on KL741/15FEB from BON to LIM → LM/KL741/15FEB/BONLIM",
+        "cmds": [
+          "LM/KL741/15FEB/BONLIM"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Todos los PNRs confirmados KL641/22MAR",
+        "en": "All confirmed PNR's on KL641/22MAR → LM/K/KL641/22MAR",
+        "cmds": [
+          "LM/K/KL641/22MAR"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Todos los PNRs en lista de espera KL641/22MAR",
+        "en": "All waitlist PNR's on KL641/22MAR → LM/W/KL641/22MAR",
+        "cmds": [
+          "LM/W/KL641/22MAR"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Enviar PNR a cola 25 categoría 0",
+        "en": "Send all PNR's on KL742/20MAR, Category 0 → LM/KL742/20MAR-Q25C0",
+        "cmds": [
+          "LM/KL742/20MAR-Q25C0"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Desde PNR recuperado con FA en línea 9",
+        "en": "From a retrieved PNR with FA element on line 9 → TWD/L9",
+        "cmds": [
+          "TWD/L9"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Por número de boleto",
+        "en": "By ticket number → TWD/TKT074-1234567890",
+        "cmds": [
+          "TWD/TKT074-1234567890"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Por número Flying Blue",
+        "en": "By Flying Blue number → TWD/VCO/FTI 123456/20AUG",
+        "cmds": [
+          "TWD/VCO/FTI 123456/20AUG"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Por número de vuelo y nombre",
+        "en": "By flight number and name → TWD/VKL/KL641/20AUGMSJFK-JONESJOHN",
+        "cmds": [
+          "TWD/VKL/KL641/20AUGMSJFK-JONESJOHN"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Desde otra base de datos de boletos",
+        "en": "From other airline database → TWD/DBNW/TKT012-1234567890",
+        "cmds": [
+          "TWD/DBNW/TKT012-1234567890"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Mostrar historial",
+        "en": "Display History → RH",
+        "cmds": [
+          "RH"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Historial solo segmentos de vuelo",
+        "en": "Display History for flight segments only → RHA",
+        "cmds": [
+          "RHA"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Historial de nombre, observaciones y segmentos",
+        "en": "Display History for name, remarks and flight segments only → RHN,J,A",
+        "cmds": [
+          "RHN,J,A"
+        ],
+        "note": ""
+      }
+    ]
+  },
+  {
+    "name_es": "Colas de PNR",
+    "name_en": "Queuing — HE QT, OS",
+    "color": "#4f9cf9",
+    "entries": [
+      {
+        "es": "Ver cuenta de cola de propia oficina Q",
+        "en": "Display queue count for own office Q → QT",
+        "cmds": [
+          "QT"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Ver cuenta de otra oficina",
+        "en": "Display queue count for other office Q → QT/LHRKL0519",
+        "cmds": [
+          "QT/LHRKL0519"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Iniciar cola específica 8",
+        "en": "Start specific queue 8 → QS8",
+        "cmds": [
+          "QS8"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Iniciar cola 8, categoría 0",
+        "en": "Start specific queue 8, Category 0 → QS8C0",
+        "cmds": [
+          "QS8C0"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Iniciar cola 8, cat. 0, para otra oficina",
+        "en": "Start specific queue 8, Category 0 for other office → QS/LHRKL0519/8C0",
+        "cmds": [
+          "QS/LHRKL0519/8C0"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Retrasar PNR activo y mostrar el siguiente",
+        "en": "Delay active PNR and display next on queue → QD12NOV",
+        "cmds": [
+          "QD12NOV"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Quitar PNR de la cola y mostrar siguiente",
+        "en": "Remove PNR and display next on queue → QN",
+        "cmds": [
+          "QN"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Poner PNR activo en cola 13",
+        "en": "Place an active PNR on queue 13 → QE13",
+        "cmds": [
+          "QE13"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Poner PNR en colas 7 y 13",
+        "en": "Place an active PNR on queue 7 and 13 → QE7/13",
+        "cmds": [
+          "QE7/13"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Poner PNR activo en cola 13 de otra oficina",
+        "en": "Place an active PNR on queue 13 of another office → QE/LHRKL0519/13",
+        "cmds": [
+          "QE/LHRKL0519/13"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Ignorar PNR y salir de la cola",
+        "en": "Ignore PNR and exit queue mode → QI",
+        "cmds": [
+          "QI"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Archivar PNR, quitar de cola y salir",
+        "en": "End PNR, remove from queue and exit queue → QF",
+        "cmds": [
+          "QF"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Archivar PNR, quitar de cola y salir con redisplay fuera de Q",
+        "en": "End PNR, remove from queue, exit queue and redisplay outside Q → QFR",
+        "cmds": [
+          "QFR"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Quitar PNR de cola y salir del modo cola",
+        "en": "Remove PNR and exit queue mode → QNF",
+        "cmds": [
+          "QNF"
+        ],
+        "note": ""
+      }
+    ]
+  },
+  {
+    "name_es": "Visualización de Tarifas",
+    "name_en": "Fare Display / Fare Notes — HE FQD",
+    "color": "#ffd166",
+    "entries": [
+      {
+        "es": "Tarifas de ciudad actual a MAD",
+        "en": "Fares from own city to MAD → FQDMAD",
+        "cmds": [
+          "FQDMAD"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Tarifas entre dos ciudades",
+        "en": "Fares between two cities → FQDLONMAD",
+        "cmds": [
+          "FQDLONMAD"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Tarifas para fecha específica (16 ENE)",
+        "en": "Fares for specific date → FQDMAD/16JAN",
+        "cmds": [
+          "FQDMAD/16JAN"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Tarifas con especificación entrada/salida (16 ENE / 20 ENE)",
+        "en": "Fares with out- and inbound date specification → FQDMAD/16JAN*20JAN",
+        "cmds": [
+          "FQDMAD/16JAN*20JAN"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Tarifas para aerolínea específica (KLM)",
+        "en": "Fares for specific airline → FQDMAD/AKL",
+        "cmds": [
+          "FQDMAD/AKL"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Tarifas para más de una aerolínea (KL y AF)",
+        "en": "Fares for more than one airline → FQDMAD/AKL,AF",
+        "cmds": [
+          "FQDMAD/AKL,AF"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Tarifas de ida (one way)",
+        "en": "One way fares only → FQDMAD/IO",
+        "cmds": [
+          "FQDMAD/IO"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Tarifas de bajo a alto",
+        "en": "Fares from low to high → FQDMAD/IX",
+        "cmds": [
+          "FQDMAD/IX"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Tarifas roundtrip en NUC",
+        "en": "Round trip fares in NUC → FQDMAD/IR,NUC",
+        "cmds": [
+          "FQDMAD/IR,NUC"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Media tarifa roundtrip (por defecto NUC)",
+        "en": "Half round trip fares (default in NUC) → FQDMAD/IH",
+        "cmds": [
+          "FQDMAD/IH"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Media tarifa RT de bajo a alto",
+        "en": "Half round trip fares from low to high → FQDMAD/IX,H",
+        "cmds": [
+          "FQDMAD/IX,H"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Solo tarifas normales",
+        "en": "Normal fares only → FQDMAD/R,NML",
+        "cmds": [
+          "FQDMAD/R,NML"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Tarifas históricas con fecha de boleto (15 NOV)",
+        "en": "Historic Fares with ticketing date → FQDMAD/15NOV06*NOV05",
+        "cmds": [
+          "FQDMAD/15NOV06*NOV05"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Regresar al último display de tarifas",
+        "en": "Return to last Fare Display → MPFQD",
+        "cmds": [
+          "MPFQD"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Mostrar notas para línea 3 de FQD",
+        "en": "Display notes for line 3 of FQD → FQN3",
+        "cmds": [
+          "FQN3"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Resumen de párrafos con notas de tarifa",
+        "en": "Overview paragraphs with fare notes → FQN3*LI",
+        "cmds": [
+          "FQN3*LI"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Estancia mínima para tarifa en línea 3",
+        "en": "Display Minimum stay for fare on line 3 → FQN3MN",
+        "cmds": [
+          "FQN3MN"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Estancia mínima y penalidades",
+        "en": "Display Minimum stay and Penalties → FQN3MN,PE",
+        "cmds": [
+          "FQN3MN,PE"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Mostrar ruteo",
+        "en": "Display Routing → FQN3*RG or FOR3",
+        "cmds": [
+          "FQN3*RG",
+          "FOR3"
+        ],
+        "note": ""
+      }
+    ]
+  },
+  {
+    "name_es": "Conversión de Moneda / Millaje",
+    "name_en": "Currency Conversion / Mileage Calculation — HE FARE CUR / HE FQM",
+    "color": "#a78bfa",
+    "entries": [
+      {
+        "es": "Convertir 600 de moneda propia a SEK",
+        "en": "Convert 600 of own currency to SEK → FQC600/SEK",
+        "cmds": [
+          "FQC600/SEK"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Convertir USD1200 a moneda propia",
+        "en": "Convert USD1200 to own currency → FQC1200.00USD",
+        "cmds": [
+          "FQC1200.00USD"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Convertir USD1200 a Libra esterlina",
+        "en": "Convert USD1200 to UK Pound → FQC1200.00USD/GBP",
+        "cmds": [
+          "FQC1200.00USD/GBP"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Convertir a tasa específica",
+        "en": "Convert against specific rate → FQC1200.00/GBP/1.16",
+        "cmds": [
+          "FQC1200.00/GBP/1.16"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Convertir GBP1200 a NUC",
+        "en": "Convert GBP 1200 to NUC → FQC1200.00NUC",
+        "cmds": [
+          "FQC1200.00NUC"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Convertir EUR800 a NUC con fecha histórica (12 NOV)",
+        "en": "Convert EUR800 to NUC with historic date → FQC800EUR/NUC/12NOV06",
+        "cmds": [
+          "FQC800EUR/NUC/12NOV06"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Calcular TPM y MPM para ruta AMS-BKK-MNL-HKG",
+        "en": "Calculate TPM and MPM for route: AMS, BKK, MNL, HKG → FQM AMS BKK MNL HKG",
+        "cmds": [
+          "FQM AMS BKK MNL HKG"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Calcular millaje con aerolíneas específicas",
+        "en": "Calculate mileage with specific airlines → FQM BUE/ARG SAO/AKL AMS LON",
+        "cmds": [
+          "FQM BUE/ARG SAO/AKL AMS LON"
+        ],
+        "note": ""
+      }
+    ]
+  },
+  {
+    "name_es": "Cotización de Tarifas / Boletos",
+    "name_en": "Pricing / Fare Quote / TST — HE FXP / HE TQT / HE TTP",
+    "color": "#ff8c42",
+    "entries": [
+      {
+        "es": "Cotizar PNR y crear TST",
+        "en": "Quote a PNR and create a TST → FXP",
+        "cmds": [
+          "FXP"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Cotizar PNR sin crear TST",
+        "en": "Quote a PNR, do not create a TST → FXX",
+        "cmds": [
+          "FXX"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Cotizar pasajeros 1, 3 y 4",
+        "en": "Quote passengers 1, 3 and 4 → FXP/P1,3-4",
+        "cmds": [
+          "FXP/P1,3-4"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Cotizar segmentos 1 y 5",
+        "en": "Quote segments 1 and 5 only → FXP/S1,5",
+        "cmds": [
+          "FXP/S1,5"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Cotizar con punto de venta override",
+        "en": "Quote with point of sale override → FXP/R,FRA",
+        "cmds": [
+          "FXP/R,FRA"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Cotizar con descuento CHD",
+        "en": "Quote with CHD discount → FXP/RCH",
+        "cmds": [
+          "FXP/RCH"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Cotizar con descuento INF",
+        "en": "Quote with INF discount → FXP/RIN",
+        "cmds": [
+          "FXP/RIN"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Cotizar y emitir en moneda extranjera (USD)",
+        "en": "Quote and ticketing in a foreign currency → FXP/R,FC-USD",
+        "cmds": [
+          "FXP/R,FC-USD"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Cotizar, re-reservar y crear TXT",
+        "en": "Quote, rebook and create TXT → FXB",
+        "cmds": [
+          "FXB"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Cotizar, re-reservar sin crear TST",
+        "en": "Quote, rebook, do not create TST → FXR",
+        "cmds": [
+          "FXR"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Después de lista de tarifas más bajas, seleccionar tarifa",
+        "en": "After a list of lower fares (FXA) you have to select a fare → FXA",
+        "cmds": [
+          "FXA"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Re-reservar y crear TST para tarifa número 3",
+        "en": "Rebook and create TST for fare number 3 → FXU3",
+        "cmds": [
+          "FXU3"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Re-reservar sin crear TST para tarifa 4",
+        "en": "Or rebook, do not create TST for fare 4 → FXZ4",
+        "cmds": [
+          "FXZ4"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Cotización forzada con base de tarifa",
+        "en": "Forced Quote with fare basis → FXP/L-KPXKL",
+        "cmds": [
+          "FXP/L-KPXKL"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Seleccionar cotización 2 entre diferentes opciones",
+        "en": "Select Quote 2 in case of different options → FXT2",
+        "cmds": [
+          "FXT2"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Cotización 2 para pasajeros 1 y 2",
+        "en": "Select Quote 2 for passengers 1 and 2 → FXT2/P1-2",
+        "cmds": [
+          "FXT2/P1-2"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Tarifa diferente para distintos pasajeros",
+        "en": "Select different fare for different passengers → FXT4/P1,3-4/5/P2/6/P3",
+        "cmds": [
+          "FXT4/P1,3-4/5/P2/6/P3"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Ejemplo de boleto para tarifa 1",
+        "en": "Display ticket example for fare 1 → FQQ1",
+        "cmds": [
+          "FQQ1"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Mostrar TST",
+        "en": "Display TST → TQT",
+        "cmds": [
+          "TQT"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Mostrar TST número 1",
+        "en": "Display TST number 1 → TQT/T1",
+        "cmds": [
+          "TQT/T1"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Crear TST manual para todos los pasajeros del PNR",
+        "en": "Create a Manual TST for all passengers in PNR → TTC",
+        "cmds": [
+          "TTC"
+        ],
+        "note": ""
+      },
+      {
+        "es": "TST manual pasajero 2",
+        "en": "Create a Manual TST for passenger 2 → TTC/P2",
+        "cmds": [
+          "TTC/P2"
+        ],
+        "note": ""
+      },
+      {
+        "es": "TST manual para segmento de vuelo 2",
+        "en": "Create a Manual TST for flight segment 2 → TTC/S2",
+        "cmds": [
+          "TTC/S2"
+        ],
+        "note": ""
+      },
+      {
+        "es": "TST manual solo para infante",
+        "en": "Create a Manual TST for an infant only → TTC/INF",
+        "cmds": [
+          "TTC/INF"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Imprimir TST",
+        "en": "Print a TST → TTP",
+        "cmds": [
+          "TTP"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Imprimir TST y redisplay PNR",
+        "en": "Print a TST and redisplay the PNR → TTP/RT",
+        "cmds": [
+          "TTP/RT"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Imprimir solo TST 2",
+        "en": "Print a TST 2 only → TTP/T2",
+        "cmds": [
+          "TTP/T2"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Imprimir TST 2 y 4",
+        "en": "Print a TST 2 and 4 → TTP/T2,4",
+        "cmds": [
+          "TTP/T2,4"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Mostrar TST solo para pasajero adulto",
+        "en": "Display the TST for an adult passenger only → TQT/PAX",
+        "cmds": [
+          "TQT/PAX"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Mostrar TST solo para infante",
+        "en": "Display the TST for an infant only → TQT/INF",
+        "cmds": [
+          "TQT/INF"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Ciudad de entrada básica, ciudad o aeropuerto especificado",
+        "en": "Basic entry, city or airport specified → FQPAMSJFKAMS",
+        "cmds": [
+          "FQPAMSJFKAMS"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Todos los segmentos, solo KLM",
+        "en": "All segments, KLM only → FQPAMSJFKAMS/OKL",
+        "cmds": [
+          "FQPAMSJFKAMS/OKL"
+        ],
+        "note": ""
+      },
+      {
+        "es": "AMS-ZRH en clase S con portadora KL",
+        "en": "AMSZRH in S-class with carrier KL → FQPAMS/AKL/CSZRH",
+        "cmds": [
+          "FQPAMS/AKL/CSZRH"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Rutas con fechas de viaje (10 JUN)",
+        "en": "Routing with travel dates → FQPAMS/D10JUNZRH/D12JUNAMS",
+        "cmds": [
+          "FQPAMS/D10JUNZRH/D12JUNAMS"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Con fechas de viaje históricas",
+        "en": "Routing with Historical Travel Dates → FQPAMS/D10AUG/AKLZRH/R,02AUG06",
+        "cmds": [
+          "FQPAMS/D10AUG/AKLZRH/R,02AUG06"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Con indicador de venta",
+        "en": "Routing with Sale Indicator → FQPAMS/AKLFRA/AKLAMS/R,LON,LON",
+        "cmds": [
+          "FQPAMS/AKLFRA/AKLAMS/R,LON,LON"
+        ],
+        "note": ""
+      },
+      {
+        "es": "Entrada de seguimiento",
+        "en": "Follow up entry → FQQ3",
+        "cmds": [
+          "FQQ3"
+        ],
+        "note": ""
+      }
+    ]
+  }
+];
+
+// ── THEME ──
+function initTheme() {
+  const saved = localStorage.getItem('stbc-theme') || 'light';
+  document.documentElement.setAttribute('data-theme', saved);
+  updateThemeBtn(saved);
+}
+function toggleTheme() {
+  const current = document.documentElement.getAttribute('data-theme');
+  const next = current === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  localStorage.setItem('stbc-theme', next);
+  updateThemeBtn(next);
+}
+function updateThemeBtn(theme) {
+  const btn = document.getElementById('themeBtn');
+  btn.textContent = theme === 'dark' ? '☀️ Claro' : '🌙 Oscuro';
+}
+
+// ── BUILD SEARCH INDEX ──
+const searchIndex = [];
+SECTIONS.forEach((sec, si) => {
+  sec.entries.forEach((entry, ei) => {
+    searchIndex.push({
+      es: entry.es,
+      en: entry.en,
+      cmds: entry.cmds,
+      note: entry.note,
+      cat: sec.name_es,
+      catEn: sec.name_en,
+      color: sec.color,
+      si, ei
+    });
+  });
+});
+
+// ── BUILD BROWSE UI ──
+function buildBrowse() {
+  const area = document.getElementById('browseArea');
+  const pills = document.getElementById('catPills');
+  
+  SECTIONS.forEach((sec, si) => {
+    // Add pill
+    const pill = document.createElement('button');
+    pill.className = 'cat-pill';
+    pill.dataset.cat = si;
+    pill.innerHTML = `<span class="dot" style="background:${sec.color}"></span>${sec.name_es}`;
+    pill.onclick = function() { filterCat(this, String(si)); };
+    pills.appendChild(pill);
+    
+    // Add section block
+    const block = document.createElement('div');
+    block.className = 'section-block';
+    block.dataset.si = si;
+    block.innerHTML = `
+      <button class="section-header-btn" onclick="toggleSection(this)">
+        <span class="section-dot" style="background:${sec.color}"></span>
+        <span class="section-name-es">${sec.name_es}</span>
+        <span class="section-name-en" style="color:${sec.color};opacity:0.7;">${sec.name_en}</span>
+        <span class="section-count">${sec.entries.length}</span>
+        <span class="section-chevron">▼</span>
+      </button>
+      <div class="section-body">
+        ${sec.entries.map((entry, ei) => `
+          <div class="entry-row" onclick="openModal(${si}, ${ei})">
+            <div class="entry-text">
+              <div class="entry-es-text">${entry.es}</div>
+              <div class="entry-cmds-wrap">
+                ${entry.cmds.map(c => `<span class="entry-cmd-chip" onclick="copyCmd(event, '${c.replace(/'/g,"\'")}')">
+                  ${c}
+                </span>`).join('')}
+              </div>
+            </div>
+          </div>`).join('')}
+      </div>`;
+    area.appendChild(block);
+  });
+}
+
+// ── SECTION TOGGLE ──
+function toggleSection(btn) {
+  const block = btn.closest('.section-block');
+  block.classList.toggle('open');
+}
+
+// ── FILTER BY CATEGORY ──
+function filterCat(pillEl, cat) {
+  document.querySelectorAll('.cat-pill').forEach(p => p.classList.remove('active'));
+  pillEl.classList.add('active');
+  
+  const blocks = document.querySelectorAll('.section-block');
+  blocks.forEach(block => {
+    if (cat === 'all') {
+      block.classList.remove('hidden');
+    } else {
+      block.classList.toggle('hidden', block.dataset.si !== cat);
+    }
+  });
+}
+
+// ── REAL-TIME SEARCH ──
+let searchTimer = null;
+function onSearchInput(e) {
+  const q = e.target.value.trim();
+  const clearBtn = document.getElementById('clearSearchBtn');
+  clearBtn.classList.toggle('visible', q.length > 0);
+  
+  clearTimeout(searchTimer);
+  if (q.length === 0) {
+    showBrowse();
+    return;
+  }
+  searchTimer = setTimeout(() => doSearch(q), 80);
+}
+
+function doSearch(q) {
+  const terms = q.toLowerCase().split(/\s+/).filter(Boolean);
+  const scored = [];
+  
+  searchIndex.forEach(item => {
+    const cmdText = item.cmds.join(' ').toLowerCase();
+    const fullText = [item.es, item.en, cmdText, item.cat].join(' ').toLowerCase();
+    let score = 0;
+    terms.forEach(term => {
+      if (fullText.includes(term)) score += 1;
+      if (cmdText.includes(term)) score += 4;
+      if (item.es.toLowerCase().includes(term)) score += 2;
+      item.cmds.forEach(cmd => {
+        if (cmd.toLowerCase().startsWith(term)) score += 5;
+        if (cmd.toLowerCase() === term) score += 10;
+      });
+    });
+    if (score > 0) scored.push({ item, score });
+  });
+  
+  scored.sort((a, b) => b.score - a.score);
+  const results = scored.slice(0, 20).map(s => s.item);
+  showResults(results, q);
+}
+
+function showResults(results, q) {
+  document.getElementById('browseArea').classList.add('hidden');
+  document.getElementById('catPills').style.display = 'none';
+  const ra = document.getElementById('resultsArea');
+  ra.classList.add('active');
+  
+  const header = document.getElementById('resultsHeader');
+  header.innerHTML = results.length > 0
+    ? `${results.length} resultado${results.length !== 1 ? 's' : ''} para <strong>"${q}"</strong>`
+    : '';
+  
+  const list = document.getElementById('resultsList');
+  if (results.length === 0) {
+    list.innerHTML = `<div class="empty-state">
+      <span class="icon">🔍</span>
+      <p>No hay resultados para <strong>"${q}"</strong>.<br>Prueba con otro término o el código directo.</p>
+    </div>`;
+    return;
+  }
+  
+  list.innerHTML = results.map(item => {
+    const idx = searchIndex.indexOf(item);
+    const si = item.si;
+    const ei = item.ei;
+    return `<div class="result-card" style="--card-color:${item.color}" onclick="openModal(${si}, ${ei})">
+      <div class="result-cat-badge" style="color:${item.color};background:${item.color}22;">${item.cat}</div>
+      <div class="result-es">${item.es}</div>
+      <div class="result-cmds">
+        ${item.cmds.map(c => `<span class="cmd-chip" onclick="copyCmd(event, '${c.replace(/'/g,"\'")}')">
+          ${c} <span class="copy-icon">⎘</span>
+        </span>`).join('')}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function showBrowse() {
+  document.getElementById('resultsArea').classList.remove('active');
+  document.getElementById('browseArea').classList.remove('hidden');
+  document.getElementById('catPills').style.display = '';
+  document.getElementById('resultsList').innerHTML = '';
+  document.getElementById('resultsHeader').innerHTML = '';
+}
+
+function clearSearch() {
+  document.getElementById('searchInput').value = '';
+  document.getElementById('clearSearchBtn').classList.remove('visible');
+  showBrowse();
+  document.getElementById('searchInput').focus();
+}
+
+// ── MODAL ──
+function openModal(si, ei) {
+  const sec = SECTIONS[si];
+  const entry = sec.entries[ei];
+  
+  document.getElementById('modalCatBadge').innerHTML = `<span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:${sec.color};margin-right:4px;"></span>${sec.name_es}`;
+  document.getElementById('modalCatBadge').style.cssText = `color:${sec.color};background:${sec.color}20;`;
+  document.getElementById('modalTitle').textContent = entry.es;
+  
+  const cmdsEl = document.getElementById('modalCmds');
+  cmdsEl.innerHTML = entry.cmds.map(c => `
+    <button class="modal-cmd-chip" onclick="copyCmd(event, '${c.replace(/'/g,"\'")}')">
+      ${c}
+      <span class="tap-hint">toca para copiar</span>
+    </button>`).join('');
+  
+  const enWrap = document.getElementById('modalEnWrap');
+  if (entry.en) {
+    enWrap.style.display = '';
+    document.getElementById('modalEn').innerHTML = `
+      <div class="modal-en-label">Original EN</div>
+      <div class="modal-en-text">${entry.en}</div>`;
+  } else {
+    enWrap.style.display = 'none';
+  }
+  
+  // Related entries (same section)
+  const relatedLabel = document.getElementById('modalRelatedLabel');
+  const relatedEl = document.getElementById('modalRelated');
+  const related = sec.entries
+    .map((e, i) => ({ e, i }))
+    .filter(({ i }) => i !== ei)
+    .slice(0, 5);
+  
+  if (related.length > 0) {
+    relatedLabel.innerHTML = `Más en <span style="color:${sec.color}">${sec.name_es}</span>`;
+    relatedLabel.style.display = '';
+    relatedEl.innerHTML = related.map(({ e, i }) => `
+      <div class="related-card" onclick="openModal(${si}, ${i})">
+        <span class="related-dot" style="background:${sec.color}"></span>
+        <span class="related-es">${e.es}</span>
+        <span class="related-cmd">${e.cmds[0]}</span>
+      </div>`).join('');
+  } else {
+    relatedLabel.style.display = 'none';
+    relatedEl.innerHTML = '';
+  }
+  
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function closeModalOnOverlay(e) {
+  if (e.target === document.getElementById('modalOverlay')) closeModal();
+}
+
+// ── COPY ──
+function copyCmd(event, text) {
+  event.stopPropagation();
+  const clean = text.replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').trim();
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(clean).then(() => showToast(clean));
+  } else {
+    const ta = document.createElement('textarea');
+    ta.value = clean;
+    ta.style.cssText = 'position:fixed;opacity:0;';
+    document.body.appendChild(ta);
+    ta.focus();
+    ta.select();
+    try { document.execCommand('copy'); showToast(clean); } catch(e) {}
+    document.body.removeChild(ta);
+  }
+}
+
+function showToast(text) {
+  const t = document.getElementById('copyToast');
+  t.innerHTML = `✓ Copiado: <strong>${text}</strong>`;
+  t.classList.add('show');
+  clearTimeout(t._timer);
+  t._timer = setTimeout(() => t.classList.remove('show'), 2000);
+}
+
+// ── KEYBOARD SHORTCUT ──
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeModal();
+  if (e.key === '/' && e.target.tagName !== 'INPUT') {
+    e.preventDefault();
+    document.getElementById('searchInput').focus();
+  }
+});
+
+// ── SWIPE TO CLOSE MODAL ──
+let touchStartY = 0;
+document.getElementById('modalSheet').addEventListener('touchstart', e => {
+  touchStartY = e.touches[0].clientY;
+}, { passive: true });
+document.getElementById('modalSheet').addEventListener('touchmove', e => {
+  const dy = e.touches[0].clientY - touchStartY;
+  if (dy > 60) closeModal();
+}, { passive: true });
+
+// ── INIT ──
+initTheme();
+buildBrowse();
+document.getElementById('searchInput').addEventListener('input', onSearchInput);
+</script>
+</body>
+</html>
