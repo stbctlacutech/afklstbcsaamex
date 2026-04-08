@@ -2,8 +2,8 @@
 <html lang="es" data-theme="light">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>WFM STBC · AF/KL MEX T1</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>WFM STBC · Compact Mobile Menu</title>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,300&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -11,7 +11,6 @@
   --border:#e2e5eb; --text:#0f1923; --text2:#4a5568; --text3:#8898aa;
   --accent:#2563eb; --accent2:#7c3aed;
   --shadow:0 2px 12px rgba(0,0,0,.08); --shadow-lg:0 8px 32px rgba(0,0,0,.12);
-  --shadow-xl:0 20px 60px rgba(0,0,0,.15);
   --radius:14px; --radius-sm:8px; --radius-lg:20px;
   --nav-bg-rgb:240,242,245;
 }
@@ -20,135 +19,181 @@
   --border:#30363d; --text:#e6edf3; --text2:#8b949e; --text3:#484f58;
   --accent:#58a6ff; --accent2:#bc8cff;
   --shadow:0 2px 12px rgba(0,0,0,.4); --shadow-lg:0 8px 32px rgba(0,0,0,.5);
-  --shadow-xl:0 20px 60px rgba(0,0,0,.7);
   --nav-bg-rgb:13,17,23;
 }
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
-html,body{height:100%;font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;transition:background .3s,color .3s;}
-
-/* CANVAS */
-#sky-canvas{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;}
+html,body{height:100%;font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;-webkit-tap-highlight-color:transparent;}
 
 /* NAV */
-.stbc-nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:9px 18px;background:rgba(var(--nav-bg-rgb),.88);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--border);gap:8px;}
+.stbc-nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:9px 14px;background:rgba(var(--nav-bg-rgb),.88);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);gap:8px;}
 .stbc-nav-brand{display:flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:var(--text);text-decoration:none;white-space:nowrap;}
-.stbc-nav-links{display:flex;gap:4px;align-items:center;overflow-x:auto;scrollbar-width:none;}
-.stbc-nav-links::-webkit-scrollbar{display:none;}
-.stbc-nav-link{display:flex;align-items:center;gap:5px;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;padding:5px 10px;border-radius:6px;border:1px solid var(--border);background:var(--surface);color:var(--text2);text-decoration:none;white-space:nowrap;transition:all .15s;cursor:pointer;}
-.stbc-nav-link:hover{background:var(--surface3);color:var(--text);}
-.stbc-nav-link.nav-active{background:var(--accent2);border-color:var(--accent2);color:#fff;}
-.stbc-nav-link:active{transform:scale(.96);}
-.stbc-nav-right{display:flex;gap:6px;align-items:center;flex-shrink:0;}
-.stbc-theme-btn{background:var(--surface3);border:1px solid var(--border);color:var(--text2);width:30px;height:30px;border-radius:6px;cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;transition:all .15s;flex-shrink:0;}
-.stbc-theme-btn:hover{background:var(--border);}
+.stbc-theme-btn{background:var(--surface3);border:1px solid var(--border);color:var(--text2);width:32px;height:32px;border-radius:8px;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;transition:all .15s;}
 
 /* PAGE */
-.page{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px 20px 32px;}
+.page{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;padding:72px 16px 24px;}
 
-/* BRAND */
-.top-brand-subtle{margin-bottom:26px;text-align:center;}
-.top-brand-main{font-family:'JetBrains Mono',monospace;font-size:clamp(24px,5vw,36px);font-weight:700;letter-spacing:-.5px;color:var(--text);line-height:1;}
-.top-brand-sub{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text3);margin-top:5px;letter-spacing:.3px;}
+/* BRAND - Compact for mobile */
+.brand-block{text-align:center;margin-bottom:16px;}
+.brand-main{font-family:'JetBrains Mono',monospace;font-size:clamp(20px,4vw,28px);font-weight:700;letter-spacing:-.5px;color:var(--text);line-height:1;}
+.brand-sub{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text3);margin-top:4px;letter-spacing:.3px;text-transform:uppercase;}
 
-/* STATION PILL */
-.station-pill{display:inline-flex;align-items:center;gap:7px;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text2);background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:5px 14px;margin-bottom:36px;box-shadow:var(--shadow);}
-.station-dot{width:6px;height:6px;border-radius:50%;background:#22c55e;box-shadow:0 0 0 2px rgba(34,197,94,.25);animation:pulse-dot 2.2s ease infinite;}
-@keyframes pulse-dot{0%,100%{box-shadow:0 0 0 2px rgba(34,197,94,.25);}50%{box-shadow:0 0 0 5px rgba(34,197,94,.08);}}
+/* STATION PILL - Tighter */
+.station-pill{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text2);background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:4px 12px;margin:0 auto 20px;box-shadow:var(--shadow);}
+.station-dot{width:5px;height:5px;border-radius:50%;background:#22c55e;box-shadow:0 0 0 2px rgba(34,197,94,.25);animation:pulse-dot 2.2s ease infinite;}
+@keyframes pulse-dot{0%,100%{box-shadow:0 0 0 2px rgba(34,197,94,.25);}50%{box-shadow:0 0 0 4px rgba(34,197,94,.08);}}
 
-/* CARDS */
-.cards-wrap{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:16px;width:100%;max-width:900px;margin-bottom:44px;}
-.nav-card{position:relative;overflow:hidden;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:26px 22px;display:flex;flex-direction:column;gap:13px;text-decoration:none;color:inherit;cursor:pointer;transition:border-color .2s,box-shadow .2s,transform .2s;box-shadow:var(--shadow);}
-.nav-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;border-radius:var(--radius-lg) var(--radius-lg) 0 0;}
-.nav-card.calendario::before{background:linear-gradient(90deg,var(--accent),var(--accent2));}
-.nav-card.asignaciones::before{background:linear-gradient(90deg,#16a34a,#00a1de);}
-[data-theme="dark"] .nav-card.asignaciones::before{background:linear-gradient(90deg,#4ade80,#00a1de);}
-.nav-card.altea::before{background:linear-gradient(90deg,#0369a1,#0891b2);}
-[data-theme="dark"] .nav-card.altea::before{background:linear-gradient(90deg,#0369a1,#0e7490);}
-.nav-card.distribucion::before{background:linear-gradient(90deg,#7c3aed,#2563eb);}
-[data-theme="dark"] .nav-card.distribucion::before{background:linear-gradient(90deg,#bc8cff,#58a6ff);}
-.nav-card:hover{border-color:var(--text3);box-shadow:var(--shadow-xl);transform:translateY(-3px);}
-.nav-card:active{transform:translateY(0) scale(.984);box-shadow:var(--shadow);transition:transform .08s,box-shadow .08s;}
+/* ========== COMPACT LIST TILES (Mobile First) ========== */
+.menu-list{display:flex;flex-direction:column;gap:8px;width:100%;max-width:500px;margin:0 auto 28px;}
 
-.card-bg-deco{position:absolute;bottom:-12px;right:-12px;pointer-events:none;transition:opacity .3s;}
-[data-theme="light"] .card-bg-deco{opacity:.05;}
-[data-theme="dark"]  .card-bg-deco{opacity:.06;}
-.nav-card:hover .card-bg-deco{opacity:.11 !important;}
+/* Base tile styling */
+.nav-tile{
+  position:relative;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:14px 16px;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  text-decoration:none;
+  color:inherit;
+  box-shadow:var(--shadow);
+  transition:transform .15s, box-shadow .2s, border-color .2s;
+  overflow:hidden;
+  min-height:68px; /* Optimal touch target: 68px */
+}
 
-.card-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;padding:3px 8px;border-radius:4px;width:fit-content;}
-.nav-card.calendario .card-tag{color:var(--accent);background:rgba(37,99,235,.08);border:1px solid rgba(37,99,235,.2);}
-.nav-card.asignaciones .card-tag{color:#16a34a;background:rgba(22,163,74,.08);border:1px solid rgba(22,163,74,.2);}
-[data-theme="dark"] .nav-card.calendario .card-tag{color:var(--accent);background:rgba(88,166,255,.1);border-color:rgba(88,166,255,.2);}
-[data-theme="dark"] .nav-card.asignaciones .card-tag{color:#4ade80;background:rgba(74,222,128,.08);border-color:rgba(74,222,128,.2);}
-.nav-card.distribucion .card-tag{color:var(--accent2);background:rgba(124,58,237,.08);border:1px solid rgba(124,58,237,.2);}
-[data-theme="dark"] .nav-card.distribucion .card-tag{color:#bc8cff;background:rgba(188,140,255,.08);border-color:rgba(188,140,255,.2);}
+/* Left color coding (saves vertical space vs top border) */
+.nav-tile::before{
+  content:'';position:absolute;left:0;top:0;bottom:0;width:3px;
+}
+.nav-tile.calendario::before{background:linear-gradient(180deg,var(--accent),var(--accent2));}
+.nav-tile.asignaciones::before{background:linear-gradient(180deg,#16a34a,#00a1de);}
+[data-theme="dark"] .nav-tile.asignaciones::before{background:linear-gradient(180deg,#4ade80,#00a1de);}
+.nav-tile.distribucion::before{background:linear-gradient(180deg,var(--accent2),var(--accent));}
+.nav-tile.altea::before{background:linear-gradient(180deg,#0369a1,#0891b2);}
 
-.card-icon-row{display:flex;align-items:center;gap:10px;}
-.card-title{font-family:'JetBrains Mono',monospace;font-size:20px;font-weight:700;color:var(--text);letter-spacing:-.4px;}
-.card-desc{font-size:13px;color:var(--text2);line-height:1.55;font-weight:300;}
-.card-items{display:flex;flex-wrap:wrap;gap:5px;margin-top:2px;}
-.item-pill{font-family:'JetBrains Mono',monospace;font-size:9px;padding:3px 8px;border-radius:10px;background:var(--surface2);border:1px solid var(--border);color:var(--text3);white-space:nowrap;}
-.card-cta{display:flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;margin-top:4px;padding-top:13px;border-top:1px solid var(--border);}
-.nav-card.calendario .card-cta{color:var(--accent);}
-.nav-card.asignaciones .card-cta{color:#16a34a;}
-[data-theme="dark"] .nav-card.asignaciones .card-cta{color:#4ade80;}
-.nav-card.distribucion .card-cta{color:var(--accent2);}
-[data-theme="dark"] .nav-card.distribucion .card-cta{color:#bc8cff;}
-.cta-arrow{display:inline-block;transition:transform .2s;}
-.nav-card:hover .cta-arrow{transform:translateX(4px);}
+/* Active states */
+.nav-tile:active{transform:scale(.98);box-shadow:0 1px 4px rgba(0,0,0,.1);}
+.nav-tile:hover{border-color:var(--text3);}
 
-/* AIRLINE STRIP */
-.airline-strip{display:flex;align-items:center;gap:14px;opacity:.28;transition:opacity .3s;margin-bottom:40px;}
-.airline-strip:hover{opacity:.52;}
-.airline-div{width:1px;height:22px;background:var(--border);}
-.airline-label{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:1.2px;text-transform:uppercase;color:var(--text3);}
+/* Icon container - Fixed size for alignment */
+.tile-icon{
+  flex-shrink:0;
+  width:36px;height:36px;
+  display:flex;align-items:center;justify-content:center;
+  border-radius:10px;
+  background:var(--surface2);
+  border:1px solid var(--border);
+}
+.tile-icon svg{width:20px;height:20px;}
 
-/* FOOTER */
-.footer{text-align:center;display:flex;flex-direction:column;align-items:center;gap:3px;padding-bottom:20px;}
-.footer-raccoon{font-size:24px;animation:wobble 6s ease-in-out infinite;}
-.footer-name{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;color:var(--text);letter-spacing:-.3px;}
-.footer-sub{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text3);}
-.footer-version{font-family:'JetBrains Mono',monospace;font-size:9px;color:#d97706;background:rgba(61,38,0,.08);border:1px solid rgba(146,64,14,.25);padding:2px 10px;border-radius:6px;margin-top:3px;}
+/* Text content - Flexible middle */
+.tile-content{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;}
+
+/* Title */
+.tile-title{
+  font-family:'JetBrains Mono',monospace;
+  font-size:15px;font-weight:700;
+  color:var(--text);
+  letter-spacing:-.3px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+/* Description - PRESERVED as requested, single line with ellipsis */
+.tile-desc{
+  font-size:12px;
+  color:var(--text2);
+  line-height:1.3;
+  font-weight:400;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  max-width:100%;
+}
+
+/* Right side: Tag + Arrow */
+.tile-meta{
+  display:flex;flex-direction:column;align-items:flex-end;gap:4px;
+  margin-left:auto;flex-shrink:0;
+}
+.tile-tag{
+  font-family:'JetBrains Mono',monospace;
+  font-size:8px;
+  letter-spacing:.5px;
+  text-transform:uppercase;
+  padding:2px 6px;
+  border-radius:4px;
+  background:var(--surface3);
+  color:var(--text3);
+  white-space:nowrap;
+}
+.tile-arrow{
+  font-size:18px;
+  color:var(--text3);
+  transition:transform .2s;
+}
+.nav-tile:hover .tile-arrow{transform:translateX(2px);}
+
+/* Subtle background deco (very faint, doesn't add height) */
+.tile-deco{
+  position:absolute;
+  right:-10px;bottom:-10px;
+  opacity:.04;
+  pointer-events:none;
+  transition:opacity .3s;
+}
+.nav-tile:hover .tile-deco{opacity:.08;}
+[data-theme="dark"] .tile-deco{opacity:.06;}
+
+/* Footer compact */
+.footer{text-align:center;padding-bottom:20px;margin-top:auto;}
+.footer-raccoon{font-size:22px;margin-bottom:4px;}
+.footer-name{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;color:var(--text);}
+.footer-sub{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text3);margin-top:2px;}
+.footer-version{font-family:'JetBrains Mono',monospace;font-size:9px;color:#d97706;background:rgba(61,38,0,.08);border:1px solid rgba(146,64,14,.25);padding:2px 8px;border-radius:6px;margin-top:6px;display:inline-block;}
 [data-theme="dark"] .footer-version{background:rgba(61,38,0,.5);border-color:rgba(146,64,14,.4);}
 
-@keyframes wobble{0%,100%{transform:rotate(0);}20%{transform:rotate(-8deg);}40%{transform:rotate(6deg);}60%{transform:rotate(-4deg);}80%{transform:rotate(3deg);}}
-@keyframes fade-up{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:translateY(0);}}
-.top-brand-subtle{animation:fade-up .5s ease both;}
-.station-pill{animation:fade-up .5s .08s ease both;}
-.cards-wrap{animation:fade-up .55s .14s ease both;}
-.airline-strip{animation:fade-up .5s .22s ease both;}
-.footer{animation:fade-up .5s .28s ease both;}
+/* Desktop enhancement: slightly larger on big screens */
+@media(min-width:581px){
+  .menu-list{gap:10px;}
+  .nav-tile{min-height:72px;padding:16px 18px;}
+  .tile-icon{width:40px;height:40px;}
+  .tile-icon svg{width:22px;height:22px;}
+  .tile-title{font-size:16px;}
+  .tile-desc{font-size:13px;}
+  /* Add back subtle right-side deco for desktop */
+  .tile-deco{opacity:.06;}
+  .tile-deco svg{width:80px;height:80px;}
+}
 
-@media(max-width:580px){
-  .cards-wrap{grid-template-columns:1fr;max-width:380px;}
-  .stbc-nav-links .stbc-nav-link:not(.nav-active){display:none;}
+/* Animation */
+@keyframes slide-up{
+  from{opacity:0;transform:translateY(10px);}
+  to{opacity:1;transform:translateY(0);}
 }
-@media(min-width:860px){
-  .cards-wrap{grid-template-columns:1fr 1fr 1fr;max-width:900px;}
-}
+.menu-list > *{animation:slide-up .4s ease both;}
+.menu-list > *:nth-child(1){animation-delay:.05s;}
+.menu-list > *:nth-child(2){animation-delay:.1s;}
+.menu-list > *:nth-child(3){animation-delay:.15s;}
+.menu-list > *:nth-child(4){animation-delay:.2s;}
 </style>
+<base target="_blank">
 </head>
 <body>
 
-<canvas id="sky-canvas"></canvas>
-
 <nav class="stbc-nav">
-  <a href="index.html" class="stbc-nav-brand">🦝 <span>WFM STBC</span></a>
-  <div class="stbc-nav-links">
-    <a href="index.html" class="stbc-nav-link nav-active">⌂ Inicio</a>
-    <a href="calendario_stbc.html" class="stbc-nav-link">📅 Calendario</a>
-    <a href="abril_stbc_map.html" class="stbc-nav-link">📋 Asignaciones</a>
-    <a href="distribucion_supervisores.html" class="stbc-nav-link">👥 Distribución</a>
-  </div>
-  <div class="stbc-nav-right">
-    <button class="stbc-theme-btn" id="themeBtn" onclick="toggleTheme()" title="Cambiar tema">🌙</button>
-  </div>
+  <a href="#" class="stbc-nav-brand">🦝 <span>WFM STBC</span></a>
+  <button class="stbc-theme-btn" id="themeBtn" onclick="toggleTheme()" title="Cambiar tema">🌙</button>
 </nav>
 
 <main class="page">
 
-  <div class="top-brand-subtle">
-    <div class="top-brand-main">WFM STBC</div>
-    <div class="top-brand-sub">by Tlacuache Ops · STN MEX</div>
+  <div class="brand-block">
+    <div class="brand-main">WFM STBC</div>
+    <div class="brand-sub">Tlacuache Ops · STN MEX</div>
   </div>
 
   <div class="station-pill">
@@ -156,335 +201,167 @@ html,body{height:100%;font-family:'DM Sans',sans-serif;background:var(--bg);colo
     AF/KL · MEX T1 · Turno Tarde 14:30–23:00
   </div>
 
-  <div class="cards-wrap">
+  <!-- COMPACT MENU LIST -->
+  <div class="menu-list">
 
-    <!-- CALENDARIO -->
-    <a href="calendario_stbc.html" class="nav-card calendario">
-      <svg class="card-bg-deco" width="120" height="120" viewBox="0 0 120 120" fill="none">
-        <rect x="8" y="18" width="104" height="94" rx="10" stroke="currentColor" stroke-width="3"/>
+    <!-- 1. CALENDARIO -->
+    <a href="calendario_stbc.html" class="nav-tile calendario">
+      <svg class="tile-deco" width="60" height="60" viewBox="0 0 120 120" fill="none">
+        <rect x="8" y="18" width="104" height="94" rx="10" stroke="currentColor" stroke-width="2"/>
         <line x1="8" y1="38" x2="112" y2="38" stroke="currentColor" stroke-width="2"/>
-        <line x1="8"  y1="56" x2="112" y2="56" stroke="currentColor" stroke-width="1"/>
-        <line x1="8"  y1="74" x2="112" y2="74" stroke="currentColor" stroke-width="1"/>
-        <line x1="8"  y1="92" x2="112" y2="92" stroke="currentColor" stroke-width="1"/>
         <line x1="42" y1="38" x2="42" y2="112" stroke="currentColor" stroke-width="1"/>
-        <line x1="76" y1="38" x2="76" y2="112" stroke="currentColor" stroke-width="1"/>
         <rect x="22" y="4" width="12" height="20" rx="4" stroke="currentColor" stroke-width="2"/>
-        <rect x="86" y="4" width="12" height="20" rx="4" stroke="currentColor" stroke-width="2"/>
       </svg>
-      <div class="card-tag">Calendarios</div>
-      <div class="card-icon-row">
-        <svg width="30" height="30" viewBox="0 0 30 30" fill="none">
-          <rect x="3" y="6" width="24" height="21" rx="4" stroke="var(--accent)" stroke-width="1.5" fill="none"/>
-          <line x1="3" y1="12" x2="27" y2="12" stroke="var(--accent)" stroke-width="1.5"/>
-          <rect x="9" y="2" width="4" height="8" rx="2" stroke="var(--accent)" stroke-width="1.5" fill="none"/>
-          <rect x="17" y="2" width="4" height="8" rx="2" stroke="var(--accent)" stroke-width="1.5" fill="none"/>
-          <circle cx="9"  cy="19" r="2" fill="#16a34a"/>
-          <circle cx="15" cy="19" r="2" fill="var(--border)"/>
-          <circle cx="21" cy="19" r="2" fill="var(--border)"/>
-          <circle cx="9"  cy="25" r="2" fill="#16a34a"/>
+      
+      <div class="tile-icon">
+        <svg viewBox="0 0 24 24" fill="none">
+          <rect x="2" y="4" width="20" height="18" rx="3" stroke="var(--accent)" stroke-width="1.8" fill="none"/>
+          <line x1="2" y1="9" x2="22" y2="9" stroke="var(--accent)" stroke-width="1.8"/>
+          <rect x="6" y="1" width="4" height="6" rx="2" stroke="var(--accent)" stroke-width="1.5" fill="none"/>
+          <rect x="14" y="1" width="4" height="6" rx="2" stroke="var(--accent)" stroke-width="1.5" fill="none"/>
+          <circle cx="7" cy="14" r="1.5" fill="#16a34a"/>
+          <circle cx="12" cy="14" r="1.5" fill="var(--border)"/>
+          <circle cx="17" cy="14" r="1.5" fill="var(--border)"/>
         </svg>
-        <div class="card-title">Calendario</div>
       </div>
-      <p class="card-desc">Ver días de trabajo, descanso, permutas y permisos ya autorizados del período.</p>
-      <div class="card-items">
-        <span class="item-pill">✦ Trabajo</span>
-        <span class="item-pill">⊟ Descanso</span>
-        <span class="item-pill">↔ Permutas</span>
-        <span class="item-pill">⊕ Permisos</span>
-        <span class="item-pill">⊘ Incapacidades</span>
+      
+      <div class="tile-content">
+        <div class="tile-title">Calendario</div>
+        <div class="tile-desc">Días de trabajo, descanso, permutas y permisos</div>
       </div>
-      <div class="card-cta">Ver calendario <span class="cta-arrow">→</span></div>
+      
+      <div class="tile-meta">
+        <span class="tile-tag">Calendarios</span>
+        <span class="tile-arrow">→</span>
+      </div>
     </a>
 
-    <!-- ASIGNACIONES -->
-    <a href="abril_stbc_map.html" class="nav-card asignaciones">
-      <svg class="card-bg-deco" width="120" height="120" viewBox="0 0 120 120" fill="none">
-        <rect x="6"  y="6"  width="48" height="48" rx="8" stroke="currentColor" stroke-width="2.5" fill="none"/>
-        <rect x="66" y="6"  width="48" height="48" rx="8" stroke="currentColor" stroke-width="2.5" fill="none"/>
-        <rect x="6"  y="66" width="48" height="48" rx="8" stroke="currentColor" stroke-width="2.5" fill="none"/>
-        <rect x="66" y="66" width="48" height="48" rx="8" stroke="#00a1de" stroke-width="2.5" fill="none"/>
-        <line x1="16" y1="22" x2="44" y2="22" stroke="currentColor" stroke-width="1.5"/>
-        <line x1="16" y1="32" x2="36" y2="32" stroke="currentColor" stroke-width="1"/>
-        <line x1="16" y1="82" x2="44" y2="82" stroke="currentColor" stroke-width="1.5"/>
-        <line x1="76" y1="22" x2="104" y2="22" stroke="currentColor" stroke-width="1.5"/>
-        <line x1="76" y1="82" x2="104" y2="82" stroke="#00a1de" stroke-width="1.5"/>
-        <line x1="76" y1="92" x2="96"  y2="92" stroke="#00a1de" stroke-width="1"/>
+    <!-- 2. ASIGNACIONES -->
+    <a href="abril_stbc_map.html" class="nav-tile asignaciones">
+      <svg class="tile-deco" width="60" height="60" viewBox="0 0 120 120" fill="none">
+        <rect x="6" y="6" width="48" height="48" rx="8" stroke="currentColor" stroke-width="2"/>
+        <rect x="66" y="6" width="48" height="48" rx="8" stroke="currentColor" stroke-width="2"/>
+        <rect x="6" y="66" width="48" height="48" rx="8" stroke="currentColor" stroke-width="2"/>
+        <rect x="66" y="66" width="48" height="48" rx="8" stroke="#00a1de" stroke-width="2"/>
       </svg>
-      <div class="card-tag">Turnos · Abril 2026</div>
-      <div class="card-icon-row">
-        <svg width="30" height="30" viewBox="0 0 30 30" fill="none">
-          <rect x="2"  y="2"  width="11" height="11" rx="3" stroke="#16a34a" stroke-width="1.5" fill="none"/>
-          <rect x="17" y="2"  width="11" height="11" rx="3" stroke="#16a34a" stroke-width="1.5" fill="none"/>
-          <rect x="2"  y="17" width="11" height="11" rx="3" stroke="#16a34a" stroke-width="1.5" fill="none"/>
-          <rect x="17" y="17" width="11" height="11" rx="3" stroke="#00a1de" stroke-width="1.5" fill="none"/>
-          <line x1="5"  y1="7"  x2="10" y2="7"  stroke="#16a34a" stroke-width="1.2"/>
-          <line x1="5"  y1="22" x2="10" y2="22" stroke="#16a34a" stroke-width="1.2"/>
-          <line x1="20" y1="7"  x2="25" y2="7"  stroke="#16a34a" stroke-width="1.2"/>
-          <line x1="20" y1="22" x2="25" y2="22" stroke="#00a1de" stroke-width="1.2"/>
-          <line x1="20" y1="25" x2="25" y2="25" stroke="#00a1de" stroke-width="1"/>
+
+      <div class="tile-icon">
+        <svg viewBox="0 0 24 24" fill="none">
+          <rect x="2" y="2" width="9" height="9" rx="2.5" stroke="#16a34a" stroke-width="1.5" fill="none"/>
+          <rect x="13" y="2" width="9" height="9" rx="2.5" stroke="#16a34a" stroke-width="1.5" fill="none"/>
+          <rect x="2" y="13" width="9" height="9" rx="2.5" stroke="#16a34a" stroke-width="1.5" fill="none"/>
+          <rect x="13" y="13" width="9" height="9" rx="2.5" stroke="#00a1de" stroke-width="1.5" fill="none"/>
+          <line x1="5" y1="5" x2="8" y2="5" stroke="#16a34a" stroke-width="1.2"/>
+          <line x1="5" y1="16" x2="8" y2="16" stroke="#16a34a" stroke-width="1.2"/>
+          <line x1="16" y1="5" x2="19" y2="5" stroke="#16a34a" stroke-width="1.2"/>
+          <line x1="16" y1="16" x2="19" y2="16" stroke="#00a1de" stroke-width="1.2"/>
         </svg>
-        <div class="card-title">Asignaciones</div>
       </div>
-      <p class="card-desc">Ver las asignaciones por día, posición y horario asignado de lunch de cada agente.</p>
-      <div class="card-items">
-        <span class="item-pill">✈ AF179</span>
-        <span class="item-pill">✈ KL686</span>
-        <span class="item-pill">✈ AF173/174/175</span>
-        <span class="item-pill">⏱ Lunch</span>
-        <span class="item-pill">◈ Posición</span>
+      
+      <div class="tile-content">
+        <div class="tile-title">Asignaciones</div>
+        <div class="tile-desc">Posiciones, horarios y lunch por agente</div>
       </div>
-      <div class="card-cta">Ver asignaciones <span class="cta-arrow">→</span></div>
+      
+      <div class="tile-meta">
+        <span class="tile-tag">Abril 2026</span>
+        <span class="tile-arrow">→</span>
+      </div>
     </a>
 
-    <!-- DISTRIBUCIÓN DE SUPERVISORES -->
-    <a href="distribucion_supervisores.html" class="nav-card distribucion">
-      <svg class="card-bg-deco" width="120" height="120" viewBox="0 0 120 120" fill="none">
+    <!-- 3. DISTRIBUCIÓN -->
+    <a href="distribucion_supervisores.html" class="nav-tile distribucion">
+      <svg class="tile-deco" width="60" height="60" viewBox="0 0 120 120" fill="none">
         <circle cx="60" cy="32" r="18" stroke="currentColor" stroke-width="2.5" fill="none"/>
         <circle cx="24" cy="90" r="14" stroke="currentColor" stroke-width="2" fill="none"/>
         <circle cx="96" cy="90" r="14" stroke="currentColor" stroke-width="2" fill="none"/>
         <circle cx="60" cy="90" r="14" stroke="currentColor" stroke-width="2" fill="none"/>
         <line x1="60" y1="50" x2="60" y2="76" stroke="currentColor" stroke-width="1.5"/>
-        <line x1="60" y1="60" x2="24" y2="76" stroke="currentColor" stroke-width="1.5"/>
-        <line x1="60" y1="60" x2="96" y2="76" stroke="currentColor" stroke-width="1.5"/>
       </svg>
-      <div class="card-tag">Turno · Abril 2026</div>
-      <div class="card-icon-row">
-        <svg width="30" height="30" viewBox="0 0 30 30" fill="none">
-          <circle cx="15" cy="8" r="5" stroke="var(--accent2)" stroke-width="1.5" fill="none"/>
-          <circle cx="6"  cy="23" r="4" stroke="var(--accent2)" stroke-width="1.5" fill="none"/>
-          <circle cx="15" cy="23" r="4" stroke="var(--accent2)" stroke-width="1.5" fill="none"/>
-          <circle cx="24" cy="23" r="4" stroke="var(--accent2)" stroke-width="1.5" fill="none"/>
-          <line x1="15" y1="13" x2="15" y2="19" stroke="var(--accent2)" stroke-width="1.2"/>
-          <line x1="15" y1="16" x2="6"  y2="19" stroke="var(--accent2)" stroke-width="1.2"/>
-          <line x1="15" y1="16" x2="24" y2="19" stroke="var(--accent2)" stroke-width="1.2"/>
+
+      <div class="tile-icon">
+        <svg viewBox="0 0 24 24" fill="none">
+          <circle cx="12" cy="6" r="4" stroke="var(--accent2)" stroke-width="1.5" fill="none"/>
+          <circle cx="5" cy="18" r="3.5" stroke="var(--accent2)" stroke-width="1.5" fill="none"/>
+          <circle cx="12" cy="18" r="3.5" stroke="var(--accent2)" stroke-width="1.5" fill="none"/>
+          <circle cx="19" cy="18" r="3.5" stroke="var(--accent2)" stroke-width="1.5" fill="none"/>
+          <line x1="12" y1="10" x2="12" y2="14.5" stroke="var(--accent2)" stroke-width="1.2"/>
+          <line x1="12" y1="12.5" x2="5" y2="14.5" stroke="var(--accent2)" stroke-width="1.2"/>
+          <line x1="12" y1="12.5" x2="19" y2="14.5" stroke="var(--accent2)" stroke-width="1.2"/>
         </svg>
-        <div class="card-title">Distribución</div>
       </div>
-      <p class="card-desc">Ver qué agentes están asignados a cada supervisor en el turno del día.</p>
-      <div class="card-items">
-        <span class="item-pill">👤 Supervisores</span>
-        <span class="item-pill">✦ Activos</span>
-        <span class="item-pill">⊟ Vacantes</span>
-        <span class="item-pill">🔍 Búsqueda</span>
+      
+      <div class="tile-content">
+        <div class="tile-title">Distribución</div>
+        <div class="tile-desc">Agentes asignados a cada supervisor</div>
       </div>
-      <div class="card-cta">Ver distribución <span class="cta-arrow">→</span></div>
+      
+      <div class="tile-meta">
+        <span class="tile-tag">Turno Tarde</span>
+        <span class="tile-arrow">→</span>
+      </div>
     </a>
-  <a href="altea_qrc.html" class="nav-card altea">
-      <svg class="card-bg-deco" width="120" height="120" viewBox="0 0 120 120" fill="none">
+
+    <!-- 4. ALTÉA (Standardized markup to match others) -->
+    <a href="altea_qrc.html" class="nav-tile altea">
+      <svg class="tile-deco" width="60" height="60" viewBox="0 0 120 120" fill="none">
         <rect x="10" y="20" width="100" height="80" rx="8" stroke="currentColor" stroke-width="2.5" fill="none"/>
         <line x1="10" y1="40" x2="110" y2="40" stroke="currentColor" stroke-width="2"/>
         <rect x="22" y="52" width="38" height="7" rx="3" fill="currentColor" opacity="0.4"/>
         <rect x="22" y="65" width="26" height="7" rx="3" fill="currentColor" opacity="0.6"/>
-        <rect x="22" y="78" width="32" height="7" rx="3" fill="currentColor" opacity="0.4"/>
-        <text x="78" y="73" font-family="monospace" font-size="14" font-weight="bold" fill="currentColor" text-anchor="middle" opacity="0.7">QRC</text>
       </svg>
-      <div class="card-icon">✈️</div>
-      <div class="card-label">Altéa</div>
-      <div class="card-sublabel">Guía de referencia rápida</div>
-  </a>
 
-  </div>
+      <div class="tile-icon">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M3 17h18M3 12h18M3 7h18" stroke="#0891b2" stroke-width="1.5" stroke-linecap="round"/>
+          <rect x="6" y="3" width="12" height="18" rx="2" stroke="#0891b2" stroke-width="1.5" fill="none"/>
+          <line x1="10" y1="8" x2="14" y2="8" stroke="#0891b2" stroke-width="1"/>
+        </svg>
+      </div>
+      
+      <div class="tile-content">
+        <div class="tile-title">Altéa</div>
+        <div class="tile-desc">Guía de referencia rápida del sistema</div>
+      </div>
+      
+      <div class="tile-meta">
+        <span class="tile-tag">QRC</span>
+        <span class="tile-arrow">→</span>
+      </div>
+    </a>
 
-  <!-- AIRLINE STRIP discreta -->
-  <div class="airline-strip">
-    <svg width="56" height="18" viewBox="0 0 56 18" fill="none">
-      <rect width="56" height="18" rx="3" fill="#002157"/>
-      <path d="M4 14 L10 4 L16 14" stroke="#d21034" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-      <path d="M7 14 L10 8 L13 14" stroke="white" stroke-width=".9" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-      <text x="20" y="12" font-family="Georgia,serif" font-size="6.5" fill="white" font-style="italic" letter-spacing=".2">Air France</text>
-    </svg>
-    <div class="airline-div"></div>
-    <div class="airline-label">Staff tercerizado</div>
-    <div class="airline-div"></div>
-    <svg width="44" height="18" viewBox="0 0 44 18" fill="none">
-      <rect width="44" height="18" rx="3" fill="#00368c"/>
-      <text x="4" y="12" font-family="Arial Black,sans-serif" font-size="7.5" font-weight="900" fill="white" letter-spacing=".4">KLM</text>
-      <path d="M26 3 C29 1.5,38 3,37 8 C36 12,31 11,29 15" stroke="#00a1de" stroke-width="1.2" fill="none" stroke-linecap="round"/>
-    </svg>
   </div>
 
   <!-- FOOTER -->
   <footer class="footer">
     <div class="footer-raccoon">🦝</div>
-    <div class="footer-name">Sistema de Todo Bajo Control (según)</div>
-    <div class="footer-sub">con tecnología de Tlacuache Ops</div>
-    <div class="footer-version">V 2.32 beta 1</div>
+    <div class="footer-name">Sistema de Todo Bajo Control</div>
+    <div class="footer-sub">Tlacuache Ops · v2.32</div>
+    <div class="footer-version">beta compact</div>
   </footer>
 
 </main>
 
 <script>
-// ── THEME ──
-function toggleTheme() {
-  const html = document.documentElement;
-  const isDark = html.getAttribute('data-theme') === 'dark';
-  const next = isDark ? 'light' : 'dark';
-  html.setAttribute('data-theme', next);
-  document.getElementById('themeBtn').textContent = isDark ? '🌙' : '☀️';
-  try { localStorage.setItem('stbc-theme', next); } catch(e) {}
+// Theme toggle (simplified from your original)
+function toggleTheme(){
+  const html=document.documentElement;
+  const isDark=html.getAttribute('data-theme')==='dark';
+  const next=isDark?'light':'dark';
+  html.setAttribute('data-theme',next);
+  document.getElementById('themeBtn').textContent=isDark?'🌙':'☀️';
+  try{localStorage.setItem('stbc-theme',next);}catch(e){}
 }
-(function loadTheme() {
-  try {
-    const t = localStorage.getItem('stbc-theme');
-    if (t) {
-      document.documentElement.setAttribute('data-theme', t);
-      const btn = document.getElementById('themeBtn');
-      if (btn) btn.textContent = t === 'dark' ? '☀️' : '🌙';
+(function loadTheme(){
+  try{
+    const t=localStorage.getItem('stbc-theme');
+    if(t){
+      document.documentElement.setAttribute('data-theme',t);
+      document.getElementById('themeBtn').textContent=t==='dark'?'☀️':'🌙';
     }
-  } catch(e) {}
+  }catch(e){}
 })();
-
-// ── CANVAS ANIMADO ──
-const canvas = document.getElementById('sky-canvas');
-const ctx = canvas.getContext('2d');
-let W, H;
-
-function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
-window.addEventListener('resize', resize);
-resize();
-
-function isDark() { return document.documentElement.getAttribute('data-theme') === 'dark'; }
-
-function drawBg() {
-  const g = ctx.createLinearGradient(0, 0, 0, H);
-  if (isDark()) {
-    g.addColorStop(0, '#090d14'); g.addColorStop(.6, '#0d1117'); g.addColorStop(1, '#111820');
-  } else {
-    g.addColorStop(0, '#e6ebf4'); g.addColorStop(.5, '#f0f2f5'); g.addColorStop(1, '#f5f7fb');
-  }
-  ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
-}
-
-function drawGrid() {
-  ctx.strokeStyle = isDark() ? 'rgba(255,255,255,.025)' : 'rgba(0,0,0,.035)';
-  ctx.lineWidth = 1;
-  const gap = 68;
-  for (let x = 0; x < W; x += gap) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke(); }
-  for (let y = 0; y < H; y += gap) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke(); }
-}
-
-// Estrellas solo en dark
-const stars = Array.from({length: 55}, () => ({
-  x: Math.random(), y: Math.random() * .6, r: Math.random() * 1.1 + .3,
-  a: Math.random() * .4 + .1, spd: Math.random() * .0015 + .0008, ph: Math.random() * Math.PI * 2
-}));
-function drawStars(t) {
-  if (!isDark()) return;
-  stars.forEach(s => {
-    const alpha = s.a * (.4 + .6 * Math.sin(t * s.spd * 60 + s.ph));
-    ctx.beginPath(); ctx.arc(s.x * W, s.y * H, s.r, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(210,225,255,${alpha})`; ctx.fill();
-  });
-}
-
-// Aviones con estela
-class FlightDot {
-  constructor() { this.reset(true); }
-  reset(init = false) {
-    this.fromLeft = Math.random() > .5;
-    this.x = init ? Math.random() * W : (this.fromLeft ? -40 : W + 40);
-    this.y = Math.random() * H * .48 + H * .04;
-    this.spd = (Math.random() * .28 + .12) * (this.fromLeft ? 1 : -1);
-    this.size = Math.random() * 1.6 + .8;
-    this.alpha = Math.random() * .28 + .08;
-    this.trail = []; this.trailMax = 22 + Math.floor(Math.random() * 28);
-  }
-  update() {
-    this.trail.push({x: this.x, y: this.y});
-    if (this.trail.length > this.trailMax) this.trail.shift();
-    this.x += this.spd;
-    if (this.x < -80 || this.x > W + 80) this.reset();
-  }
-  draw() {
-    const tc = isDark() ? '88,166,255' : '37,99,235';
-    const hc = isDark() ? '188,140,255' : '124,58,237';
-    for (let i = 0; i < this.trail.length - 1; i++) {
-      const p = i / this.trail.length;
-      ctx.beginPath();
-      ctx.moveTo(this.trail[i].x, this.trail[i].y);
-      ctx.lineTo(this.trail[i+1].x, this.trail[i+1].y);
-      ctx.strokeStyle = `rgba(${tc},${p * this.alpha * .45})`;
-      ctx.lineWidth = this.size * p * .75; ctx.stroke();
-    }
-    ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(${hc},${this.alpha * .85})`; ctx.fill();
-  }
-}
-
-// Boarding passes flotantes
-class BoardingMark {
-  constructor() { this.reset(true); }
-  reset(init = false) {
-    this.x = Math.random() * W;
-    this.y = init ? Math.random() * H : H + 20;
-    this.vy = -(Math.random() * .18 + .04);
-    this.alpha = Math.random() * .07 + .015;
-    this.size = Math.random() * 10 + 8;
-    this.rot = Math.random() * Math.PI * 2;
-    this.rotSpd = (Math.random() - .5) * .0015;
-  }
-  update() { this.y += this.vy; this.rot += this.rotSpd; if (this.y < -30) this.reset(); }
-  draw() {
-    const c = isDark() ? `rgba(88,166,255,${this.alpha})` : `rgba(37,99,235,${this.alpha})`;
-    ctx.save(); ctx.translate(this.x, this.y); ctx.rotate(this.rot);
-    ctx.strokeStyle = c; ctx.lineWidth = .8;
-    ctx.strokeRect(-this.size * .7, -this.size * .45, this.size * 1.4, this.size * .9);
-    ctx.beginPath(); ctx.moveTo(-this.size * .7, -this.size * .1); ctx.lineTo(this.size * .7, -this.size * .1); ctx.stroke();
-    ctx.restore();
-  }
-}
-
-// Check-in counter marks
-class CheckinMark {
-  constructor() { this.reset(true); }
-  reset(init = false) {
-    this.x = Math.random() * W;
-    this.y = init ? Math.random() * H * .8 : -20;
-    this.vy = Math.random() * .12 + .04;
-    this.alpha = Math.random() * .06 + .015;
-    this.r = Math.random() * 8 + 6;
-    this.rot = Math.random() * Math.PI * 2;
-  }
-  update() { this.y += this.vy; this.rot += .001; if (this.y > H + 30) this.reset(); }
-  draw() {
-    const c = isDark() ? `rgba(188,140,255,${this.alpha})` : `rgba(124,58,237,${this.alpha})`;
-    ctx.save(); ctx.translate(this.x, this.y); ctx.rotate(this.rot);
-    ctx.strokeStyle = c; ctx.lineWidth = .8;
-    // Destino marker
-    ctx.beginPath();
-    ctx.moveTo(0, -this.r);
-    ctx.bezierCurveTo(this.r * .8, -this.r, this.r * .8, this.r * .2, 0, this.r * .5);
-    ctx.bezierCurveTo(-this.r * .8, this.r * .2, -this.r * .8, -this.r, 0, -this.r);
-    ctx.stroke();
-    ctx.beginPath(); ctx.arc(0, 0, this.r * .25, 0, Math.PI * 2); ctx.stroke();
-    ctx.restore();
-  }
-}
-
-const flights  = Array.from({length: 5}, () => new FlightDot());
-const bmarks   = Array.from({length: 10}, () => new BoardingMark());
-const cmarks   = Array.from({length: 8},  () => new CheckinMark());
-
-function drawFog() {
-  const start = isDark() ? 'rgba(13,17,23,0)'    : 'rgba(240,242,245,0)';
-  const end   = isDark() ? 'rgba(13,17,23,.95)'  : 'rgba(240,242,245,.96)';
-  const g = ctx.createLinearGradient(0, H * .7, 0, H);
-  g.addColorStop(0, start); g.addColorStop(1, end);
-  ctx.fillStyle = g; ctx.fillRect(0, H * .7, W, H);
-}
-
-let t = 0;
-function loop() {
-  t += .016;
-  ctx.clearRect(0, 0, W, H);
-  drawBg(); drawGrid(); drawStars(t);
-  bmarks.forEach(m => { m.update(); m.draw(); });
-  cmarks.forEach(m => { m.update(); m.draw(); });
-  flights.forEach(f => { f.update(); f.draw(); });
-  drawFog();
-  requestAnimationFrame(loop);
-}
-loop();
 </script>
+
 </body>
 </html>
