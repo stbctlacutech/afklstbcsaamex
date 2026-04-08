@@ -770,6 +770,42 @@ body {
 }
 .footer-brand .raccoon { font-size: 14px; opacity: 1; }
 
+/* ── ALTÉA TIP BANNER ── */
+.altea-tip {
+  display: flex;
+  gap: 11px;
+  align-items: flex-start;
+  background: color-mix(in srgb, var(--accent) 8%, var(--surface2));
+  border: 1.5px solid color-mix(in srgb, var(--accent) 25%, var(--border));
+  border-radius: var(--radius-sm);
+  padding: 11px 13px;
+  margin-bottom: 14px;
+}
+.altea-tip-icon {
+  font-size: 18px;
+  flex-shrink: 0;
+  line-height: 1.3;
+}
+.altea-tip-text {
+  font-size: 12px;
+  line-height: 1.55;
+  color: var(--text2);
+}
+.altea-tip-text strong {
+  color: var(--text);
+  font-weight: 600;
+}
+.altea-tip-text code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--cmd-color);
+  background: var(--cmd-bg);
+  border: 1px solid var(--cmd-border);
+  padding: 1px 5px;
+  border-radius: 5px;
+}
+
 /* ── EMPTY STATE ── */
 .empty-state {
   text-align: center;
@@ -804,10 +840,6 @@ body {
   <a href="index.html" class="stbc-nav-brand">🦝 <span>WFM STBC</span></a>
   <div class="nav-sep"></div>
   <a href="index.html" class="stbc-nav-link">⌂ Inicio</a>
-  <a href="calendario_stbc.html" class="stbc-nav-link">📅 Calendario</a>
-  <a href="abril_stbc_map.html" class="stbc-nav-link">📋 Asignaciones</a>
-  <a href="distribucion_supervisores.html" class="stbc-nav-link">👥 Distribución</a>
-  <a href="altea_qrc.html" class="stbc-nav-link nav-active">✈️ Altéa QRC</a>
   <button class="theme-btn" id="themeBtn" onclick="toggleTheme()">☀️ Claro</button>
 </nav>
 
@@ -883,6 +915,13 @@ body {
     <div class="modal-body">
       <div class="modal-cmds-label">📋 Toca para copiar</div>
       <div class="modal-cmds" id="modalCmds"></div>
+      <div class="altea-tip">
+        <span class="altea-tip-icon">💡</span>
+        <span class="altea-tip-text">
+          <strong>Puedes escribir este comando directamente en la barra de entrada de Altéa Amadeus.</strong>
+          Aunque no estés en una pantalla de mascarilla nativa, al teclear el comando (por ejemplo <code>FXP</code> o <code>RT 2BD3AF</code>) el sistema te lleva automáticamente a la opción, botón o pantalla correcta.
+        </span>
+      </div>
       <div id="modalEnWrap">
         <div class="modal-en" id="modalEn"></div>
       </div>
