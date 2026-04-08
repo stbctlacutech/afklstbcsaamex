@@ -143,33 +143,34 @@
         /* BRANDING TLACUACHE OPS */
         .brand-strip {
             display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 6px 0 0;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: 4px 6px;
+            padding: 8px 0 0;
             margin-top: 10px;
             border-top: 1px solid var(--border);
+            overflow: hidden;
         }
         .brand-icon {
-            font-size: 14px;
+            font-size: 13px;
             opacity: 0.7;
+            flex-shrink: 0;
         }
         .brand-name {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 10px;
+            font-size: 9px;
             font-weight: 600;
             color: var(--accent);
             letter-spacing: 0.04em;
-            white-space: nowrap;
         }
         .brand-tagline {
             font-family: 'JetBrains Mono', monospace;
             font-size: 9px;
             color: var(--text3);
-            white-space: nowrap;
         }
         .brand-sep {
             color: var(--border);
-            font-size: 10px;
+            font-size: 9px;
         }
         .brand-version {
             font-family: 'JetBrains Mono', monospace;
@@ -186,9 +187,11 @@
             padding: 10px 16px;
             margin-top: 12px;
             display: flex;
+            flex-wrap: wrap;
             align-items: center;
-            gap: 8px;
+            gap: 4px 8px;
             box-shadow: var(--shadow);
+            overflow: hidden;
         }
         .list-footer .brand-icon { font-size: 12px; }
         .list-footer .brand-name { font-size: 9px; }
@@ -846,13 +849,16 @@
         .modal {
             display: none;
             position: fixed;
-            inset: 0;
+            /* descuenta la nav sticky para que el modal no quede oculto debajo */
+            top: 46px;
+            left: 0; right: 0; bottom: 0;
             background: rgba(0,0,0,0.6);
-            z-index: 1000;
-            align-items: center;
+            z-index: 999;
+            align-items: flex-start;
             justify-content: center;
-            padding: 20px;
+            padding: 12px 14px 20px;
             backdrop-filter: blur(4px);
+            overflow-y: auto;
         }
         .modal.active { display: flex; }
 
@@ -860,13 +866,13 @@
             background: var(--surface);
             border: 1px solid var(--border);
             border-radius: var(--radius);
-            padding: 24px;
+            padding: 20px;
             max-width: 420px;
             width: 100%;
-            max-height: 85vh;
-            overflow-y: auto;
             box-shadow: var(--shadow-lg);
             animation: slideUp 0.2s ease;
+            /* sin max-height fija: el overlay es el que scrollea */
+            flex-shrink: 0;
         }
 
         @keyframes slideUp {
@@ -1052,6 +1058,7 @@
     <a href="index.html" class="stbc-nav-link">⌂ Inicio</a>
     <a href="calendario_stbc.html" class="stbc-nav-link nav-active">📅 Calendario</a>
     <a href="abril_stbc_map.html" class="stbc-nav-link">📋 Asignaciones</a>
+    <a href="distribucion_supervisores.html" class="stbc-nav-link">👥 Distribución</a>
   </div>
   <div class="stbc-nav-right">
     <button class="stbc-theme-btn" id="stbc-theme-nav-btn" onclick="toggleDark()" title="Cambiar tema">🌙</button>
@@ -1065,9 +1072,6 @@
             <div>
                 <div class="header-title">✈ ROSTER · MAR–MAY 2026</div>
                 <div class="header-subtitle" id="current-date-display"></div>
-            </div>
-            <div class="header-actions">
-                <button class="dark-toggle" onclick="toggleDark()" title="Modo oscuro" id="theme-btn">🌙</button>
             </div>
         </div>
         <div class="roster-meta">
@@ -1379,7 +1383,6 @@
         const next = isDark ? 'light' : 'dark';
         html.setAttribute('data-theme', next);
         const icon = isDark ? '🌙' : '☀️';
-        document.getElementById('theme-btn').textContent = icon;
         const navBtn = document.getElementById('stbc-theme-nav-btn');
         if(navBtn) navBtn.textContent = icon;
         try{ localStorage.setItem('stbc-theme', next); }catch(e){}
@@ -1389,9 +1392,7 @@
             const t = localStorage.getItem('stbc-theme');
             if(t){ document.documentElement.setAttribute('data-theme',t);
                    const icon = t==='dark'?'☀️':'🌙';
-                   const btn = document.getElementById('theme-btn');
                    const nav = document.getElementById('stbc-theme-nav-btn');
-                   if(btn) btn.textContent=icon;
                    if(nav) nav.textContent=icon;
             }
         }catch(e){}
