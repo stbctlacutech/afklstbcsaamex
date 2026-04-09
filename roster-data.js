@@ -120,6 +120,9 @@
     { id1: '2000472', nombre1: 'Leslie Jimenez',    id2: '2000701', nombre2: 'Angel Ledezma',      mes: 4, id1_trabaja: 5,    id1_descansa: 16,   id2_trabaja: 16,   id2_descansa: 5    },
     { id1: '2000674', nombre1: 'Kenji Jurado',      id2: '2000549', nombre2: 'Mitchel Herrejon',   mes: 4, id1_trabaja: 8,    id1_descansa: 11,   id2_trabaja: 11,   id2_descansa: 8    },
     { id1: '2000704', nombre1: 'Dylan Rivera',      id2: '2000734', nombre2: 'Jonathan Sánchez',   mes: 4, id1_trabaja: 30,   id1_descansa: 20,   id2_trabaja: 20,   id2_descansa: 30   },
+    { id1: '2000681', nombre1: 'Montserrat Guzman', id2: '2000607', nombre2: 'Argelia Garcia',     mes: 4, id1_trabaja: 9,    id1_descansa: 11,   id2_trabaja: 11,   id2_descansa: 9    },
+    { id1: '2000472', nombre1: 'Leslie Jimenez',    id2: '2000475', nombre2: 'Alessia Taddei',     mes: 4, id1_trabaja: 12,   id1_descansa: 20,   id2_trabaja: 20,   id2_descansa: 12   },
+    { id1: '2000681', nombre1: 'Montserrat Guzman', id2: '2000472', nombre2: 'Leslie Jimenez',     mes: 4, id1_trabaja: 17,   id1_descansa: 25,   id2_trabaja: 25,   id2_descansa: 17   },
   ];
 
   // ═══════════════════════════════════════════════════════════════════

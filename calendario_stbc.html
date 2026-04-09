@@ -1219,7 +1219,21 @@
     // "trabaja" = día en que el agente trabaja en lugar de su descanso original.
     // "descansa" = día en que el agente descansa en lugar de su día de trabajo original.
     // ══════════════════════════════════════════
-    // permutas eliminado — usa window.ROSTER.permutas
+    // ── PERMUTAS — datos embebidos (fuente: roster-data.js)
+    // Al agregar permutas nuevas: actualizar aquí Y en roster-data.js
+    const _PERMUTAS = [
+      { id1: '2000472', nombre1: 'Leslie Jimenez',    id2: '2000607', nombre2: 'Argelia Garcia',    mes: 3, id1_trabaja: 8,    id1_descansa: 6,    id2_trabaja: 6,    id2_descansa: 8    },
+      { id1: '2000701', nombre1: 'Angel Vidal',       id2: '2000673', nombre2: 'Fatima Moreno',     mes: 3, id1_trabaja: null, id1_descansa: 17,   id2_trabaja: 17,   id2_descansa: null },
+      { id1: '2000701', nombre1: 'Angel Vidal',       id2: '2000673', nombre2: 'Fatima Moreno',     mes: 4, id1_trabaja: 2,    id1_descansa: null, id2_trabaja: null,  id2_descansa: 2    },
+      { id1: '2000467', nombre1: 'Elizabeth Cruz',    id2: '2000472', nombre2: 'Leslie Jimenez',    mes: 3, id1_trabaja: 30,   id1_descansa: 28,   id2_trabaja: 28,   id2_descansa: 30   },
+      { id1: '2000682', nombre1: 'Fernanda Moreno',   id2: '2000704', nombre2: 'Dylan Rivera',      mes: 4, id1_trabaja: 21,   id1_descansa: 2,    id2_trabaja: 2,    id2_descansa: 21   },
+      { id1: '2000472', nombre1: 'Leslie Jimenez',    id2: '2000701', nombre2: 'Angel Ledezma',     mes: 4, id1_trabaja: 5,    id1_descansa: 16,   id2_trabaja: 16,   id2_descansa: 5    },
+      { id1: '2000674', nombre1: 'Kenji Jurado',      id2: '2000549', nombre2: 'Mitchel Herrejon',  mes: 4, id1_trabaja: 8,    id1_descansa: 11,   id2_trabaja: 11,   id2_descansa: 8    },
+      { id1: '2000704', nombre1: 'Dylan Rivera',      id2: '2000734', nombre2: 'Jonathan Sanchez',  mes: 4, id1_trabaja: 30,   id1_descansa: 20,   id2_trabaja: 20,   id2_descansa: 30   },
+      { id1: '2000681', nombre1: 'Montserrat Guzman', id2: '2000607', nombre2: 'Argelia Garcia',    mes: 4, id1_trabaja: 9,    id1_descansa: 11,   id2_trabaja: 11,   id2_descansa: 9    },
+      { id1: '2000472', nombre1: 'Leslie Jimenez',    id2: '2000475', nombre2: 'Alessia Taddei',    mes: 4, id1_trabaja: 12,   id1_descansa: 20,   id2_trabaja: 20,   id2_descansa: 12   },
+      { id1: '2000681', nombre1: 'Montserrat Guzman', id2: '2000472', nombre2: 'Leslie Jimenez',    mes: 4, id1_trabaja: 17,   id1_descansa: 25,   id2_trabaja: 25,   id2_descansa: 17   },
+    ];
 
     // Argelia Garcia — 04 marzo: Posible entrada tarde (Permiso)
     // permisoEntradaTarde eliminado — usa window.ROSTER.permisoEntradaTarde
@@ -1244,7 +1258,21 @@
 
     function isIncapacidad(agId, mes, dia) { return window.ROSTER.isIncapacidad(agId, mes, dia); }
 
-    function getPermutaInfo(agId, mes, dia) { return window.ROSTER.getPermutaInfo(agId, mes, dia); }
+    function getPermutaInfo(agId, mes, dia) {
+      const src = (window.ROSTER && window.ROSTER.permutas) ? window.ROSTER.permutas : _PERMUTAS;
+      for (const p of src) {
+        if (p.mes !== mes) continue;
+        if (p.id1 === agId) {
+          if (dia === p.id1_trabaja)  return { tipo: 'permuta-trabajo',  conQuien: p.nombre2, conId: p.id2 };
+          if (dia === p.id1_descansa) return { tipo: 'permuta-descanso', conQuien: p.nombre2, conId: p.id2 };
+        }
+        if (p.id2 === agId) {
+          if (dia === p.id2_trabaja)  return { tipo: 'permuta-trabajo',  conQuien: p.nombre1, conId: p.id1 };
+          if (dia === p.id2_descansa) return { tipo: 'permuta-descanso', conQuien: p.nombre1, conId: p.id1 };
+        }
+      }
+      return null;
+    }
 
     // ═══════════════════════════════════════════════════
     // MESES
