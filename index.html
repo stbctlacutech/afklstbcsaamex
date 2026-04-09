@@ -3,216 +3,276 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>WFM STBC · Compact Mobile Menu</title>
+<title>🦝 WFM STBC · Tlacuache Ops</title>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,300&display=swap" rel="stylesheet">
 <style>
 :root {
   --bg:#f0f2f5; --surface:#ffffff; --surface2:#f7f8fa; --surface3:#eef0f4;
   --border:#e2e5eb; --text:#0f1923; --text2:#4a5568; --text3:#8898aa;
   --accent:#2563eb; --accent2:#7c3aed;
-  --shadow:0 2px 12px rgba(0,0,0,.08); --shadow-lg:0 8px 32px rgba(0,0,0,.12);
-  --radius:14px; --radius-sm:8px; --radius-lg:20px;
+  --shadow:0 2px 12px rgba(0,0,0,.07); --shadow-lg:0 8px 28px rgba(0,0,0,.11);
+  --radius:14px; --radius-sm:8px;
   --nav-bg-rgb:240,242,245;
 }
 [data-theme="dark"] {
   --bg:#0d1117; --surface:#161b22; --surface2:#1c2128; --surface3:#21262d;
   --border:#30363d; --text:#e6edf3; --text2:#8b949e; --text3:#484f58;
   --accent:#58a6ff; --accent2:#bc8cff;
-  --shadow:0 2px 12px rgba(0,0,0,.4); --shadow-lg:0 8px 32px rgba(0,0,0,.5);
+  --shadow:0 2px 12px rgba(0,0,0,.4); --shadow-lg:0 8px 28px rgba(0,0,0,.55);
   --nav-bg-rgb:13,17,23;
 }
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
-html,body{height:100%;font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;-webkit-tap-highlight-color:transparent;}
 
-/* NAV */
-.stbc-nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:9px 14px;background:rgba(var(--nav-bg-rgb),.88);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);gap:8px;}
-.stbc-nav-brand{display:flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:var(--text);text-decoration:none;white-space:nowrap;}
-.stbc-theme-btn{background:var(--surface3);border:1px solid var(--border);color:var(--text2);width:32px;height:32px;border-radius:8px;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;transition:all .15s;}
+*,*::before,*::after { margin:0; padding:0; box-sizing:border-box; }
+html, body {
+  height:100%;
+  font-family:'DM Sans', sans-serif;
+  background:var(--bg); color:var(--text);
+  overflow-x:hidden;
+  -webkit-tap-highlight-color:transparent;
+  transition:background .25s, color .25s;
+}
 
-/* PAGE */
-.page{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;padding:72px 16px 24px;}
+/* ── NAV ── */
+.stbc-nav {
+  position:fixed; top:0; left:0; right:0; z-index:100;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:9px 14px;
+  background:rgba(var(--nav-bg-rgb),.92);
+  backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+  transition:background .25s, border-color .25s;
+}
+.nav-brand {
+  display:flex; align-items:center; gap:6px;
+  font-family:'JetBrains Mono', monospace;
+  font-size:12px; font-weight:700;
+  color:var(--text); text-decoration:none;
+}
+.nav-brand-emoji {
+  font-size:15px; display:inline-block;
+  animation:wobble 5s ease-in-out infinite;
+}
+@keyframes wobble {
+  0%,78%,100% { transform:rotate(0) }
+  82%  { transform:rotate(-10deg) }
+  88%  { transform:rotate(8deg) }
+  94%  { transform:rotate(-5deg) }
+}
+.nav-right { display:flex; align-items:center; gap:8px; }
+.nav-station {
+  display:none; align-items:center; gap:5px;
+  font-family:'JetBrains Mono', monospace; font-size:9px;
+  color:var(--text3); background:var(--surface3);
+  border:1px solid var(--border); border-radius:20px; padding:3px 10px;
+}
+@media(min-width:420px) { .nav-station { display:flex; } }
+.station-dot-sm {
+  width:5px; height:5px; border-radius:50%; background:#22c55e;
+  box-shadow:0 0 0 2px rgba(34,197,94,.25);
+  animation:pulse-dot 2.2s ease infinite; flex-shrink:0;
+}
+@keyframes pulse-dot {
+  0%,100% { box-shadow:0 0 0 2px rgba(34,197,94,.25); }
+  50%     { box-shadow:0 0 0 4px rgba(34,197,94,.08); }
+}
+.theme-btn {
+  background:var(--surface3); border:1px solid var(--border);
+  color:var(--text2); width:32px; height:32px; border-radius:8px;
+  cursor:pointer; font-size:14px;
+  display:flex; align-items:center; justify-content:center;
+  transition:all .15s; flex-shrink:0;
+}
+.theme-btn:hover { border-color:var(--accent); }
 
-/* BRAND - Compact for mobile */
-.brand-block{text-align:center;margin-bottom:16px;}
-.brand-main{font-family:'JetBrains Mono',monospace;font-size:clamp(20px,4vw,28px);font-weight:700;letter-spacing:-.5px;color:var(--text);line-height:1;}
-.brand-sub{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text3);margin-top:4px;letter-spacing:.3px;text-transform:uppercase;}
+/* ── PAGE ── */
+.page {
+  min-height:100vh;
+  display:flex; flex-direction:column;
+  padding:70px 16px 24px;
+}
 
-/* STATION PILL - Tighter */
-.station-pill{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text2);background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:4px 12px;margin:0 auto 20px;box-shadow:var(--shadow);}
-.station-dot{width:5px;height:5px;border-radius:50%;background:#22c55e;box-shadow:0 0 0 2px rgba(34,197,94,.25);animation:pulse-dot 2.2s ease infinite;}
-@keyframes pulse-dot{0%,100%{box-shadow:0 0 0 2px rgba(34,197,94,.25);}50%{box-shadow:0 0 0 4px rgba(34,197,94,.08);}}
+/* ── BRAND ── */
+.brand-block { text-align:center; margin-bottom:14px; padding-top:8px; }
+.brand-main {
+  font-family:'JetBrains Mono', monospace;
+  font-size:clamp(20px,5vw,28px); font-weight:700;
+  letter-spacing:-.5px; color:var(--text); line-height:1;
+}
+.brand-sub {
+  font-family:'JetBrains Mono', monospace;
+  font-size:9px; color:var(--text3);
+  margin-top:4px; letter-spacing:.5px; text-transform:uppercase;
+}
 
-/* ========== COMPACT LIST TILES (Mobile First) ========== */
-.menu-list{display:flex;flex-direction:column;gap:8px;width:100%;max-width:500px;margin:0 auto 28px;}
+/* ── STATION PILL ── */
+.station-pill {
+  display:inline-flex; align-items:center; gap:6px;
+  font-family:'JetBrains Mono', monospace; font-size:10px;
+  color:var(--text2); background:var(--surface);
+  border:1px solid var(--border); border-radius:20px;
+  padding:4px 12px; margin:0 auto 20px;
+  box-shadow:var(--shadow);
+}
+.station-dot {
+  width:5px; height:5px; border-radius:50%; background:#22c55e;
+  box-shadow:0 0 0 2px rgba(34,197,94,.25);
+  animation:pulse-dot 2.2s ease infinite; flex-shrink:0;
+}
 
-/* Base tile styling */
-.nav-tile{
+/* ── MENU LIST ── */
+.menu-list {
+  display:flex; flex-direction:column; gap:8px;
+  width:100%; max-width:500px; margin:0 auto 28px;
+}
+
+/* ── NAV TILE ── */
+.nav-tile {
   position:relative;
-  display:flex;
-  align-items:center;
-  gap:12px;
+  display:flex; align-items:center; gap:12px;
   padding:14px 16px;
-  background:var(--surface);
-  border:1px solid var(--border);
+  background:var(--surface); border:1px solid var(--border);
   border-radius:var(--radius);
-  text-decoration:none;
-  color:inherit;
+  text-decoration:none; color:inherit;
   box-shadow:var(--shadow);
   transition:transform .15s, box-shadow .2s, border-color .2s;
-  overflow:hidden;
-  min-height:68px; /* Optimal touch target: 68px */
+  overflow:hidden; min-height:68px;
+}
+.nav-tile::before {
+  content:''; position:absolute; left:0; top:0; bottom:0; width:3px;
+  border-radius:3px 0 0 3px;
+}
+.nav-tile:active  { transform:scale(.98); box-shadow:0 1px 4px rgba(0,0,0,.08); }
+.nav-tile:hover   { border-color:var(--text3); box-shadow:var(--shadow-lg); }
+.nav-tile:hover .tile-arrow { transform:translateX(3px); }
+.nav-tile:hover .tile-deco  { opacity:.08; }
+
+.nav-tile.calendario::before   { background:linear-gradient(180deg,var(--accent),var(--accent2)); }
+.nav-tile.asignaciones::before { background:linear-gradient(180deg,#16a34a,#00a1de); }
+.nav-tile.distribucion::before { background:linear-gradient(180deg,var(--accent2),#ec4899); }
+.nav-tile.altea::before        { background:linear-gradient(180deg,#0369a1,#0891b2); }
+.nav-tile.guia::before         { background:linear-gradient(180deg,#d97706,#ea580c); }
+[data-theme="dark"] .nav-tile.asignaciones::before { background:linear-gradient(180deg,#4ade80,#00a1de); }
+
+/* ── TILE ICON ── */
+.tile-icon {
+  flex-shrink:0; width:36px; height:36px;
+  display:flex; align-items:center; justify-content:center;
+  border-radius:10px; background:var(--surface2); border:1px solid var(--border);
+}
+.tile-icon svg { width:20px; height:20px; }
+
+/* ── TILE CONTENT ── */
+.tile-content { flex:1; min-width:0; display:flex; flex-direction:column; gap:2px; }
+.tile-title {
+  font-family:'JetBrains Mono', monospace;
+  font-size:15px; font-weight:700; color:var(--text);
+  letter-spacing:-.3px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+.tile-desc {
+  font-size:12px; color:var(--text2); line-height:1.3;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
 }
 
-/* Left color coding (saves vertical space vs top border) */
-.nav-tile::before{
-  content:'';position:absolute;left:0;top:0;bottom:0;width:3px;
+/* ── TILE META ── */
+.tile-meta { display:flex; flex-direction:column; align-items:flex-end; gap:4px; margin-left:auto; flex-shrink:0; }
+.tile-tag {
+  font-family:'JetBrains Mono', monospace;
+  font-size:8px; letter-spacing:.5px; text-transform:uppercase;
+  padding:2px 6px; border-radius:4px;
+  background:var(--surface3); color:var(--text3); white-space:nowrap;
 }
-.nav-tile.calendario::before{background:linear-gradient(180deg,var(--accent),var(--accent2));}
-.nav-tile.asignaciones::before{background:linear-gradient(180deg,#16a34a,#00a1de);}
-[data-theme="dark"] .nav-tile.asignaciones::before{background:linear-gradient(180deg,#4ade80,#00a1de);}
-.nav-tile.distribucion::before{background:linear-gradient(180deg,var(--accent2),var(--accent));}
-.nav-tile.altea::before{background:linear-gradient(180deg,#0369a1,#0891b2);}
+.tile-arrow { font-size:18px; color:var(--text3); transition:transform .2s; }
 
-/* Active states */
-.nav-tile:active{transform:scale(.98);box-shadow:0 1px 4px rgba(0,0,0,.1);}
-.nav-tile:hover{border-color:var(--text3);}
-
-/* Icon container - Fixed size for alignment */
-.tile-icon{
-  flex-shrink:0;
-  width:36px;height:36px;
-  display:flex;align-items:center;justify-content:center;
-  border-radius:10px;
-  background:var(--surface2);
-  border:1px solid var(--border);
+/* ── TILE DECO ── */
+.tile-deco {
+  position:absolute; right:-10px; bottom:-10px;
+  opacity:.04; pointer-events:none; transition:opacity .3s; color:var(--text3);
 }
-.tile-icon svg{width:20px;height:20px;}
+[data-theme="dark"] .tile-deco { opacity:.055; }
 
-/* Text content - Flexible middle */
-.tile-content{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;}
+/* ── FOOTER ── */
+.footer { text-align:center; padding-bottom:20px; margin-top:auto; }
+.footer-raccoon {
+  font-size:22px; margin-bottom:4px; display:inline-block;
+  animation:wobble 7s ease-in-out 2s infinite;
+}
+.footer-name { font-family:'JetBrains Mono', monospace; font-size:11px; font-weight:600; color:var(--text); }
+.footer-sub  { font-family:'JetBrains Mono', monospace; font-size:9px; color:var(--text3); margin-top:2px; }
+.footer-version {
+  font-family:'JetBrains Mono', monospace; font-size:9px; color:#d97706;
+  background:rgba(217,119,6,.08); border:1px solid rgba(146,64,14,.2);
+  padding:2px 8px; border-radius:6px; margin-top:6px; display:inline-block;
+}
+[data-theme="dark"] .footer-version { background:rgba(61,38,0,.5); border-color:rgba(146,64,14,.4); }
 
-/* Title */
-.tile-title{
-  font-family:'JetBrains Mono',monospace;
-  font-size:15px;font-weight:700;
-  color:var(--text);
-  letter-spacing:-.3px;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
+/* ── RESPONSIVE ── */
+@media(min-width:581px) {
+  .menu-list  { gap:10px; }
+  .nav-tile   { min-height:72px; padding:16px 18px; }
+  .tile-icon  { width:40px; height:40px; }
+  .tile-icon svg { width:22px; height:22px; }
+  .tile-title { font-size:16px; }
+  .tile-desc  { font-size:13px; }
 }
+@media(min-width:768px) { .page { padding-top:76px; } }
 
-/* Description - PRESERVED as requested, single line with ellipsis */
-.tile-desc{
-  font-size:12px;
-  color:var(--text2);
-  line-height:1.3;
-  font-weight:400;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  max-width:100%;
-}
-
-/* Right side: Tag + Arrow */
-.tile-meta{
-  display:flex;flex-direction:column;align-items:flex-end;gap:4px;
-  margin-left:auto;flex-shrink:0;
-}
-.tile-tag{
-  font-family:'JetBrains Mono',monospace;
-  font-size:8px;
-  letter-spacing:.5px;
-  text-transform:uppercase;
-  padding:2px 6px;
-  border-radius:4px;
-  background:var(--surface3);
-  color:var(--text3);
-  white-space:nowrap;
-}
-.tile-arrow{
-  font-size:18px;
-  color:var(--text3);
-  transition:transform .2s;
-}
-.nav-tile:hover .tile-arrow{transform:translateX(2px);}
-
-/* Subtle background deco (very faint, doesn't add height) */
-.tile-deco{
-  position:absolute;
-  right:-10px;bottom:-10px;
-  opacity:.04;
-  pointer-events:none;
-  transition:opacity .3s;
-}
-.nav-tile:hover .tile-deco{opacity:.08;}
-[data-theme="dark"] .tile-deco{opacity:.06;}
-
-/* Footer compact */
-.footer{text-align:center;padding-bottom:20px;margin-top:auto;}
-.footer-raccoon{font-size:22px;margin-bottom:4px;}
-.footer-name{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;color:var(--text);}
-.footer-sub{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text3);margin-top:2px;}
-.footer-version{font-family:'JetBrains Mono',monospace;font-size:9px;color:#d97706;background:rgba(61,38,0,.08);border:1px solid rgba(146,64,14,.25);padding:2px 8px;border-radius:6px;margin-top:6px;display:inline-block;}
-[data-theme="dark"] .footer-version{background:rgba(61,38,0,.5);border-color:rgba(146,64,14,.4);}
-
-/* Desktop enhancement: slightly larger on big screens */
-@media(min-width:581px){
-  .menu-list{gap:10px;}
-  .nav-tile{min-height:72px;padding:16px 18px;}
-  .tile-icon{width:40px;height:40px;}
-  .tile-icon svg{width:22px;height:22px;}
-  .tile-title{font-size:16px;}
-  .tile-desc{font-size:13px;}
-  /* Add back subtle right-side deco for desktop */
-  .tile-deco{opacity:.06;}
-  .tile-deco svg{width:80px;height:80px;}
-}
-
-/* Animation */
-@keyframes slide-up{
-  from{opacity:0;transform:translateY(10px);}
-  to{opacity:1;transform:translateY(0);}
-}
-.menu-list > *{animation:slide-up .4s ease both;}
-.menu-list > *:nth-child(1){animation-delay:.05s;}
-.menu-list > *:nth-child(2){animation-delay:.1s;}
-.menu-list > *:nth-child(3){animation-delay:.15s;}
-.menu-list > *:nth-child(4){animation-delay:.2s;}
+/* ── ENTRANCE ANIMATIONS ── */
+@keyframes slide-up { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+.brand-block                   { animation:slide-up .35s ease both; animation-delay:.03s; }
+.station-pill                  { animation:slide-up .35s ease both; animation-delay:.07s; }
+.menu-list > *:nth-child(1)    { animation:slide-up .35s ease both; animation-delay:.10s; }
+.menu-list > *:nth-child(2)    { animation:slide-up .35s ease both; animation-delay:.15s; }
+.menu-list > *:nth-child(3)    { animation:slide-up .35s ease both; animation-delay:.20s; }
+.menu-list > *:nth-child(4)    { animation:slide-up .35s ease both; animation-delay:.25s; }
+.menu-list > *:nth-child(5)    { animation:slide-up .35s ease both; animation-delay:.30s; }
+.footer                        { animation:slide-up .35s ease both; animation-delay:.35s; }
 </style>
-<base target="_blank">
 </head>
 <body>
 
+<!-- NAV -->
 <nav class="stbc-nav">
-  <a href="#" class="stbc-nav-brand">🦝 <span>WFM STBC</span></a>
-  <button class="stbc-theme-btn" id="themeBtn" onclick="toggleTheme()" title="Cambiar tema">🌙</button>
+  <a href="#" class="nav-brand">
+    <span class="nav-brand-emoji">🦝</span>
+    <span>WFM STBC</span>
+  </a>
+  <div class="nav-right">
+    <div class="nav-station">
+      <div class="station-dot-sm"></div>
+      AF/KL · MEX T1
+    </div>
+    <button class="theme-btn" id="themeBtn" onclick="toggleTheme()" aria-label="Cambiar tema">🌙</button>
+  </div>
 </nav>
 
 <main class="page">
 
+  <!-- BRAND -->
   <div class="brand-block">
     <div class="brand-main">WFM STBC</div>
     <div class="brand-sub">Tlacuache Ops · STN MEX</div>
   </div>
 
-  <div class="station-pill">
-    <div class="station-dot"></div>
-    AF/KL · MEX T1 · Turno Tarde 14:30–23:00
+  <!-- STATION PILL -->
+  <div style="text-align:center;">
+    <div class="station-pill">
+      <div class="station-dot"></div>
+      AF/KL · MEX T1 · Turno Tarde 14:30–23:00
+    </div>
   </div>
 
-  <!-- COMPACT MENU LIST -->
+  <!-- TILES -->
   <div class="menu-list">
 
-    <!-- 1. CALENDARIO -->
+    <!-- CALENDARIO -->
     <a href="calendario_stbc.html" class="nav-tile calendario">
       <svg class="tile-deco" width="60" height="60" viewBox="0 0 120 120" fill="none">
         <rect x="8" y="18" width="104" height="94" rx="10" stroke="currentColor" stroke-width="2"/>
         <line x1="8" y1="38" x2="112" y2="38" stroke="currentColor" stroke-width="2"/>
         <line x1="42" y1="38" x2="42" y2="112" stroke="currentColor" stroke-width="1"/>
         <rect x="22" y="4" width="12" height="20" rx="4" stroke="currentColor" stroke-width="2"/>
+        <rect x="86" y="4" width="12" height="20" rx="4" stroke="currentColor" stroke-width="2"/>
       </svg>
-      
       <div class="tile-icon">
         <svg viewBox="0 0 24 24" fill="none">
           <rect x="2" y="4" width="20" height="18" rx="3" stroke="var(--accent)" stroke-width="1.8" fill="none"/>
@@ -222,21 +282,20 @@ html,body{height:100%;font-family:'DM Sans',sans-serif;background:var(--bg);colo
           <circle cx="7" cy="14" r="1.5" fill="#16a34a"/>
           <circle cx="12" cy="14" r="1.5" fill="var(--border)"/>
           <circle cx="17" cy="14" r="1.5" fill="var(--border)"/>
+          <circle cx="7" cy="19" r="1.5" fill="#16a34a"/>
         </svg>
       </div>
-      
       <div class="tile-content">
         <div class="tile-title">Calendario</div>
         <div class="tile-desc">Días de trabajo, descanso, permutas y permisos</div>
       </div>
-      
       <div class="tile-meta">
         <span class="tile-tag">Calendarios</span>
         <span class="tile-arrow">→</span>
       </div>
     </a>
 
-    <!-- 2. ASIGNACIONES -->
+    <!-- ASIGNACIONES -->
     <a href="abril_stbc_map.html" class="nav-tile asignaciones">
       <svg class="tile-deco" width="60" height="60" viewBox="0 0 120 120" fill="none">
         <rect x="6" y="6" width="48" height="48" rx="8" stroke="currentColor" stroke-width="2"/>
@@ -244,7 +303,6 @@ html,body{height:100%;font-family:'DM Sans',sans-serif;background:var(--bg);colo
         <rect x="6" y="66" width="48" height="48" rx="8" stroke="currentColor" stroke-width="2"/>
         <rect x="66" y="66" width="48" height="48" rx="8" stroke="#00a1de" stroke-width="2"/>
       </svg>
-
       <div class="tile-icon">
         <svg viewBox="0 0 24 24" fill="none">
           <rect x="2" y="2" width="9" height="9" rx="2.5" stroke="#16a34a" stroke-width="1.5" fill="none"/>
@@ -257,75 +315,99 @@ html,body{height:100%;font-family:'DM Sans',sans-serif;background:var(--bg);colo
           <line x1="16" y1="16" x2="19" y2="16" stroke="#00a1de" stroke-width="1.2"/>
         </svg>
       </div>
-      
       <div class="tile-content">
         <div class="tile-title">Asignaciones</div>
         <div class="tile-desc">Posiciones, horarios y lunch por agente</div>
       </div>
-      
       <div class="tile-meta">
         <span class="tile-tag">Abril 2026</span>
         <span class="tile-arrow">→</span>
       </div>
     </a>
 
-    <!-- 3. DISTRIBUCIÓN -->
+    <!-- DISTRIBUCIÓN -->
     <a href="distribucion_supervisores.html" class="nav-tile distribucion">
       <svg class="tile-deco" width="60" height="60" viewBox="0 0 120 120" fill="none">
-        <circle cx="60" cy="32" r="18" stroke="currentColor" stroke-width="2.5" fill="none"/>
-        <circle cx="24" cy="90" r="14" stroke="currentColor" stroke-width="2" fill="none"/>
-        <circle cx="96" cy="90" r="14" stroke="currentColor" stroke-width="2" fill="none"/>
-        <circle cx="60" cy="90" r="14" stroke="currentColor" stroke-width="2" fill="none"/>
-        <line x1="60" y1="50" x2="60" y2="76" stroke="currentColor" stroke-width="1.5"/>
+        <circle cx="60" cy="28" r="18" stroke="currentColor" stroke-width="2.5" fill="none"/>
+        <circle cx="22" cy="90" r="15" stroke="currentColor" stroke-width="2" fill="none"/>
+        <circle cx="60" cy="90" r="15" stroke="currentColor" stroke-width="2" fill="none"/>
+        <circle cx="98" cy="90" r="15" stroke="currentColor" stroke-width="2" fill="none"/>
+        <line x1="60" y1="46" x2="60" y2="75" stroke="currentColor" stroke-width="1.5"/>
+        <line x1="60" y1="60" x2="22" y2="75" stroke="currentColor" stroke-width="1.5"/>
+        <line x1="60" y1="60" x2="98" y2="75" stroke="currentColor" stroke-width="1.5"/>
       </svg>
-
       <div class="tile-icon">
         <svg viewBox="0 0 24 24" fill="none">
-          <circle cx="12" cy="6" r="4" stroke="var(--accent2)" stroke-width="1.5" fill="none"/>
-          <circle cx="5" cy="18" r="3.5" stroke="var(--accent2)" stroke-width="1.5" fill="none"/>
-          <circle cx="12" cy="18" r="3.5" stroke="var(--accent2)" stroke-width="1.5" fill="none"/>
-          <circle cx="19" cy="18" r="3.5" stroke="var(--accent2)" stroke-width="1.5" fill="none"/>
-          <line x1="12" y1="10" x2="12" y2="14.5" stroke="var(--accent2)" stroke-width="1.2"/>
-          <line x1="12" y1="12.5" x2="5" y2="14.5" stroke="var(--accent2)" stroke-width="1.2"/>
-          <line x1="12" y1="12.5" x2="19" y2="14.5" stroke="var(--accent2)" stroke-width="1.2"/>
+          <circle cx="12" cy="5.5" r="3.5" stroke="var(--accent2)" stroke-width="1.5" fill="none"/>
+          <circle cx="5" cy="17.5" r="3" stroke="var(--accent2)" stroke-width="1.5" fill="none"/>
+          <circle cx="12" cy="17.5" r="3" stroke="var(--accent2)" stroke-width="1.5" fill="none"/>
+          <circle cx="19" cy="17.5" r="3" stroke="var(--accent2)" stroke-width="1.5" fill="none"/>
+          <line x1="12" y1="9" x2="12" y2="14.5" stroke="var(--accent2)" stroke-width="1.2"/>
+          <line x1="12" y1="12" x2="5" y2="14.5" stroke="var(--accent2)" stroke-width="1.2"/>
+          <line x1="12" y1="12" x2="19" y2="14.5" stroke="var(--accent2)" stroke-width="1.2"/>
         </svg>
       </div>
-      
       <div class="tile-content">
         <div class="tile-title">Distribución</div>
         <div class="tile-desc">Agentes asignados a cada supervisor</div>
       </div>
-      
       <div class="tile-meta">
         <span class="tile-tag">Turno Tarde</span>
         <span class="tile-arrow">→</span>
       </div>
     </a>
 
-    <!-- 4. ALTÉA (Standardized markup to match others) -->
+    <!-- ALTÉA -->
     <a href="altea_qrc.html" class="nav-tile altea">
       <svg class="tile-deco" width="60" height="60" viewBox="0 0 120 120" fill="none">
         <rect x="10" y="20" width="100" height="80" rx="8" stroke="currentColor" stroke-width="2.5" fill="none"/>
         <line x1="10" y1="40" x2="110" y2="40" stroke="currentColor" stroke-width="2"/>
         <rect x="22" y="52" width="38" height="7" rx="3" fill="currentColor" opacity="0.4"/>
-        <rect x="22" y="65" width="26" height="7" rx="3" fill="currentColor" opacity="0.6"/>
+        <rect x="22" y="65" width="26" height="7" rx="3" fill="currentColor" opacity="0.3"/>
+        <rect x="22" y="78" width="32" height="7" rx="3" fill="currentColor" opacity="0.2"/>
       </svg>
-
       <div class="tile-icon">
         <svg viewBox="0 0 24 24" fill="none">
-          <path d="M3 17h18M3 12h18M3 7h18" stroke="#0891b2" stroke-width="1.5" stroke-linecap="round"/>
-          <rect x="6" y="3" width="12" height="18" rx="2" stroke="#0891b2" stroke-width="1.5" fill="none"/>
-          <line x1="10" y1="8" x2="14" y2="8" stroke="#0891b2" stroke-width="1"/>
+          <rect x="4" y="2" width="16" height="20" rx="2.5" stroke="#0891b2" stroke-width="1.5" fill="none"/>
+          <line x1="7" y1="7"  x2="17" y2="7"  stroke="#0891b2" stroke-width="1.2" stroke-linecap="round"/>
+          <line x1="7" y1="11" x2="17" y2="11" stroke="#0891b2" stroke-width="1.2" stroke-linecap="round"/>
+          <line x1="7" y1="15" x2="13" y2="15" stroke="#0891b2" stroke-width="1.2" stroke-linecap="round"/>
         </svg>
       </div>
-      
       <div class="tile-content">
         <div class="tile-title">Altéa</div>
         <div class="tile-desc">Guía de referencia rápida del sistema</div>
       </div>
-      
       <div class="tile-meta">
         <span class="tile-tag">QRC</span>
+        <span class="tile-arrow">→</span>
+      </div>
+    </a>
+
+    <!-- GUÍA DEL SISTEMA -->
+    <a href="guia_sistema.html" class="nav-tile guia">
+      <svg class="tile-deco" width="60" height="60" viewBox="0 0 120 120" fill="none">
+        <circle cx="60" cy="60" r="48" stroke="currentColor" stroke-width="2.5" stroke-dasharray="7 5"/>
+        <circle cx="60" cy="60" r="28" stroke="currentColor" stroke-width="1.5" opacity=".6"/>
+        <circle cx="60" cy="60" r="10" fill="currentColor" opacity=".35"/>
+        <line x1="60" y1="12" x2="60" y2="24" stroke="currentColor" stroke-width="2"/>
+        <line x1="60" y1="96" x2="60" y2="108" stroke="currentColor" stroke-width="2"/>
+        <line x1="12" y1="60" x2="24" y2="60" stroke="currentColor" stroke-width="2"/>
+        <line x1="96" y1="60" x2="108" y2="60" stroke="currentColor" stroke-width="2"/>
+      </svg>
+      <div class="tile-icon">
+        <svg viewBox="0 0 24 24" fill="none">
+          <circle cx="12" cy="12" r="9.5" stroke="#d97706" stroke-width="1.5" fill="none"/>
+          <path d="M12 8.5C12 8.5 9.5 9.2 9.5 11.5C9.5 13.4 11 14.2 12 14.2" stroke="#d97706" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+          <circle cx="12" cy="17" r="1" fill="#d97706"/>
+        </svg>
+      </div>
+      <div class="tile-content">
+        <div class="tile-title">Guía del Sistema</div>
+        <div class="tile-desc">Preguntas frecuentes y cómo usar el sistema</div>
+      </div>
+      <div class="tile-meta">
+        <span class="tile-tag">Q&amp;A</span>
         <span class="tile-arrow">→</span>
       </div>
     </a>
@@ -343,23 +425,16 @@ html,body{height:100%;font-family:'DM Sans',sans-serif;background:var(--bg);colo
 </main>
 
 <script>
-// Theme toggle (simplified from your original)
-function toggleTheme(){
-  const html=document.documentElement;
-  const isDark=html.getAttribute('data-theme')==='dark';
-  const next=isDark?'light':'dark';
-  html.setAttribute('data-theme',next);
-  document.getElementById('themeBtn').textContent=isDark?'🌙':'☀️';
-  try{localStorage.setItem('stbc-theme',next);}catch(e){}
+function setTheme(t) {
+  document.documentElement.setAttribute('data-theme', t);
+  document.getElementById('themeBtn').textContent = t === 'dark' ? '☀️' : '🌙';
+  try { localStorage.setItem('stbc-theme', t); } catch(e) {}
 }
-(function loadTheme(){
-  try{
-    const t=localStorage.getItem('stbc-theme');
-    if(t){
-      document.documentElement.setAttribute('data-theme',t);
-      document.getElementById('themeBtn').textContent=t==='dark'?'☀️':'🌙';
-    }
-  }catch(e){}
+function toggleTheme() {
+  setTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+}
+(function() {
+  try { const s = localStorage.getItem('stbc-theme'); if (s) setTheme(s); } catch(e) {}
 })();
 </script>
 

@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guía del Sistema · Tlacuache Ops</title>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,300&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f0f2f5;
+      --surface: #ffffff;
+      --surface2: #f7f8fa;
+      --surface3: #eef0f4;
+      --border: #e2e5eb;
+      --text: #0f1923;
+      --text2: #4a5568;
+      --text3: #8898aa;
+      --accent: #2563eb;
+      --accent2: #7c3aed;
+      --accent-bg: #dbeafe;
+      --accent2-bg: #ede9fe;
+      --shadow: 0 2px 12px rgba(0,0,0,0.07);
+      --shadow-lg: 0 8px 32px rgba(0,0,0,0.10);
+      --radius: 14px;
+      --radius-sm: 8px;
+      --cal-color: #2563eb;    --cal-bg: #dbeafe;
+      --asig-color: #16a34a;   --asig-bg: #dcfce7;
+      --integ-color: #7c3aed;  --integ-bg: #ede9fe;
+      --func-color: #d97706;   --func-bg: #fef3c7;
+      --mejora-color: #0891b2; --mejora-bg: #cffafe;
+    }
+    [data-theme="dark"] {
+      --bg: #0d1117;
+      --surface: #161b22;
+      --surface2: #1c2128;
+      --surface3: #21262d;
+      --border: #30363d;
+      --text: #e6edf3;
+      --text2: #8b949e;
+      --text3: #484f58;
+      --accent: #58a6ff;
+      --accent2: #bc8cff;
+      --accent-bg: #1e3a5f;
+      --accent2-bg: #2e1065;
+      --shadow: 0 2px 12px rgba(0,0,0,0.4);
+      --shadow-lg: 0 8px 32px rgba(0,0,0,0.5);
+      --cal-color: #58a6ff;    --cal-bg: #1e3a5f;
+      --asig-color: #4ade80;   --asig-bg: #052e16;
+      --integ-color: #bc8cff;  --integ-bg: #2e1065;
+      --func-color: #fbbf24;   --func-bg: #3d2600;
+      --mejora-color: #22d3ee; --mejora-bg: #0c3040;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg); color: var(--text);
+      min-height: 100vh; transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    /* TOP BAR */
+    .topbar {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 10px 16px;
+      background: var(--surface); border-bottom: 1px solid var(--border);
+      box-shadow: var(--shadow); transition: background 0.3s, border-color 0.3s;
+    }
+    .topbar-left { display: flex; align-items: center; gap: 8px; }
+    .back-btn {
+      display: flex; align-items: center; gap: 6px;
+      text-decoration: none; color: var(--text2);
+      font-family: 'JetBrains Mono', monospace; font-size: 11px;
+      padding: 5px 10px; border: 1px solid var(--border); border-radius: 20px;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+    }
+    .back-btn:hover { color: var(--text); border-color: var(--accent); background: var(--accent-bg); }
+    .topbar-title {
+      font-family: 'JetBrains Mono', monospace; font-size: 11px;
+      color: var(--text3); display: none;
+    }
+    @media (min-width: 480px) { .topbar-title { display: block; } }
+    .topbar-right { display: flex; align-items: center; }
+    .theme-btn {
+      display: flex; align-items: center; gap: 6px;
+      background: var(--surface2); border: 1px solid var(--border); border-radius: 20px;
+      padding: 5px 12px; cursor: pointer;
+      font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text2);
+      transition: all 0.2s; user-select: none;
+    }
+    .theme-btn:hover { border-color: var(--accent); color: var(--text); }
+
+    /* HERO */
+    .hero {
+      text-align: center; padding: 40px 16px 24px;
+      max-width: 640px; margin: 0 auto;
+    }
+    .hero-kicker {
+      font-family: 'JetBrains Mono', monospace; font-size: 9px;
+      letter-spacing: 2px; text-transform: uppercase;
+      color: var(--accent); opacity: 0.8; margin-bottom: 12px;
+    }
+    .hero-icon {
+      font-size: 48px; display: block; margin-bottom: 12px;
+      animation: float 3s ease-in-out infinite;
+    }
+    @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
+    .hero-title {
+      font-size: clamp(22px, 5vw, 32px); font-weight: 700;
+      color: var(--text); line-height: 1.15; letter-spacing: -0.5px; margin-bottom: 10px;
+    }
+    .hero-desc {
+      font-size: 14px; color: var(--text2); line-height: 1.6;
+      max-width: 420px; margin: 0 auto;
+    }
+
+    /* TOC CHIPS */
+    .toc-chips {
+      display: flex; flex-wrap: wrap; justify-content: center;
+      gap: 6px; padding: 24px 16px 32px; max-width: 660px; margin: 0 auto;
+    }
+    .toc-chip {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: 500;
+      border: 1.5px solid; text-decoration: none;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .toc-chip:hover { transform: translateY(-1px); box-shadow: var(--shadow); }
+    .chip-prop    { color: var(--accent);       background: var(--accent-bg);  border-color: var(--accent); }
+    .chip-cal     { color: var(--cal-color);    background: var(--cal-bg);     border-color: var(--cal-color); }
+    .chip-asig    { color: var(--asig-color);   background: var(--asig-bg);    border-color: var(--asig-color); }
+    .chip-integ   { color: var(--integ-color);  background: var(--integ-bg);   border-color: var(--integ-color); }
+    .chip-func    { color: var(--func-color);   background: var(--func-bg);    border-color: var(--func-color); }
+    .chip-mejora  { color: var(--mejora-color); background: var(--mejora-bg);  border-color: var(--mejora-color); }
+
+    /* CONTENT */
+    .content {
+      max-width: 640px; margin: 0 auto;
+      padding: 0 16px 80px; display: flex; flex-direction: column; gap: 24px;
+    }
+
+    /* SECTION BLOCK */
+    .section-block {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow);
+      transition: background 0.3s, border-color 0.3s;
+    }
+    .section-header {
+      display: flex; align-items: center; gap: 12px;
+      padding: 18px 20px 14px; border-bottom: 1px solid var(--border);
+    }
+    .section-icon-wrap {
+      width: 40px; height: 40px; border-radius: var(--radius-sm);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px; flex-shrink: 0;
+    }
+    .section-meta { flex: 1; }
+    .section-label {
+      font-family: 'JetBrains Mono', monospace; font-size: 9px;
+      letter-spacing: 1.5px; text-transform: uppercase; opacity: 0.6; margin-bottom: 2px;
+    }
+    .section-title { font-weight: 700; font-size: 17px; letter-spacing: -0.3px; }
+
+    .sec-prop        .section-icon-wrap { background: var(--accent-bg); }
+    .sec-prop        .section-label, .sec-prop .section-title { color: var(--accent); }
+    .sec-cal         .section-icon-wrap { background: var(--cal-bg); }
+    .sec-cal         .section-label, .sec-cal .section-title { color: var(--cal-color); }
+    .sec-asig        .section-icon-wrap { background: var(--asig-bg); }
+    .sec-asig        .section-label, .sec-asig .section-title { color: var(--asig-color); }
+    .sec-integ       .section-icon-wrap { background: var(--integ-bg); }
+    .sec-integ       .section-label, .sec-integ .section-title { color: var(--integ-color); }
+    .sec-func        .section-icon-wrap { background: var(--func-bg); }
+    .sec-func        .section-label, .sec-func .section-title { color: var(--func-color); }
+    .sec-mejora      .section-icon-wrap { background: var(--mejora-bg); }
+    .sec-mejora      .section-label, .sec-mejora .section-title { color: var(--mejora-color); }
+
+    /* INTRO BODY */
+    .intro-body { padding: 18px 20px; }
+    .intro-body p { font-size: 14px; color: var(--text2); line-height: 1.65; margin-bottom: 14px; }
+    .feature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .feature-item {
+      display: flex; align-items: flex-start; gap: 8px;
+      background: var(--surface2); border: 1px solid var(--border);
+      border-radius: var(--radius-sm); padding: 10px 12px;
+    }
+    .feature-icon { font-size: 16px; flex-shrink: 0; line-height: 1; margin-top: 1px; }
+    .feature-text { font-size: 12px; color: var(--text); line-height: 1.4; font-weight: 500; }
+
+    /* Q&A */
+    .qa-list { padding: 6px 0; }
+    .qa-item { border-bottom: 1px solid var(--border); }
+    .qa-item:last-child { border-bottom: none; }
+    .qa-question {
+      display: flex; align-items: flex-start; gap: 12px;
+      padding: 16px 20px 14px; cursor: pointer;
+      transition: background 0.15s; user-select: none;
+    }
+    .qa-question:hover { background: var(--surface2); }
+    .qa-q-icon {
+      width: 24px; height: 24px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700;
+      flex-shrink: 0; margin-top: 1px;
+    }
+    .qa-q-text { flex: 1; font-weight: 600; font-size: 14px; color: var(--text); line-height: 1.45; }
+    .qa-chevron {
+      flex-shrink: 0; width: 18px; height: 18px; color: var(--text3);
+      transition: transform 0.25s ease; margin-top: 3px;
+    }
+    .qa-item.open .qa-chevron { transform: rotate(180deg); }
+    .qa-answer { max-height: 0; overflow: hidden; transition: max-height 0.35s ease; }
+    .qa-item.open .qa-answer { max-height: 900px; }
+    .qa-answer-inner { padding: 0 20px 18px 56px; }
+    .qa-answer-inner p { font-size: 13px; color: var(--text2); line-height: 1.65; margin-bottom: 10px; }
+    .qa-answer-inner p:last-child { margin-bottom: 0; }
+    .qa-pills { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+    .qa-pill {
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 500;
+      background: var(--surface2); border: 1px solid var(--border); color: var(--text2);
+    }
+
+    .q-cal   { background: var(--cal-bg);    color: var(--cal-color); }
+    .q-asig  { background: var(--asig-bg);   color: var(--asig-color); }
+    .q-integ { background: var(--integ-bg);  color: var(--integ-color); }
+    .q-func  { background: var(--func-bg);   color: var(--func-color); }
+    .q-mejora{ background: var(--mejora-bg); color: var(--mejora-color); }
+
+    /* CALLOUTS */
+    .callout {
+      display: flex; gap: 10px; background: var(--surface2);
+      border-left: 3px solid var(--accent);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      padding: 12px 14px; margin: 10px 0 4px;
+    }
+    .callout.cal   { border-color: var(--cal-color); }
+    .callout.asig  { border-color: var(--asig-color); }
+    .callout.integ { border-color: var(--integ-color); }
+    .callout.func  { border-color: var(--func-color); }
+    .callout.mejora{ border-color: var(--mejora-color); }
+    .callout-icon  { font-size: 14px; flex-shrink: 0; line-height: 1.6; }
+    .callout-text  { font-size: 12px; color: var(--text2); line-height: 1.55; }
+    .callout-text strong { color: var(--text); }
+
+    /* RELATION GRID */
+    .relation-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 10px; padding: 16px 20px 4px;
+    }
+    .relation-card { border-radius: var(--radius-sm); padding: 14px; text-align: center; }
+    .relation-card.cal  { background: var(--cal-bg);  border: 1.5px solid var(--cal-color); }
+    .relation-card.asig { background: var(--asig-bg); border: 1.5px solid var(--asig-color); }
+    .rel-card-icon { font-size: 24px; margin-bottom: 6px; }
+    .rel-card-title { font-weight: 700; font-size: 13px; margin-bottom: 4px; }
+    .relation-card.cal  .rel-card-title { color: var(--cal-color); }
+    .relation-card.asig .rel-card-title { color: var(--asig-color); }
+    .rel-card-desc { font-size: 11px; color: var(--text2); line-height: 1.4; }
+    .rel-connector {
+      text-align: center; padding: 8px 20px 4px;
+      font-size: 11px; color: var(--text3); font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* STEP LIST */
+    .step-list { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
+    .step-item {
+      display: flex; align-items: flex-start; gap: 10px;
+      background: var(--surface2); border: 1px solid var(--border);
+      border-radius: var(--radius-sm); padding: 10px 12px;
+    }
+    .step-num {
+      width: 22px; height: 22px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700;
+      flex-shrink: 0; margin-top: 1px;
+    }
+    .step-num.cal   { background: var(--cal-bg);  color: var(--cal-color); }
+    .step-num.func  { background: var(--func-bg); color: var(--func-color); }
+    .step-num.mejora{ background: var(--mejora-bg);color: var(--mejora-color); }
+    .step-text { font-size: 12px; color: var(--text2); line-height: 1.5; }
+    .step-text strong { color: var(--text); }
+
+    /* FOOTER */
+    .footer { text-align: center; padding: 32px 16px 48px; max-width: 640px; margin: 0 auto; }
+    .footer-raccoon { font-size: 24px; margin-bottom: 6px; }
+    .footer-name { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text3); letter-spacing: 0.5px; }
+
+    /* RESPONSIVE */
+    @media (min-width: 600px) {
+      .hero { padding: 56px 24px 24px; }
+      .content { padding: 0 24px 80px; }
+      .toc-chips { padding: 20px 24px 32px; }
+      .feature-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (min-width: 900px) {
+      .hero { padding: 72px 32px 28px; }
+      .content { padding: 0 32px 100px; max-width: 700px; }
+    }
+    [id] { scroll-margin-top: 64px; }
+  </style>
+</head>
+<body>
+
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <div class="topbar-left">
+      <a href="index.html" class="back-btn">← Inicio</a>
+    </div>
+    <div class="topbar-title">🦝 Guía Operativa del Sistema</div>
+    <div class="topbar-right">
+      <button class="theme-btn" onclick="toggleTheme()">
+        <span id="theme-icon">☀️</span>
+        <span id="theme-label">Oscuro</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-kicker">AF/KL · MEX T1 · Tlacuache Ops</div>
+    <span class="hero-icon">🗺️</span>
+    <h1 class="hero-title">Guía Operativa del Sistema</h1>
+    <p class="hero-desc">Referencia integral para el uso correcto del sistema de rostering. Consulta por sección según lo que necesites resolver.</p>
+  </div>
+
+  <!-- TOC CHIPS -->
+  <div class="toc-chips">
+    <a class="toc-chip chip-prop"  href="#prop">🧭 Propósito</a>
+    <a class="toc-chip chip-cal"   href="#cal">📅 Calendario</a>
+    <a class="toc-chip chip-asig"  href="#asig">📋 Asignaciones</a>
+    <a class="toc-chip chip-integ" href="#integ">🔗 Integración</a>
+    <a class="toc-chip chip-func"  href="#func">⚙️ Funcionamiento</a>
+    <a class="toc-chip chip-mejora"href="#mejora">🔄 Mejora</a>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <!-- PROPÓSITO -->
+    <div class="section-block sec-prop" id="prop">
+      <div class="section-header">
+        <div class="section-icon-wrap">🧭</div>
+        <div class="section-meta">
+          <div class="section-label">Introducción</div>
+          <div class="section-title">Propósito del sistema</div>
+        </div>
+      </div>
+      <div class="intro-body">
+        <p>El sistema de rostering ha sido diseñado como una herramienta centralizada para la gestión y visualización de la operación diaria, estableciendo un <strong>punto único de referencia confiable</strong>, alineado con la naturaleza dinámica de la operación.</p>
+        <div class="feature-grid">
+          <div class="feature-item"><span class="feature-icon">🗂️</span><span class="feature-text">Consolidar información operativa relevante</span></div>
+          <div class="feature-item"><span class="feature-icon">✅</span><span class="feature-text">Consistencia en asignación de recursos</span></div>
+          <div class="feature-item"><span class="feature-icon">⚡</span><span class="feature-text">Toma de decisiones en tiempo real</span></div>
+          <div class="feature-item"><span class="feature-icon">👁️</span><span class="feature-text">Visibilidad clara para agentes y supervisores</span></div>
+          <div class="feature-item"><span class="feature-icon">🔁</span><span class="feature-text">Permutas y movimientos operativos</span></div>
+          <div class="feature-item"><span class="feature-icon">🍽️</span><span class="feature-text">Horarios de alimentos por agente</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CALENDARIO -->
+    <div class="section-block sec-cal" id="cal">
+      <div class="section-header">
+        <div class="section-icon-wrap">📅</div>
+        <div class="section-meta">
+          <div class="section-label">Sección 1</div>
+          <div class="section-title">Calendario</div>
+        </div>
+      </div>
+      <div class="qa-list">
+
+        <div class="qa-item">
+          <div class="qa-question" onclick="toggleQA(this)">
+            <div class="qa-q-icon q-cal">?</div>
+            <div class="qa-q-text">¿Qué información proporciona el calendario?</div>
+            <svg class="qa-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="qa-answer"><div class="qa-answer-inner">
+            <p>Muestra la condición operativa de cada agente por día, presentada con un sistema visual que permite interpretación ágil:</p>
+            <div class="qa-pills">
+              <span class="qa-pill">✦ Días de trabajo</span>
+              <span class="qa-pill">⊟ Descansos programados</span>
+              <span class="qa-pill">🔁 Permutas</span>
+              <span class="qa-pill">📄 Permisos y vacaciones</span>
+              <span class="qa-pill">🏥 Incapacidades</span>
+              <span class="qa-pill">🎓 Actividades especiales</span>
+            </div>
+          </div></div>
+        </div>
+
+        <div class="qa-item">
+          <div class="qa-question" onclick="toggleQA(this)">
+            <div class="qa-q-icon q-cal">?</div>
+            <div class="qa-q-text">¿Qué significa cada color o estatus?</div>
+            <svg class="qa-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="qa-answer"><div class="qa-answer-inner">
+            <p>Cada color corresponde a un tipo de condición operativa — trabajo, descanso, permiso, permuta, incapacidad, entre otros.</p>
+            <div class="callout cal">
+              <span class="callout-icon">🎨</span>
+              <span class="callout-text">La interpretación es <strong>directa y consistente en todo el sistema</strong>. El código de color permite identificar el estatus de un vistazo, sin necesidad de leer texto adicional.</span>
+            </div>
+          </div></div>
+        </div>
+
+        <div class="qa-item">
+          <div class="qa-question" onclick="toggleQA(this)">
+            <div class="qa-q-icon q-cal">?</div>
+            <div class="qa-q-text">¿Cómo deben interpretarse las permutas?</div>
+            <svg class="qa-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="qa-answer"><div class="qa-answer-inner">
+            <p>Las permutas ya se encuentran integradas en el sistema.</p>
+            <div class="callout cal">
+              <span class="callout-icon">✅</span>
+              <span class="callout-text">El calendario refleja directamente el <strong>estado final aplicable</strong>. No es necesario realizar validaciones adicionales ni interpretaciones paralelas.</span>
+            </div>
+          </div></div>
+        </div>
+
+        <div class="qa-item">
+          <div class="qa-question" onclick="toggleQA(this)">
+            <div class="qa-q-icon q-cal">?</div>
+            <div class="qa-q-text">¿Puede cambiar la información del calendario?</div>
+            <svg class="qa-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="qa-answer"><div class="qa-answer-inner">
+            <p>Sí. La información puede actualizarse en función de requerimientos operativos, ajustes de cobertura o incidencias internas.</p>
+            <div class="callout cal">
+              <span class="callout-icon">📌</span>
+              <span class="callout-text">El calendario debe entenderse como una <strong>representación actualizada de la operación</strong>, no como un registro estático.</span>
+            </div>
+          </div></div>
+        </div>
+
+        <div class="qa-item">
+          <div class="qa-question" onclick="toggleQA(this)">
+            <div class="qa-q-icon q-cal">?</div>
+            <div class="qa-q-text">¿El calendario define las actividades del turno?</div>
+            <svg class="qa-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="qa-answer"><div class="qa-answer-inner">
+            <p>No. El calendario establece únicamente la condición del día.</p>
+            <div class="callout cal">
+              <span class="callout-icon">👉</span>
+              <span class="callout-text"><strong>¿Trabajas o no trabajas ese día?</strong> → Calendario</span>
+            </div>
+            <div class="callout asig" style="margin-top:8px;">
+              <span class="callout-icon">👉</span>
+              <span class="callout-text"><strong>¿Qué haces exactamente dentro del turno?</strong> → Asignaciones</span>
+            </div>
+          </div></div>
+        </div>
+
+        <div class="qa-item">
+          <div class="qa-question" onclick="toggleQA(this)">
+            <div class="qa-q-icon q-cal">?</div>
+            <div class="qa-q-text">¿Qué hago si detecto un estatus inesperado?</div>
+            <svg class="qa-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="qa-answer"><div class="qa-answer-inner">
+            <div class="step-list">
+              <div class="step-item">
+                <div class="step-num cal">1</div>
+                <div class="step-text"><strong>Verifica la fecha y el contexto</strong> — puede tratarse de una permuta o ajuste ya aplicado.</div>
+              </div>
+              <div class="step-item">
+                <div class="step-num cal">2</div>
+                <div class="step-text"><strong>Confirma en Asignaciones</strong> — si el estatus implica trabajo, la asignación debería reflejarlo.</div>
+              </div>
+              <div class="step-item">
+                <div class="step-num cal">3</div>
+                <div class="step-text"><strong>Canaliza la duda con tu supervisor</strong> — si la inconsistencia persiste tras los pasos anteriores.</div>
+              </div>
+            </div>
+            <div class="callout cal" style="margin-top:12px;">
+              <span class="callout-icon">💡</span>
+              <span class="callout-text">En la mayoría de los casos, el sistema ya refleja un <strong>ajuste previamente considerado</strong>.</span>
+            </div>
+          </div></div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ASIGNACIONES -->
+    <div class="section-block sec-asig" id="asig">
+      <div class="section-header">
+        <div class="section-icon-wrap">📋</div>
+        <div class="section-meta">
+          <div class="section-label">Sección 2</div>
+          <div class="section-title">Asignaciones</div>
+        </div>
+      </div>
+      <div class="qa-list">
+
+        <div class="qa-item">
+          <div class="qa-question" onclick="toggleQA(this)">
+            <div class="qa-q-icon q-asig">?</div>
+            <div class="qa-q-text">¿Qué información contiene esta sección?</div>
+            <svg class="qa-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="qa-answer"><div class="qa-answer-inner">
+            <p>La ejecución operativa detallada del turno:</p>
+            <div class="qa-pills">
+              <span class="qa-pill">📍 Posiciones asignadas</span>
+              <span class="qa-pill">⏰ Horarios específicos</span>
+              <span class="qa-pill">🍽️ Horario de alimentos</span>
+              <span class="qa-pill">🔄 Coberturas entre agentes</span>
+              <span class="qa-pill">↕️ Participación en múltiples funciones</span>
+            </div>
+          </div></div>
+        </div>
+
+        <div class="qa-item">
+          <div class="qa-question" onclick="toggleQA(this)">
+            <div class="qa-q-icon q-asig">?</div>
+            <div class="qa-q-text">¿Cómo se interpreta una asignación?</div>
+            <svg class="qa-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="qa-answer"><div class="qa-answer-inner">
+            <p>Cada asignación representa la función operativa del agente durante el turno. Puede incluir:</p>
+            <div class="qa-pills">
+              <span class="qa-pill">⏱ Segmentación por franjas horarias</span>
+              <span class="qa-pill">🔀 Rotación entre posiciones</span>
+              <span class="qa-pill">🤝 Apoyos operativos</span>
+            </div>
+          </div></div>
+        </div>
+
+        <div class="qa-item">
+          <div class="qa-question" onclick="toggleQA(this)">
+            <div class="qa-q-icon q-asig">?</div>
+            <div class="qa-q-text">¿Qué significa tener múltiples posiciones?</div>
+            <svg class="qa-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="qa-answer"><div class="qa-answer-inner">
+            <p>Indica que el agente participará en más de una función durante el turno.</p>
+            <div class="callout asig">
+              <span class="callout-icon">✅</span>
+              <span class="callout-text">Responde a un <strong>modelo operativo flexible</strong> que permite optimizar la cobertura. No es un error — es parte del diseño.</span>
+            </div>
+          </div></div>
+        </div>
+
+        <div class="qa-item">
+          <div class="qa-question" onclick="toggleQA(this)">
+            <div class="qa-q-icon q-asig">?</div>
+            <div class="qa-q-text">¿Qué son las coberturas?</div>
+            <svg class="qa-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="qa-answer"><div class="qa-answer-inner">
+            <p>Son sustituciones temporales entre agentes, comúnmente asociadas a periodos de alimentos o ajustes operativos.</p>
+            <div class="callout asig">
+              <span class="callout-icon">🔄</span>
+              <span class="callout-text">Su propósito es <strong>mantener la continuidad del servicio</strong> sin interrupciones.</span>
+            </div>
+          </div></div>
+        </div>
+
+        <div class="qa-item">
+          <div class="qa-question" onclick="toggleQA(this)">
+            <div class="qa-q-icon q-asig">?</div>
+            <div class="qa-q-text">¿Dónde veo mi horario de alimentos?</div>
+            <svg class="qa-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="qa-answer"><div class="qa-answer-inner">
+            <div class="callout asig">
+              <span class="callout-icon">🍽️</span>
+              <span class="callout-text">Dentro de tu asignación individual, <strong>claramente identificado</strong>. No está escondido.</span>
+            </div>
+          </div></div>
+        </div>
+
+        <div class="qa-item">
+          <div class="qa-question" onclick="toggleQA(this)">
+            <div class="qa-q-icon q-asig">?</div>
+            <div class="qa-q-text">¿Qué pasa si mi posición cambia durante el turno?</div>
+            <svg class="qa-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="qa-answer"><div class="qa-answer-inner">
+            <p>El sistema ya contempla cambios dentro del turno.</p>
+            <div class="callout asig">
+              <span class="callout-icon">📌</span>
+              <span class="callout-text">Las transiciones entre posiciones <strong>forman parte de la planificación operativa</strong>. Si aparecen en tu asignación, son intencionales.</span>
+            </div>
+          </div></div>
+        </div>
+
+        <div class="qa-item">
+          <div class="qa-question" onclick="toggleQA(this)">
+            <div class="qa-q-icon q-asig">?</div>
+            <div class="qa-q-text">¿Qué significa "sin asignación" o un estatus similar?</div>
+            <svg class="qa-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="qa-answer"><div class="qa-answer-inner">
+            <p>Puede indicar alguna de estas situaciones:</p>
+            <div class="qa-pills">
+              <span class="qa-pill">⏳ Ajuste en proceso</span>
+              <span class="qa-pill">📝 Posición por definir</span>
+              <span class="qa-pill">🔍 Necesidad operativa pendiente</span>
+            </div>
+            <div class="callout asig" style="margin-top:10px;">
+              <span class="callout-icon">🔄</span>
+              <span class="callout-text">La información <strong>puede actualizarse</strong> conforme evolucione la operación. Confirma con tu supervisor si persiste.</span>
+            </div>
+          </div></div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- INTEGRACIÓN -->
+    <div class="section-block sec-integ" id="integ">
+      <div class="section-header">
+        <div class="section-icon-wrap">🔗</div>
+        <div class="section-meta">
+          <div class="section-label">Uso conjunto</div>
+          <div class="section-title">Integración del sistema</div>
+        </div>
+      </div>
+
+      <div class="relation-grid">
+        <div class="relation-card cal">
+          <div class="rel-card-icon">📅</div>
+          <div class="rel-card-title">Calendario</div>
+          <div class="rel-card-desc">Define la condición del día — ¿trabajas o no?</div>
+        </div>
+        <div class="relation-card asig">
+          <div class="rel-card-icon">📋</div>
+          <div class="rel-card-title">Asignaciones</div>
+          <div class="rel-card-desc">Define la ejecución operativa dentro del turno</div>
+        </div>
+      </div>
+      <div class="rel-connector">— consultar ambas secciones = información completa —</div>
+
+      <div class="qa-list" style="margin-top:8px; border-top: 1px solid var(--border);">
+
+        <div class="qa-item">
+          <div class="qa-question" onclick="toggleQA(this)">
+            <div class="qa-q-icon q-integ">?</div>
+            <div class="qa-q-text">¿Cuál tiene prioridad si parece haber discrepancia?</div>
+            <svg class="qa-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="qa-answer"><div class="qa-answer-inner">
+            <div class="callout integ">
+              <span class="callout-icon">📌</span>
+              <span class="callout-text">La <strong>información más actualizada dentro del sistema</strong> es la referencia válida. Ambas secciones están diseñadas para ser consistentes entre sí. Si detectas una discrepancia real, repórtala.</span>
+            </div>
+          </div></div>
+        </div>
+
+      </div>
+
+      <div style="padding: 4px 20px 18px;">
+        <div class="callout integ">
+          <span class="callout-icon">⚠️</span>
+          <span class="callout-text">Si solo consultas una sección, estás trabajando con <strong>media información</strong>. Ambas son necesarias para una interpretación correcta.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- FUNCIONAMIENTO Y ALCANCE -->
+    <div class="section-block sec-func" id="func">
+      <div class="section-header">
+        <div class="section-icon-wrap">⚙️</div>
+        <div class="section-meta">
+          <div class="section-label">Alcance</div>
+          <div class="section-title">Funcionamiento del sistema</div>
+        </div>
+      </div>
+      <div class="qa-list">
+
+        <div class="qa-item">
+          <div class="qa-question" onclick="toggleQA(this)">
+            <div class="qa-q-icon q-func">?</div>
+            <div class="qa-q-text">¿El sistema es definitivo?</div>
+            <svg class="qa-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="qa-answer"><div class="qa-answer-inner">
+            <p>No. Se encuentra en una fase inicial, lo que implica ajustes continuos, evolución progresiva y optimización basada en uso real.</p>
+            <div class="qa-pills">
+              <span class="qa-pill">🌱 Fase inicial</span>
+              <span class="qa-pill">📈 Evolución progresiva</span>
+              <span class="qa-pill">🔧 Optimización continua</span>
+            </div>
+          </div></div>
+        </div>
+
+        <div class="qa-item">
+          <div class="qa-question" onclick="toggleQA(this)">
+            <div class="qa-q-icon q-func">?</div>
+            <div class="qa-q-text">¿Por qué el sistema puede cambiar frecuentemente?</div>
+            <svg class="qa-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="qa-answer"><div class="qa-answer-inner">
+            <p>Porque responde a una operación dinámica.</p>
+            <div class="callout func">
+              <span class="callout-icon">📡</span>
+              <span class="callout-text">La actualización constante permite mantener <strong>alineación con la realidad operativa</strong>. Un sistema estático no sirve a una operación viva.</span>
+            </div>
+          </div></div>
+        </div>
+
+        <div class="qa-item">
+          <div class="qa-question" onclick="toggleQA(this)">
+            <div class="qa-q-icon q-func">?</div>
+            <div class="qa-q-text">¿Es necesario revisarlo diariamente?</div>
+            <svg class="qa-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="qa-answer"><div class="qa-answer-inner">
+            <div class="callout func">
+              <span class="callout-icon">✅</span>
+              <span class="callout-text">Sí. La revisión periódica forma parte de la <strong>gestión operativa diaria</strong>. Consultar el sistema antes del turno es parte del flujo de trabajo.</span>
+            </div>
+          </div></div>
+        </div>
+
+        <div class="qa-item">
+          <div class="qa-question" onclick="toggleQA(this)">
+            <div class="qa-q-icon q-func">?</div>
+            <div class="qa-q-text">¿El sistema sustituye otras fuentes de información?</div>
+            <svg class="qa-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="qa-answer"><div class="qa-answer-inner">
+            <p>El sistema está diseñado para consolidar la información operativa relevante y se establece como <strong>referencia principal</strong>.</p>
+            <div class="callout func">
+              <span class="callout-icon">📌</span>
+              <span class="callout-text">En caso de duda entre el sistema y otra fuente, el sistema es la <strong>versión autoritativa</strong>. Si hay una diferencia real, debe reportarse.</span>
+            </div>
+          </div></div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- MEJORA CONTINUA -->
+    <div class="section-block sec-mejora" id="mejora">
+      <div class="section-header">
+        <div class="section-icon-wrap">🔄</div>
+        <div class="section-meta">
+          <div class="section-label">Proceso</div>
+          <div class="section-title">Mejora continua</div>
+        </div>
+      </div>
+      <div class="qa-list">
+
+        <div class="qa-item">
+          <div class="qa-question" onclick="toggleQA(this)">
+            <div class="qa-q-icon q-mejora">?</div>
+            <div class="qa-q-text">¿Cómo puedo contribuir a mejorar el sistema?</div>
+            <svg class="qa-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="qa-answer"><div class="qa-answer-inner">
+            <p>A través de retroalimentación sobre cualquiera de estas áreas:</p>
+            <div class="qa-pills">
+              <span class="qa-pill">⚠️ Inconsistencias detectadas</span>
+              <span class="qa-pill">💡 Áreas de mejora</span>
+              <span class="qa-pill">📈 Oportunidades de optimización</span>
+            </div>
+          </div></div>
+        </div>
+
+        <div class="qa-item">
+          <div class="qa-question" onclick="toggleQA(this)">
+            <div class="qa-q-icon q-mejora">?</div>
+            <div class="qa-q-text">¿Qué tipo de comentarios son útiles?</div>
+            <svg class="qa-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="qa-answer"><div class="qa-answer-inner">
+            <div class="step-list">
+              <div class="step-item">
+                <div class="step-num mejora">✓</div>
+                <div class="step-text"><strong>Problemas concretos</strong> — "El estatus del día X no coincide con lo asignado."</div>
+              </div>
+              <div class="step-item">
+                <div class="step-num mejora">✓</div>
+                <div class="step-text"><strong>Mejoras específicas</strong> — "Sería útil ver también el vuelo en la tarjeta de asignación."</div>
+              </div>
+              <div class="step-item">
+                <div class="step-num mejora">✓</div>
+                <div class="step-text"><strong>Basados en uso real</strong> — Observaciones que surgen de trabajar con el sistema día a día.</div>
+              </div>
+            </div>
+            <div class="callout mejora" style="margin-top:12px;">
+              <span class="callout-icon">🎯</span>
+              <span class="callout-text">El objetivo es que el sistema funcione para <strong>agentes, supervisores y la operación en su conjunto</strong>. La retroalimentación es parte del proceso.</span>
+            </div>
+          </div></div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-raccoon">🦝</div>
+    <div class="footer-name">Sistema de Todo Bajo Control (según) · con tecnología de Tlacuache Ops · AF/KL MEX T1</div>
+  </footer>
+
+<script>
+  function setTheme(t) {
+    document.documentElement.setAttribute('data-theme', t);
+    const isDark = t === 'dark';
+    document.getElementById('theme-icon').textContent = isDark ? '🌙' : '☀️';
+    document.getElementById('theme-label').textContent = isDark ? 'Claro' : 'Oscuro';
+    localStorage.setItem('stbc-theme', t);
+  }
+  function toggleTheme() {
+    setTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+  }
+  setTheme(localStorage.getItem('stbc-theme') || 'light');
+
+  function toggleQA(questionEl) {
+    const item = questionEl.closest('.qa-item');
+    const isOpen = item.classList.contains('open');
+    item.closest('.qa-list').querySelectorAll('.qa-item.open').forEach(el => {
+      if (el !== item) el.classList.remove('open');
+    });
+    item.classList.toggle('open', !isOpen);
+  }
+</script>
+</body>
+</html>
