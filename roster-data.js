@@ -21,10 +21,30 @@
     return null;
   }
 
+  function parseDescansosString(str) {
+    if (!str || typeof str !== 'string') return null;
+    var diaMap = {
+      'dom': 0, 'lun': 1, 'mar': 2, 'mie': 3, 'mié': 3,
+      'jue': 4, 'vie': 5, 'sab': 6, 'sáb': 6
+    };
+    var partes = str.split('-');
+    if (partes.length !== 2) return null;
+    var d1 = diaMap[partes[0].toLowerCase().trim()];
+    var d2 = diaMap[partes[1].toLowerCase().trim()];
+    if (d1 === undefined || d2 === undefined) return null;
+    return [d1, d2];
+  }
+
   function calcularDiaPorPatron(agentId, date) {
     var agente = getAgentById(agentId);
-    if (!agente || !agente.descansoPatron) return 'W';
-    var diasDescanso = agente.descansoPatron.diasDescanso || [];
+    if (!agente) return 'W';
+    var diasDescanso = null;
+    if (agente.descansoPatron && agente.descansoPatron.diasDescanso) {
+      diasDescanso = agente.descansoPatron.diasDescanso;
+    } else if (agente.descansos) {
+      diasDescanso = parseDescansosString(agente.descansos);
+    }
+    if (!diasDescanso || diasDescanso.length === 0) return 'W';
     var dow = date.getDay(); // 0=Dom, 1=Lun, ...
     return diasDescanso.indexOf(dow) !== -1 ? 'R' : 'W';
   }
