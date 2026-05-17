@@ -609,6 +609,12 @@ window.__CONFIG = {
         "A0": 1,
         "A5": 1,
         "A3": 1
+      },
+      "descansoPatron": {
+        "diasDescanso": [
+          0,
+          1
+        ]
       }
     },
     {
@@ -624,6 +630,12 @@ window.__CONFIG = {
         "A0": 1,
         "A5": 1,
         "A3": 1
+      },
+      "descansoPatron": {
+        "diasDescanso": [
+          0,
+          1
+        ]
       }
     },
     {
@@ -639,6 +651,12 @@ window.__CONFIG = {
         "A0": 1,
         "A5": 1,
         "A3": 1
+      },
+      "descansoPatron": {
+        "diasDescanso": [
+          0,
+          1
+        ]
       }
     },
     {
@@ -654,6 +672,31 @@ window.__CONFIG = {
         "A0": 1,
         "A5": 1,
         "A3": 1
+      },
+      "cambiosDescanso": [
+        {
+          "desde": "2026-05-18",
+          "descansos": "Mar-Mié",
+          "diasDescanso": [
+            2,
+            3
+          ]
+        }
+      ],
+      "notas": [
+        {
+          "texto": "⚠️ Esta semana cambia su patrón de descansos de Dom-Lun a Mar-Mié",
+          "tipo": "alerta",
+          "icono": "⚠️",
+          "desde": "2026-05-18",
+          "hasta": "2026-05-24"
+        }
+      ],
+      "descansoPatron": {
+        "diasDescanso": [
+          0,
+          1
+        ]
       }
     },
     {
@@ -669,6 +712,12 @@ window.__CONFIG = {
         "A0": 1,
         "A5": 0,
         "A3": 1
+      },
+      "descansoPatron": {
+        "diasDescanso": [
+          1,
+          2
+        ]
       }
     },
     {
@@ -684,6 +733,12 @@ window.__CONFIG = {
         "A0": 0.5,
         "A5": 1,
         "A3": 1
+      },
+      "descansoPatron": {
+        "diasDescanso": [
+          1,
+          2
+        ]
       }
     },
     {
@@ -699,6 +754,12 @@ window.__CONFIG = {
         "A0": 1,
         "A5": 0,
         "A3": 1
+      },
+      "descansoPatron": {
+        "diasDescanso": [
+          1,
+          2
+        ]
       }
     },
     {
@@ -714,6 +775,12 @@ window.__CONFIG = {
         "A0": 0.5,
         "A5": 0,
         "A3": 1
+      },
+      "descansoPatron": {
+        "diasDescanso": [
+          1,
+          2
+        ]
       }
     },
     {
@@ -729,6 +796,12 @@ window.__CONFIG = {
         "A0": 0.75,
         "A5": 0,
         "A3": 1
+      },
+      "descansoPatron": {
+        "diasDescanso": [
+          2,
+          3
+        ]
       }
     },
     {
@@ -744,6 +817,12 @@ window.__CONFIG = {
         "A0": 1,
         "A5": 0,
         "A3": 1
+      },
+      "descansoPatron": {
+        "diasDescanso": [
+          2,
+          3
+        ]
       }
     },
     {
@@ -759,6 +838,12 @@ window.__CONFIG = {
         "A0": 0.5,
         "A5": 0,
         "A3": 1
+      },
+      "descansoPatron": {
+        "diasDescanso": [
+          2,
+          3
+        ]
       }
     },
     {
@@ -774,6 +859,12 @@ window.__CONFIG = {
         "A0": 0.5,
         "A5": 0,
         "A3": 1
+      },
+      "descansoPatron": {
+        "diasDescanso": [
+          3,
+          4
+        ]
       }
     },
     {
@@ -789,6 +880,12 @@ window.__CONFIG = {
         "A0": 0.5,
         "A5": 1,
         "A3": 1
+      },
+      "descansoPatron": {
+        "diasDescanso": [
+          5,
+          6
+        ]
       }
     },
     {
@@ -804,6 +901,12 @@ window.__CONFIG = {
         "A0": 0.5,
         "A5": 0,
         "A3": 1
+      },
+      "descansoPatron": {
+        "diasDescanso": [
+          3,
+          4
+        ]
       }
     },
     {
@@ -819,6 +922,31 @@ window.__CONFIG = {
         "A0": 1,
         "A5": 0,
         "A3": 1
+      },
+      "cambiosDescanso": [
+        {
+          "desde": "2026-05-18",
+          "descansos": "Vie-Sáb",
+          "diasDescanso": [
+            5,
+            6
+          ]
+        }
+      ],
+      "notas": [
+        {
+          "texto": "⚠️ Esta semana cambia su patrón de descansos de Mié-Jue a Vie-Sáb",
+          "tipo": "alerta",
+          "icono": "⚠️",
+          "desde": "2026-05-18",
+          "hasta": "2026-05-24"
+        }
+      ],
+      "descansoPatron": {
+        "diasDescanso": [
+          3,
+          4
+        ]
       }
     },
     {
@@ -834,6 +962,12 @@ window.__CONFIG = {
         "A0": 0.5,
         "A5": 1,
         "A3": 1
+      },
+      "descansoPatron": {
+        "diasDescanso": [
+          3,
+          4
+        ]
       }
     },
     {
@@ -849,6 +983,12 @@ window.__CONFIG = {
         "A0": 0.75,
         "A5": 0,
         "A3": 1
+      },
+      "descansoPatron": {
+        "diasDescanso": [
+          4,
+          5
+        ]
       }
     },
     {
@@ -864,6 +1004,12 @@ window.__CONFIG = {
         "A0": 0.25,
         "A5": 1,
         "A3": 1
+      },
+      "descansoPatron": {
+        "diasDescanso": [
+          0,
+          1
+        ]
       }
     },
     {
@@ -879,6 +1025,12 @@ window.__CONFIG = {
         "A0": 1,
         "A5": 0,
         "A3": 1
+      },
+      "descansoPatron": {
+        "diasDescanso": [
+          4,
+          5
+        ]
       }
     },
     {
@@ -894,6 +1046,12 @@ window.__CONFIG = {
         "A0": 1,
         "A5": 1,
         "A3": 1
+      },
+      "descansoPatron": {
+        "diasDescanso": [
+          5,
+          6
+        ]
       }
     },
     {
@@ -909,6 +1067,12 @@ window.__CONFIG = {
         "A0": 1,
         "A5": 1,
         "A3": 1
+      },
+      "descansoPatron": {
+        "diasDescanso": [
+          5,
+          6
+        ]
       }
     },
     {
@@ -924,6 +1088,31 @@ window.__CONFIG = {
         "A0": 0.25,
         "A5": 0.5,
         "A3": 0.75
+      },
+      "cambiosDescanso": [
+        {
+          "desde": "2026-05-18",
+          "descansos": "Jue-Vie",
+          "diasDescanso": [
+            4,
+            5
+          ]
+        }
+      ],
+      "notas": [
+        {
+          "texto": "⚠️ Esta semana cambia su patrón de descansos de Mié-Jue a Jue-Vie",
+          "tipo": "alerta",
+          "icono": "⚠️",
+          "desde": "2026-05-18",
+          "hasta": "2026-05-24"
+        }
+      ],
+      "descansoPatron": {
+        "diasDescanso": [
+          3,
+          4
+        ]
       }
     },
     {
@@ -939,6 +1128,12 @@ window.__CONFIG = {
         "A0": 0,
         "A5": 1,
         "A3": 1
+      },
+      "descansoPatron": {
+        "diasDescanso": [
+          5,
+          6
+        ]
       }
     },
     {
@@ -954,6 +1149,12 @@ window.__CONFIG = {
         "A0": 0.25,
         "A5": 1,
         "A3": 1
+      },
+      "descansoPatron": {
+        "diasDescanso": [
+          5,
+          6
+        ]
       }
     },
     {
@@ -969,6 +1170,12 @@ window.__CONFIG = {
         "A0": 1,
         "A5": 0.25,
         "A3": 1
+      },
+      "descansoPatron": {
+        "diasDescanso": [
+          6,
+          0
+        ]
       }
     },
     {
@@ -984,6 +1191,12 @@ window.__CONFIG = {
         "A0": 1,
         "A5": 0,
         "A3": 1
+      },
+      "descansoPatron": {
+        "diasDescanso": [
+          6,
+          0
+        ]
       }
     },
     {
@@ -999,6 +1212,12 @@ window.__CONFIG = {
         "A0": 1,
         "A5": 1,
         "A3": 1
+      },
+      "descansoPatron": {
+        "diasDescanso": [
+          6,
+          0
+        ]
       }
     },
     {
@@ -1014,6 +1233,12 @@ window.__CONFIG = {
         "A0": 0.5,
         "A5": 1,
         "A3": 0.5
+      },
+      "descansoPatron": {
+        "diasDescanso": [
+          4,
+          5
+        ]
       }
     },
     {
@@ -1024,7 +1249,13 @@ window.__CONFIG = {
       "descansos": "Sáb-Dom",
       "cumple": "15/09",
       "skills": null,
-      "wfmExcluded": true
+      "wfmExcluded": true,
+      "descansoPatron": {
+        "diasDescanso": [
+          6,
+          0
+        ]
+      }
     },
     {
       "id": "2000562",
@@ -1034,7 +1265,13 @@ window.__CONFIG = {
       "descansos": "Sáb-Dom",
       "cumple": "08/05",
       "skills": null,
-      "wfmExcluded": true
+      "wfmExcluded": true,
+      "descansoPatron": {
+        "diasDescanso": [
+          6,
+          0
+        ]
+      }
     },
     {
       "id": "2000788",
@@ -1049,6 +1286,12 @@ window.__CONFIG = {
         "A0": 0.25,
         "A5": 0.25,
         "A3": 0.5
+      },
+      "descansoPatron": {
+        "diasDescanso": [
+          2,
+          3
+        ]
       }
     },
     {
@@ -1064,6 +1307,12 @@ window.__CONFIG = {
         "A0": 0.75,
         "A5": 0.25,
         "A3": 0.5
+      },
+      "descansoPatron": {
+        "diasDescanso": [
+          2,
+          3
+        ]
       }
     },
     {
@@ -1080,7 +1329,13 @@ window.__CONFIG = {
         "A5": 0.75,
         "A3": 0.75
       },
-      "wfmWeekendExcluded": true
+      "wfmWeekendExcluded": true,
+      "descansoPatron": {
+        "diasDescanso": [
+          4,
+          5
+        ]
+      }
     },
     {
       "id": "2000191",
@@ -1099,6 +1354,12 @@ window.__CONFIG = {
         "A0": 1,
         "A5": 1,
         "A3": 1
+      },
+      "descansoPatron": {
+        "diasDescanso": [
+          2,
+          3
+        ]
       }
     },
     {
@@ -1118,12 +1379,18 @@ window.__CONFIG = {
         "A0": 1,
         "A5": 1,
         "A3": 1
+      },
+      "descansoPatron": {
+        "diasDescanso": [
+          3,
+          4
+        ]
       }
     },
     {
       "id": "2000462",
       "nombre": "AGUILAR GUERRERO BRENDA LORENA",
-      "name": "Brenda Aguilar",
+      "name": "Lorena Aguilar",
       "tipo": "supervisor",
       "descansos": "Jue-Vie",
       "cumple": "09/09",
@@ -1137,6 +1404,12 @@ window.__CONFIG = {
         "A0": 1,
         "A5": 1,
         "A3": 1
+      },
+      "descansoPatron": {
+        "diasDescanso": [
+          4,
+          5
+        ]
       }
     },
     {
@@ -1156,6 +1429,12 @@ window.__CONFIG = {
         "A0": 1,
         "A5": 1,
         "A3": 1
+      },
+      "descansoPatron": {
+        "diasDescanso": [
+          5,
+          6
+        ]
       }
     },
     {
@@ -1175,6 +1454,12 @@ window.__CONFIG = {
         "A0": 1,
         "A5": 1,
         "A3": 1
+      },
+      "descansoPatron": {
+        "diasDescanso": [
+          0,
+          1
+        ]
       }
     },
     {
@@ -1194,6 +1479,12 @@ window.__CONFIG = {
         "A0": 1,
         "A5": 1,
         "A3": 1
+      },
+      "descansoPatron": {
+        "diasDescanso": [
+          1,
+          2
+        ]
       }
     },
     {
@@ -1272,14 +1563,80 @@ window.__CONFIG = {
     "alejandroVId": "2000788",
     "cassandraId": "2000789"
   },
-  "incapacidades": [],
+  "incapacidades": [
+    {
+      "id": "2000708",
+      "nota": "Agente no se presenta a servicio.",
+      "mes": 5,
+      "diaInicio": 4,
+      "diaFin": 31
+    },
+    {
+      "id": "2000676",
+      "nota": "Agente no se presenta a servicio.",
+      "mes": 5,
+      "diaInicio": 12,
+      "diaFin": 18
+    },
+    {
+      "id": "2000676",
+      "nota": "Agente no se presenta a servicio.",
+      "mes": 5,
+      "diaInicio": 7,
+      "diaFin": 12
+    },
+    {
+      "id": "2000708",
+      "nota": "Agente no se presenta a servicio.",
+      "mes": 6,
+      "diaInicio": 1,
+      "diaFin": 1
+    }
+  ],
   "permisoEntradaTarde": [],
-  "permisoSinGoce": [],
+  "permisoSinGoce": [
+    {
+      "id": "2000462",
+      "nota": "Agente no se presenta a servicio.",
+      "mes": 5,
+      "dia": 16
+    }
+  ],
   "cursosAduana": [],
   "descansosAjuste": [],
   "descansoLaborado": [],
   "observacionPeriodos": [],
   "permutas": [
+    {
+      "id1": "2000790",
+      "nombre1": "Alan Gama",
+      "id2": "2000562",
+      "nombre2": "Karina Ulibarri",
+      "id1_trabaja": 29,
+      "id1_trabaja_mes": 5,
+      "id1_descansa": 17,
+      "id1_descansa_mes": 5,
+      "id2_trabaja": 17,
+      "id2_trabaja_mes": 5,
+      "id2_descansa": 29,
+      "id2_descansa_mes": 5,
+      "mes": 5
+    },
+    {
+      "id1": "2000718",
+      "nombre1": "Nadia Fraga",
+      "id2": "2000790",
+      "nombre2": "Alan Gama",
+      "id1_trabaja": 13,
+      "id1_trabaja_mes": 5,
+      "id1_descansa": 15,
+      "id1_descansa_mes": 5,
+      "id2_trabaja": 15,
+      "id2_trabaja_mes": 5,
+      "id2_descansa": 13,
+      "id2_descansa_mes": 5,
+      "mes": 5
+    },
     {
       "id1": "2000718",
       "nombre1": "Nadia Fraga",
@@ -1292,6 +1649,21 @@ window.__CONFIG = {
       "id2_trabaja": 17,
       "id2_trabaja_mes": 5,
       "id2_descansa": 22,
+      "id2_descansa_mes": 5,
+      "mes": 5
+    },
+    {
+      "id1": "2000677",
+      "nombre1": "Rey Belman",
+      "id2": "2000707",
+      "nombre2": "Liliana Solares",
+      "id1_trabaja": 20,
+      "id1_trabaja_mes": 5,
+      "id1_descansa": 18,
+      "id1_descansa_mes": 5,
+      "id2_trabaja": 18,
+      "id2_trabaja_mes": 5,
+      "id2_descansa": 20,
       "id2_descansa_mes": 5,
       "mes": 5
     }

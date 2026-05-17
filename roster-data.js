@@ -21,6 +21,23 @@
     return null;
   }
 
+  function getNotasAgente(agentId, date) {
+    var agente = getAgentById(agentId);
+    if (!agente || !agente.notas || agente.notas.length === 0) return [];
+    var ts = date.getTime();
+    var resultado = [];
+    for (var i = 0; i < agente.notas.length; i++) {
+      var nota = agente.notas[i];
+      var desde = nota.desde ? new Date(nota.desde + 'T00:00:00').getTime() : null;
+      var hasta = nota.hasta ? new Date(nota.hasta + 'T23:59:59').getTime() : null;
+      var activa = true;
+      if (desde !== null && ts < desde) activa = false;
+      if (hasta !== null && ts > hasta) activa = false;
+      if (activa) resultado.push(nota);
+    }
+    return resultado;
+  }
+
   function parseDescansosString(str) {
     if (!str || typeof str !== 'string') return null;
     var diaMap = {
@@ -35,18 +52,58 @@
     return [d1, d2];
   }
 
-  function calcularDiaPorPatron(agentId, date) {
+  function getPatronDescansoEfectivo(agentId, date) {
     var agente = getAgentById(agentId);
-    if (!agente) return 'W';
+    if (!agente) return null;
+
     var diasDescanso = null;
-    if (agente.descansoPatron && agente.descansoPatron.diasDescanso) {
-      diasDescanso = agente.descansoPatron.diasDescanso;
-    } else if (agente.descansos) {
-      diasDescanso = parseDescansosString(agente.descansos);
+    var descansosStr = null;
+    var esCambio = false;
+    var cambioDesde = null;
+
+    // Verificar cambios de descanso programados (aplicar el más reciente cuya fecha ya haya llegado)
+    if (agente.cambiosDescanso && agente.cambiosDescanso.length > 0) {
+      var ts = date.getTime();
+      for (var ci = 0; ci < agente.cambiosDescanso.length; ci++) {
+        var cambio = agente.cambiosDescanso[ci];
+        var cd = new Date(cambio.desde + 'T00:00:00');
+        if (ts >= cd.getTime()) {
+          if (cambio.diasDescanso && cambio.diasDescanso.length > 0) {
+            diasDescanso = cambio.diasDescanso;
+          } else if (cambio.descansos) {
+            diasDescanso = parseDescansosString(cambio.descansos);
+          }
+          descansosStr = cambio.descansos || null;
+          esCambio = true;
+          cambioDesde = cambio.desde;
+        }
+      }
     }
-    if (!diasDescanso || diasDescanso.length === 0) return 'W';
+
+    if (!diasDescanso) {
+      if (agente.descansoPatron && agente.descansoPatron.diasDescanso) {
+        diasDescanso = agente.descansoPatron.diasDescanso;
+      } else if (agente.descansos) {
+        diasDescanso = parseDescansosString(agente.descansos);
+      }
+      descansosStr = agente.descansos || null;
+    }
+
+    if (!diasDescanso || diasDescanso.length === 0) return null;
+    return {
+      descansos: descansosStr,
+      diasDescanso: diasDescanso,
+      esCambio: esCambio,
+      desde: cambioDesde,
+      baseDescansos: agente.descansos || null
+    };
+  }
+
+  function calcularDiaPorPatron(agentId, date) {
+    var patron = getPatronDescansoEfectivo(agentId, date);
+    if (!patron) return 'W';
     var dow = date.getDay(); // 0=Dom, 1=Lun, ...
-    return diasDescanso.indexOf(dow) !== -1 ? 'R' : 'W';
+    return patron.diasDescanso.indexOf(dow) !== -1 ? 'R' : 'W';
   }
 
   function esCumpleanos(agentId, date) {
@@ -175,7 +232,7 @@
       return {
         status: 'cumpleanos',
         label: 'Cumpleaños',
-        canWork: true,
+        canWork: false,
       };
     }
 
@@ -348,6 +405,8 @@
     getAvailableAgents: getAvailableAgents,
     getUnavailableAgents: getUnavailableAgents,
     getAvailabilityStats: getAvailabilityStats,
+    getPatronDescansoEfectivo: getPatronDescansoEfectivo,
+    getNotasAgente: getNotasAgente,
 
     isCurso: isCurso,
     getCursoHorario: getCursoHorario,

@@ -461,6 +461,91 @@
         .coverage-low { background: rgba(220,38,38,0.15); color: #dc2626; }
         .day.today .day-coverage, .day.selected .day-coverage { background: rgba(255,255,255,0.2); color: white; }
 
+        /* WEEK BAR (compact) */
+        .week-bar {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 12px;
+            align-items: center;
+        }
+        .week-bar-nav {
+            background: var(--surface3);
+            border: 1px solid var(--border);
+            color: var(--text2);
+            width: 32px;
+            height: 32px;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.2s;
+        }
+        .week-bar-nav:hover { background: var(--border); }
+        .week-bar-days {
+            display: flex;
+            gap: 4px;
+            flex: 1;
+            overflow-x: auto;
+        }
+        .week-bar-day {
+            flex: 1;
+            min-width: 44px;
+            aspect-ratio: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+            background: var(--surface2);
+            border: 2px solid var(--border);
+            color: var(--text2);
+            transition: all 0.15s;
+            gap: 2px;
+        }
+        .week-bar-day:hover { background: var(--surface3); border-color: var(--accent); }
+        .week-bar-day.wbd-today { background: var(--accent); color: white; border-color: var(--accent); }
+        .week-bar-day.wbd-selected { background: var(--accent2); color: white; border-color: var(--accent2); }
+        .week-bar-day .wbd-label { font-size: 9px; text-transform: uppercase; opacity: 0.8; }
+        .week-bar-day .wbd-num { font-size: 14px; font-family: 'JetBrains Mono', monospace; }
+
+        .expand-month-btn {
+            background: var(--surface3);
+            border: 1px solid var(--border);
+            color: var(--text2);
+            padding: 6px 12px;
+            border-radius: var(--radius-sm);
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 12px;
+            transition: all 0.2s;
+        }
+        .expand-month-btn:hover { background: var(--border); color: var(--text); }
+
+        .calendar-expanded { display: block; }
+        .calendar-collapsed { display: none; }
+
+        /* Search focus mode */
+        .search-active .calendar-card,
+        .search-active .filters,
+        .search-active .week-bar,
+        .search-active .service-counter,
+        .search-active .list-footer {
+            display: none !important;
+        }
+        .search-active #agents-section {
+            margin-top: 0;
+        }
+
         /* FILTERS */
         .filters {
             background: var(--surface);
@@ -1073,6 +1158,252 @@
         font-style: italic;
         margin-top: 0.5em;
     }
+
+    /* ═══════════════════════════════════════════════════
+       BOTTOM TOOLBAR + BOTTOM SHEETS
+       ═══════════════════════════════════════════════════ */
+    .bottom-toolbar {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 400;
+        display: flex;
+        justify-content: center;
+        padding: 6px 16px calc(6px + env(safe-area-inset-bottom));
+    }
+    .bottom-toolbar-inner {
+        display: flex;
+        gap: 6px;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 6px;
+        box-shadow: var(--shadow-lg);
+        width: auto;
+    }
+    .toolbar-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        padding: 7px 14px;
+        border-radius: var(--radius-sm);
+        border: 1px solid transparent;
+        background: transparent;
+        color: var(--text2);
+        font-size: 12px;
+        font-weight: 600;
+        font-family: 'DM Sans', sans-serif;
+        cursor: pointer;
+        transition: all .15s;
+        -webkit-tap-highlight-color: transparent;
+        white-space: nowrap;
+    }
+    .toolbar-btn:active { transform: scale(.96); }
+    .toolbar-btn.active {
+        background: var(--accent);
+        border-color: var(--accent);
+        color: #fff;
+    }
+    .toolbar-btn .tb-icon { font-size: 14px; line-height: 1; }
+
+    /* Bottom sheet overlay */
+    .sheet-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 450;
+        background: rgba(0,0,0,0.4);
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity .25s, visibility .25s;
+    }
+    .sheet-overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
+    .sheet {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 460;
+        background: var(--surface);
+        border-radius: var(--radius) var(--radius) 0 0;
+        box-shadow: var(--shadow-lg);
+        transform: translateY(100%);
+        transition: transform .3s cubic-bezier(.32,.72,.35,1);
+        max-height: 75vh;
+        display: flex;
+        flex-direction: column;
+    }
+    .sheet.active { transform: translateY(0); }
+    .sheet-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px 16px 10px;
+        border-bottom: 1px solid var(--border);
+        flex-shrink: 0;
+    }
+    .sheet-title {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 11px;
+        font-weight: 700;
+        color: var(--text3);
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+    }
+    .sheet-close {
+        background: var(--surface3);
+        border: 1px solid var(--border);
+        font-size: 22px;
+        color: var(--text3);
+        cursor: pointer;
+        padding: 0;
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: var(--radius-sm);
+        transition: all .15s;
+    }
+    .sheet-close:active { background: var(--border); transform: scale(0.95); }
+    .sheet-body {
+        overflow-y: auto;
+        padding: 12px 16px 24px;
+        -webkit-overflow-scrolling: touch;
+    }
+    /* Sheet drag handle */
+    .sheet-handle {
+        width: 36px;
+        height: 4px;
+        background: var(--border);
+        border-radius: 2px;
+        margin: 8px auto 0;
+        flex-shrink: 0;
+    }
+
+    /* Body padding for fixed toolbar */
+    body { padding-bottom: 68px; }
+
+    /* ═══════════════════════════════════════════════════
+       AGENT CARDS — CLEANER BUT STILL CARDS
+       ═══════════════════════════════════════════════════ */
+    .agents-list {
+        gap: 10px;
+    }
+    .agent-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-left: 3px solid transparent;
+        border-radius: var(--radius-sm);
+        box-shadow: var(--shadow);
+        padding: 12px 14px;
+        margin: 0;
+        transition: all 0.15s;
+    }
+    .agent-card:hover {
+        transform: translateX(2px);
+        box-shadow: var(--shadow-lg);
+    }
+    .agent-card:active {
+        transform: scale(0.99);
+    }
+    /* Keep left border colors */
+    .agent-card.trabajo { border-left-color: var(--c-trabajo); }
+    .agent-card.descanso { border-left-color: var(--c-descanso); }
+    .agent-card.permiso { border-left-color: var(--c-permiso); }
+    .agent-card.sin-goce { border-left-color: var(--c-sin-goce); }
+    .agent-card.incapacidad { border-left-color: var(--c-incapacidad); }
+    .agent-card.cumpleanos { border-left-color: var(--c-cumple); }
+    .agent-card.curso { border-left-color: var(--c-curso); }
+    .agent-card.curso-recurrente { border-left-color: #eab308; }
+    .agent-card.descanso-ajuste { border-left-color: var(--c-desc-ajuste); }
+    .agent-card.trabaja-descanso-laborado { border-left-color: var(--c-trabaja-descanso-laborado); }
+    .agent-card.permuta-trabajo { border-left-color: var(--c-permuta-t); }
+    .agent-card.permuta-descanso { border-left-color: var(--c-permuta-d); }
+
+    /* ═══════════════════════════════════════════════════
+       MODAL — 3 ZONES
+       ═══════════════════════════════════════════════════ */
+    .modal-status-zone {
+        text-align: center;
+        padding: 20px 0 16px;
+        border-bottom: 1px solid var(--border);
+        margin-bottom: 16px;
+    }
+    .modal-status-badge-lg {
+        display: inline-block;
+        padding: 8px 20px;
+        border-radius: 20px;
+        font-size: 15px;
+        font-weight: 700;
+        margin-bottom: 10px;
+    }
+    .modal-agent-name-lg {
+        font-size: 20px;
+        font-weight: 700;
+        color: var(--text);
+        margin-bottom: 4px;
+    }
+    .modal-date-sub {
+        font-size: 13px;
+        color: var(--text3);
+        font-family: 'JetBrains Mono', monospace;
+    }
+    .modal-next-rest-zone {
+        background: var(--surface2);
+        border-radius: var(--radius-sm);
+        padding: 14px 16px;
+        margin-bottom: 16px;
+        text-align: center;
+    }
+    .modal-next-rest-label {
+        font-size: 11px;
+        font-weight: 700;
+        color: var(--text3);
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        font-family: 'JetBrains Mono', monospace;
+        margin-bottom: 4px;
+    }
+    .modal-next-rest-value {
+        font-size: 18px;
+        font-weight: 700;
+        color: var(--text);
+    }
+    .modal-details-toggle {
+        width: 100%;
+        padding: 12px;
+        border-radius: var(--radius-sm);
+        border: 1px solid var(--border);
+        background: var(--surface3);
+        color: var(--text2);
+        font-size: 13px;
+        font-weight: 700;
+        font-family: 'JetBrains Mono', monospace;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        margin-bottom: 16px;
+        transition: all .15s;
+    }
+    .modal-details-toggle:active { background: var(--border); }
+    .modal-details-zone {
+        display: none;
+    }
+    .modal-details-zone.expanded {
+        display: block;
+    }
+
+    /* Filters hidden by default (inside sheet) */
+    #view-calendar > .filters {
+        display: none;
+    }
 </style>
 </head>
 <body>
@@ -1094,22 +1425,22 @@
     <div class="header">
         <div class="header-top">
             <div>
-                <div class="header-title">✈ ROSTER · MAR–MAY 2026</div>
+                <div class="header-title">✈ ROSTER · MAR–AGO 2026</div>
                 <div class="header-subtitle" id="current-date-display"></div>
             </div>
         </div>
         <div class="roster-meta">
             <div class="meta-item"><span class="meta-dot"></span> VIGENTE</div>
-            <div class="meta-item">39 AGENTES · AEROPUERTO</div>
-            <div class="meta-item">GENERADO: 01 MAR 2026 · 00:00</div>
-            <div class="meta-item">ACTUALIZADO: 09 MAY 2026 · 22:58</div>
+            <div class="meta-item">42 AGENTES · AEROPUERTO</div>
+            <div class="meta-item">GENERADO: 16 MAY 2026 · 19:28</div>
+            <div class="meta-item">ACTUALIZADO: 17 MAY 2026 · 00:03</div>
         </div>
         <div class="brand-strip">
             <span class="brand-icon">🦝</span>
             <span class="brand-name">Sistema de Todo Bajo Control (según)</span>
             <span class="brand-sep">·</span>
             <span class="brand-tagline">con tecnología de Tlacuache Ops</span>
-            <span class="brand-version">V 4.50 prod 1 KIMI</span>
+            <span class="brand-version">V 4.73 beta 1 KC</span>
         </div>
     </div>
 
@@ -1118,18 +1449,32 @@
         <button class="view-tab" id="tab-3" onclick="setMonth(3)">Marzo</button>
         <button class="view-tab" id="tab-4" onclick="setMonth(4)">Abril</button>
         <button class="view-tab" id="tab-5" onclick="setMonth(5)">Mayo</button>
+        <button class="view-tab" id="tab-6" onclick="setMonth(6)">Junio</button>
+        <button class="view-tab" id="tab-7" onclick="setMonth(7)">Julio</button>
+        <button class="view-tab" id="tab-8" onclick="setMonth(8)">Agosto</button>
     </div>
 
     <!-- SEARCH -->
     <div class="search-bar">
         <span class="search-icon">🔍</span>
-        <input type="text" class="search-input" id="search-input" placeholder="Buscar por nombre o ID..." oninput="onSearch(this.value)">
+        <input type="text" class="search-input" id="search-input" placeholder="¿Trabajas hoy? Busca tu nombre..." oninput="onSearch(this.value)">
         <button class="search-clear" id="search-clear" onclick="clearSearch()">✕</button>
     </div>
 
     <!-- CALENDAR + AGENTS (unified view) -->
     <div id="view-calendar">
-        <div class="calendar-card">
+        <!-- WEEK BAR (compact, default visible) -->
+        <div class="calendar-card" id="week-bar-container">
+            <div class="week-bar" id="week-bar"></div>
+            <div style="text-align:center">
+                <button class="expand-month-btn" onclick="toggleMonthView()" id="btn-expand-month">
+                    📅 Ver mes completo
+                </button>
+            </div>
+        </div>
+
+        <!-- FULL MONTH CALENDAR (hidden by default) -->
+        <div class="calendar-card calendar-collapsed" id="full-calendar">
             <div class="month-nav">
                 <button onclick="previousMonth()" id="prev-btn" disabled>◀</button>
                 <span class="month-name" id="month-name"></span>
@@ -1192,9 +1537,60 @@
         <span class="brand-name">Sistema de Todo Bajo Control (según)</span>
         <span class="brand-sep">·</span>
         <span class="brand-tagline">con tecnología de Tlacuache Ops</span>
-        <span class="brand-version">V 4.50 prod 1 KIMI</span>
+        <span class="brand-version">V 4.73 beta 1 KC</span>
     </div>
 
+</div>
+
+<!-- BOTTOM TOOLBAR -->
+<div class="bottom-toolbar">
+    <div class="bottom-toolbar-inner">
+        <button class="toolbar-btn" id="tb-stats" onclick="openSheet('sheet-stats')">
+            <span class="tb-icon">📊</span>
+            <span>Totales</span>
+        </button>
+        <button class="toolbar-btn" id="tb-legend" onclick="openSheet('sheet-legend')">
+            <span class="tb-icon">ℹ️</span>
+            <span>Leyenda</span>
+        </button>
+        <button class="toolbar-btn" id="tb-filters" onclick="openSheet('sheet-filters')">
+            <span class="tb-icon">🔍</span>
+            <span>Filtrar</span>
+        </button>
+    </div>
+</div>
+
+<!-- BOTTOM SHEET: STATS -->
+<div class="sheet-overlay" id="overlay-stats" onclick="closeSheet('sheet-stats')"></div>
+<div class="sheet" id="sheet-stats">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <div class="sheet-title" id="sheet-stats-title">📊 Cobertura del turno</div>
+        <button class="sheet-close" onclick="closeSheet('sheet-stats')">×</button>
+    </div>
+    <div class="sheet-body" id="sheet-stats-body"></div>
+</div>
+
+<!-- BOTTOM SHEET: LEGEND -->
+<div class="sheet-overlay" id="overlay-legend" onclick="closeSheet('sheet-legend')"></div>
+<div class="sheet" id="sheet-legend">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <div class="sheet-title">ℹ️ Leyenda de estados</div>
+        <button class="sheet-close" onclick="closeSheet('sheet-legend')">×</button>
+    </div>
+    <div class="sheet-body" id="sheet-legend-body"></div>
+</div>
+
+<!-- BOTTOM SHEET: FILTERS -->
+<div class="sheet-overlay" id="overlay-filters" onclick="closeSheet('sheet-filters')"></div>
+<div class="sheet" id="sheet-filters">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <div class="sheet-title">🔍 Filtrar por estado</div>
+        <button class="sheet-close" onclick="closeSheet('sheet-filters')">×</button>
+    </div>
+    <div class="sheet-body" id="sheet-filters-body"></div>
 </div>
 
 <!-- MODAL -->
@@ -1300,27 +1696,32 @@
     const MONTHS = {
         3: { name:'Marzo', year:2026, days:31, firstDow:0 },
         4: { name:'Abril', year:2026, days:30, firstDow:3 },
-        5: { name:'Mayo', year:2026, days:31, firstDow:5 }
+        5: { name:'Mayo', year:2026, days:31, firstDow:5 },
+        6: { name:'Junio', year:2026, days:30, firstDow:1 },
+        7: { name:'Julio', year:2026, days:31, firstDow:3 },
+        8: { name:'Agosto', year:2026, days:31, firstDow:6 }
     };
     const diasArr = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
     const mesesArr = ['','Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
 
-    let currentMonth = 3;
-    let selectedDay = 1;
-    let activeFilter = 'all';
-    let searchQuery = '';
-    let weekOffset = 0;
-    let subView = 'list';
-    const MIN_COVERAGE = 20;
-
+    // Meses disponibles (filtrar pasados dinámicamente)
+    const ALL_MONTHS = [3,4,5,6,7,8];
     const todayRaw = new Date();
     const todayM = todayRaw.getMonth()+1;
     const todayD = todayRaw.getDate();
     const todayY = todayRaw.getFullYear();
-    if(todayY===2026 && todayM>=3 && todayM<=5) {
-        currentMonth = todayM;
-        selectedDay = todayD;
-    }
+    const MIN_MONTH = (todayY === 2026) ? Math.max(3, todayM) : 3;
+    const MAX_MONTH = 8;
+    const VISIBLE_MONTHS = ALL_MONTHS.filter(m => m >= MIN_MONTH);
+
+    let currentMonth = MIN_MONTH;
+    let selectedDay = (todayY === 2026 && todayM >= MIN_MONTH && todayM <= MAX_MONTH) ? todayD : 1;
+    let activeFilter = 'all';
+    let searchQuery = '';
+    let weekOffset = 0;
+    let subView = 'list';
+    let monthExpanded = false;
+    const MIN_COVERAGE = 20;
 
     // ═══════════════════════════════════════════════════
     // LÓGICA DE ESTADO
@@ -1385,16 +1786,24 @@ function getStatus(agId, month, day) {
         } else {
             selectedDay = 1;
         }
-        [3,4,5].forEach(n => document.getElementById('tab-'+n).classList.toggle('active', n===m));
-        document.getElementById('prev-btn').disabled = (m===3);
-        document.getElementById('next-btn').disabled = (m===5);
+        VISIBLE_MONTHS.forEach(n => document.getElementById('tab-'+n).classList.toggle('active', n===m));
+        document.getElementById('prev-btn').disabled = (m===MIN_MONTH);
+        document.getElementById('next-btn').disabled = (m===MAX_MONTH);
         renderCal();
+        renderWeekBar();
         renderAgents();
         if(subView==='week') renderWeekly();
     }
 
-    function previousMonth() { if(currentMonth>3) setMonth(currentMonth-1); }
-    function nextMonth() { if(currentMonth<5) setMonth(currentMonth+1); }
+    function previousMonth() { if(currentMonth>MIN_MONTH) setMonth(currentMonth-1); }
+    function nextMonth() { if(currentMonth<MAX_MONTH) setMonth(currentMonth+1); }
+
+    function updateVisibleTabs() {
+        ALL_MONTHS.forEach(m => {
+            const tab = document.getElementById('tab-'+m);
+            if(tab) tab.style.display = (m >= MIN_MONTH) ? '' : 'none';
+        });
+    }
 
     // ═══════════════════════════════════════════════════
     // DARK MODE
@@ -1435,13 +1844,23 @@ function getStatus(agId, month, day) {
     function onSearch(val) {
         searchQuery = val.toLowerCase();
         document.getElementById('search-clear').style.display = val ? 'block' : 'none';
+        const container = document.getElementById('view-calendar');
+        if (val.length > 0) {
+            container.classList.add('search-active');
+        } else {
+            container.classList.remove('search-active');
+        }
         renderAgents();
         if(subView==='week') renderWeekly();
     }
 
     function clearSearch() {
         document.getElementById('search-input').value = '';
-        onSearch('');
+        searchQuery = '';
+        document.getElementById('search-clear').style.display = 'none';
+        document.getElementById('view-calendar').classList.remove('search-active');
+        renderAgents();
+        if(subView==='week') renderWeekly();
     }
 
     function matchesSearch(a) {
@@ -1469,8 +1888,8 @@ function getStatus(agId, month, day) {
         document.getElementById('current-date-display').textContent =
             new Date().toLocaleDateString('es-MX',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
 
-        document.getElementById('prev-btn').disabled = (currentMonth===3);
-        document.getElementById('next-btn').disabled = (currentMonth===5);
+        document.getElementById('prev-btn').disabled = (currentMonth===MIN_MONTH);
+        document.getElementById('next-btn').disabled = (currentMonth===MAX_MONTH);
 
         const cal = document.getElementById('calendar-days');
         cal.innerHTML = '';
@@ -1497,8 +1916,101 @@ function getStatus(agId, month, day) {
         selectedDay = d;
         weekOffset = 0;
         renderCal();
+        renderWeekBar();
         renderAgents();
         if(subView==='week') renderWeekly();
+    }
+
+    function selectDayFromBar(d, m) {
+        selectedDay = d;
+        currentMonth = m;
+        weekOffset = 0;
+        renderCal();
+        renderWeekBar();
+        renderAgents();
+        if(subView==='week') renderWeekly();
+    }
+
+    // ═══════════════════════════════════════════════════
+    // BOTTOM SHEETS
+    // ═══════════════════════════════════════════════════
+    function openSheet(id) {
+        document.getElementById('overlay-'+id.replace('sheet-','')).classList.add('active');
+        document.getElementById(id).classList.add('active');
+        document.body.style.overflow = 'hidden';
+        // Populate sheet content on open
+        if(id==='sheet-stats') populateStatsSheet();
+        if(id==='sheet-legend') populateLegendSheet();
+        if(id==='sheet-filters') populateFiltersSheet();
+    }
+    function closeSheet(id) {
+        document.getElementById('overlay-'+id.replace('sheet-','')).classList.remove('active');
+        document.getElementById(id).classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    function populateStatsSheet() {
+        const mi = MONTHS[currentMonth];
+        const dow = new Date(2026,currentMonth-1,selectedDay).getDay();
+        const fechaStr = diasArr[dow] + ' ' + selectedDay + ' ' + mi.name;
+        document.getElementById('sheet-stats-title').textContent = '📊 Cobertura del turno · ' + fechaStr;
+        let count=0, countAgentes=0, countSupervisores=0;
+        agentes.forEach(a => {
+            const st = getStatus(a.id, currentMonth, selectedDay);
+            if(st==='trabajo'||st==='curso'||st==='curso-recurrente'||st==='permiso-tarde'||st==='permuta-trabajo') {
+                count++;
+                if(a.tipo.includes('Supervisor')) countSupervisores++; else countAgentes++;
+            }
+        });
+        document.getElementById('sheet-stats-body').innerHTML = `
+            <div class="service-counter" style="cursor:default;border:none;box-shadow:none;padding:8px 0">
+                <div class="counter-main" style="justify-content:center">
+                    <div class="counter-right">
+                        <div class="counter-value" style="font-size:42px">${count}</div>
+                    </div>
+                </div>
+                <div style="text-align:center;font-size:13px;color:var(--text2);margin-top:4px">agentes en servicio</div>
+            </div>
+            <div class="counter-breakdown" style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border)">
+                <div class="counter-item"><span>🎫 Agentes de tráfico</span><span class="counter-item-value">${countAgentes}</span></div>
+                <div class="counter-item"><span>👔 Supervisores</span><span class="counter-item-value">${countSupervisores}</span></div>
+            </div>`;
+    }
+
+    function populateLegendSheet() {
+        document.getElementById('sheet-legend-body').innerHTML = `
+            <div class="legend-items" style="grid-template-columns:1fr;gap:10px">
+                <div class="legend-item"><div class="legend-dot" style="background:var(--c-trabajo)"></div>En servicio</div>
+                <div class="legend-item"><div class="legend-dot" style="background:var(--c-descanso)"></div>Descanso</div>
+                <div class="legend-item"><div class="legend-dot" style="background:var(--c-curso)"></div>Curso Aduana AF</div>
+                <div class="legend-item"><div class="legend-dot" style="background:#eab308"></div>Curso AF-KL</div>
+                <div class="legend-item"><div class="legend-dot" style="background:var(--c-permiso)"></div>Permiso</div>
+                <div class="legend-item"><div class="legend-dot" style="background:var(--c-sin-goce)"></div>S/Goce</div>
+                <div class="legend-item"><div class="legend-dot" style="background:var(--c-permuta-t)"></div>Permuta · Trabaja</div>
+                <div class="legend-item"><div class="legend-dot" style="background:var(--c-permuta-d)"></div>Permuta · Descansa</div>
+                <div class="legend-item"><div class="legend-dot" style="background:var(--c-desc-ajuste)"></div>Desc. Ajuste</div>
+                <div class="legend-item"><div class="legend-dot" style="background:var(--c-cumple)"></div>Cumpleaños</div>
+                <div class="legend-item"><div class="legend-dot" style="background:var(--c-trabaja-descanso-laborado)"></div>Desc. laborado</div>
+            </div>`;
+    }
+
+    function populateFiltersSheet() {
+        const chips = [
+            {f:'all',label:'Todos'},
+            {f:'trabajo',label:'✅ En servicio'},
+            {f:'descanso',label:'💤 Descanso'},
+            {f:'permiso',label:'🟡 Permiso'},
+            {f:'sin-goce',label:'🟣 S/Goce'},
+            {f:'curso',label:'📚 Curso'},
+            {f:'supervisor',label:'👔 Supervisores'}
+        ];
+        document.getElementById('sheet-filters-body').innerHTML = `
+            <div class="filter-chips" style="flex-direction:column;align-items:stretch">
+                ${chips.map(c => `<span class="chip ${activeFilter===c.f?'active-filter':''}" data-filter="${c.f}" onclick="setFilter('${c.f}');closeSheet('sheet-filters')">${c.label}</span>`).join('')}
+            </div>
+            <div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border);text-align:center">
+                <button class="expand-month-btn" onclick="setFilter('all');closeSheet('sheet-filters')">Restablecer filtros</button>
+            </div>`;
     }
 
     // ═══════════════════════════════════════════════════
@@ -1513,6 +2025,52 @@ function getStatus(agId, month, day) {
         if(v==='week') renderWeekly();
     }
 
+    function toggleMonthView() {
+        monthExpanded = !monthExpanded;
+        const cal = document.getElementById('full-calendar');
+        const btn = document.getElementById('btn-expand-month');
+        if (monthExpanded) {
+            cal.classList.remove('calendar-collapsed');
+            cal.classList.add('calendar-expanded');
+            btn.textContent = '📅 Ocultar mes';
+        } else {
+            cal.classList.remove('calendar-expanded');
+            cal.classList.add('calendar-collapsed');
+            btn.textContent = '📅 Ver mes completo';
+        }
+    }
+
+    function renderWeekBar() {
+        const bar = document.getElementById('week-bar');
+        if (!bar) return;
+        // Calcular domingo de la semana que contiene selectedDay
+        const base = new Date(2026, currentMonth-1, selectedDay);
+        const dow = base.getDay();
+        const sunday = new Date(base);
+        sunday.setDate(base.getDate() - dow + weekOffset*7);
+
+        let html = '';
+        html += `<button class="week-bar-nav" onclick="prevWeekBar()">◀</button>`;
+        html += `<div class="week-bar-days">`;
+        for (let i=0; i<7; i++) {
+            const d = new Date(sunday);
+            d.setDate(d.getDate()+i);
+            const m = d.getMonth()+1;
+            const dayNum = d.getDate();
+            const isToday = (m===todayM && dayNum===todayD && d.getFullYear()===todayY);
+            const isSelected = (m===currentMonth && dayNum===selectedDay && d.getFullYear()===2026);
+            const label = ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'][d.getDay()];
+            const cls = isSelected ? 'week-bar-day wbd-selected' : (isToday ? 'week-bar-day wbd-today' : 'week-bar-day');
+            html += `<div class="${cls}" onclick="selectDayFromBar(${dayNum},${m})"><span class="wbd-label">${label}</span><span class="wbd-num">${dayNum}</span></div>`;
+        }
+        html += `</div>`;
+        html += `<button class="week-bar-nav" onclick="nextWeekBar()">▶</button>`;
+        bar.innerHTML = html;
+    }
+
+    function prevWeekBar() { weekOffset--; renderWeekBar(); renderAgents(); if(subView==='week') renderWeekly(); }
+    function nextWeekBar() { weekOffset++; renderWeekBar(); renderAgents(); if(subView==='week') renderWeekly(); }
+
     function renderAgents() {
         const mi = MONTHS[currentMonth];
         const cont = document.getElementById('agents-content');
@@ -1520,59 +2078,7 @@ function getStatus(agId, month, day) {
         const dow = new Date(2026, currentMonth-1, selectedDay).getDay();
         title.textContent = (diasArr[dow]+' '+selectedDay+' '+mi.name+' '+mi.year).toUpperCase();
 
-        let count=0, countAgentes=0, countSupervisores=0;
-        agentes.forEach(a => {
-            const st = getStatus(a.id, currentMonth, selectedDay);
-            if(st==='trabajo'||st==='curso'||st==='curso-recurrente'||st==='permiso-tarde'||st==='permuta-trabajo') {
-                count++;
-                if(a.tipo.includes('Supervisor')) countSupervisores++; else countAgentes++;
-            }
-        });
-
         cont.innerHTML = '';
-
-        // Counter
-        const counter = document.createElement('div');
-        counter.className = 'service-counter';
-        counter.innerHTML = `
-            <div class="counter-main">
-                <div class="counter-label">Personal en servicio</div>
-                <div class="counter-right">
-                    <div class="counter-value">${count}</div>
-                    <div class="expand-indicator" id="expand-indicator">▼</div>
-                </div>
-            </div>
-            <div class="counter-detail" id="counter-detail">
-                <div class="counter-breakdown">
-                    <div class="counter-item"><span>🎫 Agentes de tráfico</span><span class="counter-item-value">${countAgentes}</span></div>
-                    <div class="counter-item"><span>👔 Supervisores</span><span class="counter-item-value">${countSupervisores}</span></div>
-                </div>
-            </div>`;
-        counter.onclick = () => {
-            document.getElementById('counter-detail').classList.toggle('expanded');
-            document.getElementById('expand-indicator').classList.toggle('expanded');
-        };
-        cont.appendChild(counter);
-
-        // Legend
-        const legend = document.createElement('div');
-        legend.className = 'legend';
-        legend.innerHTML = `
-            <div class="legend-title">Leyenda</div>
-            <div class="legend-items">
-                <div class="legend-item"><div class="legend-dot" style="background:var(--c-trabajo)"></div>En servicio</div>
-                <div class="legend-item"><div class="legend-dot" style="background:var(--c-descanso)"></div>Descanso</div>
-                <div class="legend-item"><div class="legend-dot" style="background:var(--c-curso)"></div>Curso Aduana AF</div>
-                <div class="legend-item"><div class="legend-dot" style="background:#eab308"></div>Curso AF-KL</div>
-                <div class="legend-item"><div class="legend-dot" style="background:var(--c-permiso)"></div>Permiso</div>
-                <div class="legend-item"><div class="legend-dot" style="background:var(--c-sin-goce)"></div>S/Goce</div>
-                <div class="legend-item"><div class="legend-dot" style="background:var(--c-permuta-t)"></div>Permuta · Trabaja</div>
-                <div class="legend-item"><div class="legend-dot" style="background:var(--c-permuta-d)"></div>Permuta · Descansa</div>
-                <div class="legend-item"><div class="legend-dot" style="background:var(--c-desc-ajuste)"></div>Desc. Ajuste</div>
-                <div class="legend-item"><div class="legend-dot" style="background:var(--c-cumple)"></div>Cumpleaños</div>
-                <div class="legend-item"><div class="legend-dot" style="background:var(--c-trabaja-descanso-laborado)"></div>Desc. laborado</div>
-            </div>`;
-        cont.appendChild(legend);
 
         const list = document.createElement('div');
         list.className = 'agents-list';
@@ -1603,11 +2109,15 @@ function getStatus(agId, month, day) {
         };
 
         let shown = 0;
+        let singleMatchAgent = null;
+        let singleMatchStatus = null;
         sorted.forEach(a => {
             if(!matchesSearch(a)) return;
             const st = getStatus(a.id, currentMonth, selectedDay);
             if(!matchesFilter(a, st)) return;
             shown++;
+            singleMatchAgent = a;
+            singleMatchStatus = st;
             const isSup = a.tipo.includes('Supervisor');
             const card = document.createElement('div');
             const cardClass = st==='permiso-tarde' ? 'permiso' : (st==='permiso-sin-goce' ? 'sin-goce' : (st==='descanso-ajuste' ? 'descanso-ajuste' : st));
@@ -1672,6 +2182,9 @@ function getStatus(agId, month, day) {
             empty.className = 'no-results';
             empty.textContent = '🔍 Sin resultados para los filtros aplicados.';
             list.appendChild(empty);
+        } else if (shown === 1 && searchQuery.length > 0 && singleMatchAgent) {
+            // Auto-abrir modal cuando hay exactamente 1 resultado en búsqueda
+            setTimeout(() => showModal(singleMatchAgent, singleMatchStatus, selectedDay, currentMonth), 50);
         }
 
         cont.appendChild(list);
@@ -1734,7 +2247,7 @@ function getStatus(agId, month, day) {
         dates.forEach(d => {
             const m = d.getMonth()+1;
             const day = d.getDate();
-            const validMonth = (m>=3&&m<=5&&d.getFullYear()===2026);
+            const validMonth = (m>=3&&m<=8&&d.getFullYear()===2026);
             const isT = (d.getFullYear()===todayY && m===todayM && day===todayD);
             if(validMonth) {
                 const cov = getDayCoverage(m, day);
@@ -1767,7 +2280,7 @@ function getStatus(agId, month, day) {
             dates.forEach(d => {
                 const m = d.getMonth()+1;
                 const day = d.getDate();
-                const validMonth = (m>=3&&m<=5&&d.getFullYear()===2026);
+                const validMonth = (m>=3&&m<=8&&d.getFullYear()===2026);
                 const isT = (d.getFullYear()===todayY && m===todayM && day===todayD);
                 const isSel = (m===currentMonth && day===selectedDay);
                 const td = document.createElement('td');
@@ -1916,38 +2429,104 @@ function getStatus(agId, month, day) {
             notaCurso = `<div class="info-row"><div class="info-label">Entrenamiento de Tráfico y Procedimientos</div><div class="info-value" style="font-size:13px">🎓 Grupo ${grp} · Horario: <strong>11:00 – 15:00</strong><br>☕ Break lonche: <strong>15:00 – 16:00</strong><br>✈️ Reincorporación a operación: <strong>16:00 – 22:00</strong></div></div>`;
         }
 
+        // Calcular patrón de descanso efectivo para la fecha seleccionada
+        let patronDescansoHtml = a.descansos || '—';
+        if (window.ROSTER && window.ROSTER.getPatronDescansoEfectivo) {
+            const patronEfectivo = window.ROSTER.getPatronDescansoEfectivo(a.id, new Date(2026, mes-1, dia));
+            if (patronEfectivo) {
+                if (patronEfectivo.esCambio) {
+                    patronDescansoHtml = `<b>${patronEfectivo.descansos}</b> <span style="font-size:12px;color:var(--text3)">(patrón base: ${patronEfectivo.baseDescansos})</span>`;
+                } else {
+                    patronDescansoHtml = patronEfectivo.descansos || '—';
+                }
+            }
+        }
+
+        // Obtener notas activas para esta fecha
+        let notasHtml = '';
+        if (window.ROSTER && window.ROSTER.getNotasAgente) {
+            const notas = window.ROSTER.getNotasAgente(a.id, new Date(2026, mes-1, dia));
+            const coloresNota = {
+                alerta: { bg: 'var(--c-incapacidad-bg)', color: 'var(--c-incapacidad)', border: 'var(--c-incapacidad-border)' },
+                aviso:  { bg: 'var(--c-permiso-bg)',       color: 'var(--c-permiso)',       border: 'var(--c-permiso-border)' },
+                info:   { bg: 'var(--c-curso-bg)',         color: 'var(--c-curso)',         border: 'var(--c-curso-border)' },
+                exito:  { bg: 'var(--c-trabajo-bg)',       color: 'var(--c-trabajo)',       border: 'var(--c-trabajo-border)' }
+            };
+            if (notas && notas.length > 0) {
+                notasHtml = notas.map(n => {
+                    const c = coloresNota[n.tipo] || coloresNota.info;
+                    return `<div style="background:${c.bg};color:${c.color};border:1px solid ${c.border};border-radius:var(--radius-sm);padding:12px 14px;font-weight:700;font-size:13px;line-height:1.4;margin-bottom:14px;display:flex;gap:10px;align-items:flex-start"><span style="font-size:18px">${n.icono || 'ℹ️'}</span><span>${n.texto}</span></div>`;
+                }).join('');
+            }
+        }
+
         document.getElementById('modal-agent-name').textContent = formatNombre(a.nombre);
+
+        // Badge color for zone 1
+        const badgeColorMap = {
+            'trabajo':'var(--c-trabajo)','descanso':'var(--c-descanso)','cumpleanos':'var(--c-cumple)',
+            'curso':'var(--c-curso)','permiso-tarde':'var(--c-permiso)','permiso-sin-goce':'var(--c-sin-goce)',
+            'permuta-trabajo':'var(--c-permuta-t)','permuta-descanso':'var(--c-permuta-d)',
+            'incapacidad':'var(--c-incapacidad)','curso-recurrente':'#eab308',
+            'trabaja-descanso-laborado':'var(--c-trabaja-descanso-laborado)','descanso-ajuste':'var(--c-desc-ajuste)'
+        };
+        const badgeColor = badgeColorMap[st] || 'var(--text3)';
+
         document.getElementById('modal-body').innerHTML = `
+            <!-- ZONA 1: ESTADO PRINCIPAL -->
+            <div class="modal-status-zone">
+                ${isSup ? '<div style="margin-bottom:10px"><span class="supervisor-badge" style="font-size:10px;padding:4px 10px;">SUPERVISOR DE TRÁFICO</span></div>' : ''}
+                <div class="modal-agent-name-lg">${getNombreCorto(a.id).split(' ')[0]}</div>
+                <div class="modal-status-badge-lg" style="background:${badgeColor};color:#fff">${statusLabels[st]||st}</div>
+                <div class="modal-date-sub">${diasArr[dow]} ${dia} ${mi.name} 2026</div>
+            </div>
+
+            <!-- ZONA 2: PRÓXIMO DESCANSO -->
+            <div class="modal-next-rest-zone">
+                <div class="modal-next-rest-label">Próximo descanso</div>
+                <div class="modal-next-rest-value">${nextRest}</div>
+            </div>
+
+            <!-- ALERTAS (siempre visibles arriba de detalles) -->
+            ${notasHtml}
             ${alertHtml}
-            ${isSup ? '<div style="margin-bottom:14px"><span class="supervisor-badge" style="font-size:10px;padding:4px 10px;">SUPERVISOR DE TRÁFICO</span></div>' : ''}
-            <div class="info-row">
-                <div class="info-label">Estado — ${diasArr[dow]} ${dia} ${mi.name}</div>
-                <span class="modal-status-badge badge-${st==='permiso-tarde'?'permiso':(st==='descanso-ajuste'?'descanso-ajuste':(st==='permuta-trabajo'?'permuta-trabajo':(st==='permuta-descanso'?'permuta-descanso':(st==='curso-recurrente'?'curso-recurrente':(st==='trabaja-descanso-laborado'?'descanso-laborado':st)))))}">${statusLabels[st]||st}</span>
-            </div>
-            <div class="info-row">
-                <div class="info-label">Días en servicio en ${mi.name}</div>
-                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
-                    <span class="info-value">${worked} días</span>
-                    <span class="progress-label">${pct}%</span>
+
+            <!-- ZONA 3: DETALLES (colapsable) -->
+            <button class="modal-details-toggle" onclick="toggleModalDetails()">
+                <span>Ver más detalles</span>
+                <span id="modal-details-arrow">↓</span>
+            </button>
+            <div class="modal-details-zone" id="modal-details-zone">
+                <div class="info-row">
+                    <div class="info-label">Días en servicio en ${mi.name}</div>
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+                        <span class="info-value">${worked} días</span>
+                        <span class="progress-label">${pct}%</span>
+                    </div>
+                    <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:${pct}%"></div></div>
                 </div>
-                <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:${pct}%"></div></div>
-            </div>
-            <div class="info-row">
-                <div class="info-label">Días de descanso base</div>
-                <div class="info-value">${a.descansos}</div>
-            </div>
-            <div class="info-row">
-                <div class="info-label">Próximo descanso en ${mi.name}</div>
-                <div class="info-value">${nextRest}</div>
-            </div>
-            ${notaCurso}
-            ${a.cumple?`<div class="info-row"><div class="info-label">Cumpleaños</div><div class="info-value">🎂 ${a.cumple}</div></div>`:''}
-            <div class="info-row">
-                <div class="info-label">ID Empleado</div>
-                <div class="info-value" style="font-family:'JetBrains Mono',monospace">${a.id}</div>
+                <div class="info-row">
+                    <div class="info-label">Patrón de descanso</div>
+                    <div class="info-value">${patronDescansoHtml}</div>
+                </div>
+                ${notaCurso}
+                ${a.cumple?`<div class="info-row"><div class="info-label">Cumpleaños</div><div class="info-value">🎂 ${a.cumple}</div></div>`:''}
+                <div class="info-row">
+                    <div class="info-label">ID Empleado</div>
+                    <div class="info-value" style="font-family:'JetBrains Mono',monospace">${a.id}</div>
+                </div>
             </div>
         `;
         document.getElementById('agent-modal').classList.add('active');
+    }
+
+    function toggleModalDetails() {
+        const zone = document.getElementById('modal-details-zone');
+        const arrow = document.getElementById('modal-details-arrow');
+        if(zone && arrow) {
+            zone.classList.toggle('expanded');
+            arrow.textContent = zone.classList.contains('expanded') ? '↑' : '↓';
+        }
     }
 
     function closeModal() {
@@ -1960,11 +2539,13 @@ function getStatus(agId, month, day) {
 
     // INIT
     loadThemeCalendario();
+    updateVisibleTabs();
     // Activar el tab del mes correcto desde el arranque
-    [3,4,5].forEach(n => document.getElementById('tab-'+n).classList.toggle('active', n===currentMonth));
-    document.getElementById('prev-btn').disabled = (currentMonth===3);
-    document.getElementById('next-btn').disabled = (currentMonth===5);
+    VISIBLE_MONTHS.forEach(n => document.getElementById('tab-'+n).classList.toggle('active', n===currentMonth));
+    document.getElementById('prev-btn').disabled = (currentMonth===MIN_MONTH);
+    document.getElementById('next-btn').disabled = (currentMonth===MAX_MONTH);
     renderCal();
+    renderWeekBar();
     renderAgents();
 </script>
 <script>
