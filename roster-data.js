@@ -181,7 +181,7 @@
     var cursoA = getCursosAduana().find(
       function (c) { return c.id === agentId && c.mes === mes && c.dias.indexOf(dia) !== -1; }
     );
-    if (cursoA) return { status: 'curso', label: 'Curso Aduana AF', canWork: false, horario: cursoA.horario || '11:00\u201315:00' };
+    if (cursoA) return { status: 'curso', label: cursoA.label || 'Curso', canWork: false, horario: cursoA.horario || null };
 
     var cursoR = getCursosRecurrentes().find(
       function (c) { return c.id === agentId && c.entries.some(function (e) { return e.mes === mes && e.dias.indexOf(dia) !== -1; }); }
@@ -275,7 +275,15 @@
   }
   function getCursoHorario(agId, mes, dia) {
     var e = getCursosAduana().find(function (c) { return c.id === agId && c.mes === mes && c.dias.indexOf(dia) !== -1; });
-    return e ? (e.horario || '11:00\u201315:00') : '11:00\u201315:00';
+    return e ? (e.horario || null) : null;
+  }
+  function getCursoNota(agId, mes, dia) {
+    var e = getCursosAduana().find(function (c) { return c.id === agId && c.mes === mes && c.dias.indexOf(dia) !== -1; });
+    return e ? (e.nota || null) : null;
+  }
+  function getCursoLabel(agId, mes, dia) {
+    var e = getCursosAduana().find(function (c) { return c.id === agId && c.mes === mes && c.dias.indexOf(dia) !== -1; });
+    return e ? (e.label || 'Curso') : null;
   }
   function isCursoRecurrente(agId, mes, dia) {
     return getCursosRecurrentes().some(function (c) { return c.id === agId && c.entries.some(function (e) { return e.mes === mes && e.dias.indexOf(dia) !== -1; }); });
@@ -410,6 +418,8 @@
 
     isCurso: isCurso,
     getCursoHorario: getCursoHorario,
+    getCursoNota: getCursoNota,
+    getCursoLabel: getCursoLabel,
     isCursoRecurrente: isCursoRecurrente,
     getCursoRecurrenteGrupo: getCursoRecurrenteGrupo,
     isDescAjuste: isDescAjuste,
