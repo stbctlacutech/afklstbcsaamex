@@ -1604,8 +1604,8 @@
     </div>
 </div>
 
-<script src="config.js"></script>
-<script src="roster-data.js"></script>
+<script src="config.js?v=2"></script>
+<script src="roster-data.js?v=2"></script>
 <script>
     // ═══════════════════════════════════════════════════
     // DATOS — fuente: calsaa.html
@@ -2346,8 +2346,8 @@ function getStatus(agId, month, day) {
                 const mesInfo=MONTHS[mm];
                 if(!mesInfo) continue;
                 for(let dd=1; dd<=mesInfo.days; dd++){
-                    const st=window.ROSTER.getAgentStatus(a.id, new Date(2026, mm-1, dd));
-                    if(st.status==='descanso'||st.status==='cumpleanos'){
+                    const rs=window.ROSTER.getAgentStatus(a.id, new Date(2026, mm-1, dd));
+                    if(rs.status==='descanso'||rs.status==='cumpleanos'){
                         nextRest=dd+' de '+mesInfo.name;
                         foundRest=true;
                         break;
