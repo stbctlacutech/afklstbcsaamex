@@ -1620,7 +1620,7 @@
     // MODIFICACIONES ESPECIALES
     // ═══════════════════════════════════════════════════
 
-    // Agentes con Curso Aduana AF — 03 y 04 de marzo, 11:00-15:00
+    // Agentes con Curso Aduana / custom label — 03 y 04 de marzo, 11:00-15:00
     // cursoDates eliminado — usa window.ROSTER.cursosAduana
 
     // ══════════════════════════════════════════
@@ -1660,6 +1660,13 @@
     function isCurso(agId, mes, dia) { return window.ROSTER.isCurso(agId, mes, dia); }
 
     function getCursoHorario(agId, mes, dia) { return window.ROSTER.getCursoHorario(agId, mes, dia); }
+
+    function getCursoNota(agId, mes, dia) { return window.ROSTER.getCursoNota(agId, mes, dia); }
+
+    function getCursoLabel(agId, mes, dia) {
+        const st = window.ROSTER.getAgentStatus(agId, new Date(2026, mes - 1, dia));
+        return (st && st.status === 'curso' && st.label) ? st.label : 'Curso';
+    }
 
     function isDescAjuste(agId, mes, dia) { return window.ROSTER.isDescAjuste(agId, mes, dia); }
 
@@ -1982,7 +1989,7 @@ function getStatus(agId, month, day) {
             <div class="legend-items" style="grid-template-columns:1fr;gap:10px">
                 <div class="legend-item"><div class="legend-dot" style="background:var(--c-trabajo)"></div>En servicio</div>
                 <div class="legend-item"><div class="legend-dot" style="background:var(--c-descanso)"></div>Descanso</div>
-                <div class="legend-item"><div class="legend-dot" style="background:var(--c-curso)"></div>Curso Aduana AF</div>
+                <div class="legend-item"><div class="legend-dot" style="background:var(--c-curso)"></div>Curso</div>
                 <div class="legend-item"><div class="legend-dot" style="background:#eab308"></div>Curso AF-KL</div>
                 <div class="legend-item"><div class="legend-dot" style="background:var(--c-permiso)"></div>Permiso</div>
                 <div class="legend-item"><div class="legend-dot" style="background:var(--c-sin-goce)"></div>S/Goce</div>
@@ -2098,7 +2105,7 @@ function getStatus(agId, month, day) {
 
         const shortLabel = {
             'trabajo':'Servicio','descanso':'Descanso','cumpleanos':'🎂 Feliz cumpleaños, disfruta tu día libre',
-            'curso':'📚 Curso Aduana AF','permiso-tarde':'⚠️ Posible entrada tarde',
+            'curso':'📚 Curso','permiso-tarde':'⚠️ Posible entrada tarde',
             'permiso-sin-goce':'🟣 Permiso sin goce de sueldo',
             'descanso-ajuste':'Descanso por ajuste',
             'permuta-trabajo':'🔁 Permuta · Trabajas',
@@ -2171,7 +2178,7 @@ function getStatus(agId, month, day) {
                     ${permutaSubLabel}
                 </div>
                 <div class="agent-right">
-                    <span class="agent-status-badge badge-${badgeClass}">${shortLabel[st]||st}</span>
+                    <span class="agent-status-badge badge-${badgeClass}">${st==='curso' ? '📚 ' + getCursoLabel(a.id, currentMonth, selectedDay) : (shortLabel[st]||st)}</span>
                 </div>`;
             card.onclick = () => showModal(a, st, selectedDay);
             list.appendChild(card);
@@ -2322,12 +2329,31 @@ function getStatus(agId, month, day) {
 
         // Próximo descanso
         let nextRest='Fuera de rango';
+        let foundRest=false;
+        // Buscar en mes actual
         for(let dd=dia+1;dd<=mi.days;dd++){
             const ns=getStatus(a.id,mes,dd);
             if(ns==='descanso'||ns==='cumpleanos'||ns==='descanso-ajuste'){
                 const diff=dd-dia;
                 nextRest=diff===1?'Mañana':diff<7?'En '+diff+' días':dd+' de '+mi.name;
+                foundRest=true;
                 break;
+            }
+        }
+        // Si no se encontró, buscar en meses siguientes
+        if(!foundRest){
+            for(let mm=mes+1; mm<=12; mm++){
+                const mesInfo=MONTHS[mm];
+                if(!mesInfo) continue;
+                for(let dd=1; dd<=mesInfo.days; dd++){
+                    const st=window.ROSTER.getAgentStatus(a.id, new Date(2026, mm-1, dd));
+                    if(st.status==='descanso'||st.status==='cumpleanos'){
+                        nextRest=dd+' de '+mesInfo.name;
+                        foundRest=true;
+                        break;
+                    }
+                }
+                if(foundRest) break;
             }
         }
 
@@ -2335,7 +2361,7 @@ function getStatus(agId, month, day) {
 
         const statusLabels = {
             'trabajo':'En servicio','descanso':'Descanso','cumpleanos':'🎂 Feliz cumpleaños, disfruta tu día libre',
-            'curso':'📚 Curso Aduana AF','permiso-tarde':'⚠️ Permiso · Posible entrada tarde',
+            'curso':'📚 Curso','permiso-tarde':'⚠️ Permiso · Posible entrada tarde',
             'permiso-sin-goce':'🟣 Permiso sin goce de sueldo',
             'descanso-ajuste':'🔄 Descanso por ajuste',
             'permuta-trabajo':'🔁 Permuta · En servicio',
@@ -2349,7 +2375,9 @@ function getStatus(agId, month, day) {
         let alertHtml = '';
         if(st==='curso') {
             const horarioCurso = getCursoHorario(a.id, mes, dia);
-            alertHtml = `<div class="curso-alert"><span class="alert-icon">📚</span><span>Curso Aduana AF — Horario especial <strong>${horarioCurso}</strong></span></div>`;
+            const cursoLabel = getCursoLabel(a.id, mes, dia);
+            const horarioText = horarioCurso ? ` — Horario especial <strong>${horarioCurso}</strong>` : '';
+            alertHtml = `<div class="curso-alert"><span class="alert-icon">📚</span><span>${cursoLabel}${horarioText}</span></div>`;
         } else if(st==='trabaja-descanso-laborado') {
             alertHtml = `<div class="curso-alert" style="background:var(--c-trabaja-descanso-laborado-bg);border-color:var(--c-trabaja-descanso-laborado-border);color:var(--c-trabaja-descanso-laborado)"><span class="alert-icon">🤝</span><span><strong>Apoyo en descanso laborado</strong> — Este día es descanso de ${getNombreCorto(a.id)}, pero ha aceptado trabajar. <em>¡Gracias ${getNombreCorto(a.id)}! Tu apoyo hace la diferencia.</em></span></div>`;
         } else if(st==='descanso-ajuste') {
@@ -2360,7 +2388,10 @@ function getStatus(agId, month, day) {
                 alertHtml = `<div class="desc-ajuste-alert"><span class="alert-icon">🔄</span><span>Este día es <strong>Descanso por Ajuste</strong> de días de descanso. No se presentará a trabajar.</span></div>`;
             }
         } else if(st==='permiso-tarde') {
-            alertHtml = `<div class="permiso-entrada-alert"><span class="alert-icon">⚠️</span><span>Agente con <strong>posible entrada tarde</strong> este día. Categoría: <strong>Permiso</strong>. Además tiene Curso Aduana AF 11:00–15:00.</span></div>`;
+            const cursoLabelPT = getCursoLabel(a.id, mes, dia);
+            const horarioCursoPT = getCursoHorario(a.id, mes, dia);
+            const cursoText = cursoLabelPT ? ` Además tiene ${cursoLabelPT}${horarioCursoPT ? ' ' + horarioCursoPT : ''}.` : '';
+            alertHtml = `<div class="permiso-entrada-alert"><span class="alert-icon">⚠️</span><span>Agente con <strong>posible entrada tarde</strong> este día. Categoría: <strong>Permiso</strong>.${cursoText}</span></div>`;
         } else if(st==='permiso-sin-goce') {
             alertHtml = `<div class="permiso-entrada-alert" style="background:var(--c-sin-goce);color:#fff;"><span class="alert-icon">🟣</span><span><strong>Permiso sin goce de sueldo</strong> — El agente no se presentará este día y no percibe salario por esta jornada.</span></div>`;
         } else if(st==='trabajo') {
@@ -2397,10 +2428,19 @@ function getStatus(agId, month, day) {
         // Nota especial para Argelia Garcia si es curso + permiso
         let notaCurso = '';
         if(a.id==='2000607' && mes===3 && dia===4) {
-            notaCurso = `<div class="info-row"><div class="info-label">Nota del día</div><div class="info-value" style="font-size:13px">📚 Curso Aduana AF — 11:00 a 15:00<br>⚠️ Posible entrada tarde · Permiso</div></div>`;
+            const cursoLabelArgelia = getCursoLabel('2000607', mes, dia);
+            const horarioArgelia = getCursoHorario('2000607', mes, dia);
+            const horarioText = horarioArgelia || '11:00 a 15:00';
+            notaCurso = `<div class="info-row"><div class="info-label">Nota del día</div><div class="info-value" style="font-size:13px">📚 ${cursoLabelArgelia} — ${horarioText}<br>⚠️ Posible entrada tarde · Permiso</div></div>`;
         } else if(st==='curso') {
             const horarioCurso = getCursoHorario(a.id, mes, dia);
-            notaCurso = `<div class="info-row"><div class="info-label">Horario Curso Aduana AF</div><div class="info-value">${horarioCurso} hrs</div></div>`;
+            const cursoNota = getCursoNota(a.id, mes, dia);
+            const cursoLabelInfo = getCursoLabel(a.id, mes, dia);
+            let infoParts = [];
+            if (horarioCurso) infoParts.push(`${horarioCurso} hrs`);
+            if (cursoNota) infoParts.push(cursoNota);
+            const infoValue = infoParts.length ? infoParts.join('<br>') : '—';
+            notaCurso = `<div class="info-row"><div class="info-label">${cursoLabelInfo}</div><div class="info-value">${infoValue}</div></div>`;
         } else if(st==='descanso-ajuste') {
             const notaAjuste = getDescAjusteNota(a.id, mes, dia);
             if(notaAjuste === 'ajuste-unico-especial') {
@@ -2477,7 +2517,7 @@ function getStatus(agId, month, day) {
             <div class="modal-status-zone">
                 ${isSup ? '<div style="margin-bottom:10px"><span class="supervisor-badge" style="font-size:10px;padding:4px 10px;">SUPERVISOR DE TRÁFICO</span></div>' : ''}
                 <div class="modal-agent-name-lg">${getNombreCorto(a.id).split(' ')[0]}</div>
-                <div class="modal-status-badge-lg" style="background:${badgeColor};color:#fff">${statusLabels[st]||st}</div>
+                <div class="modal-status-badge-lg" style="background:${badgeColor};color:#fff">${st==='curso' ? '📚 ' + getCursoLabel(a.id, mes, dia) : (statusLabels[st]||st)}</div>
                 <div class="modal-date-sub">${diasArr[dow]} ${dia} ${mi.name} 2026</div>
             </div>
 
