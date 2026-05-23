@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#ffffff" id="themeColor">
+<title>WT Helper</title>
+<style>
+  :root{
+    --bg:#faf8f5;
+    --text:#2d2d3a;
+    --header-bg:#fff;
+    --header-border:#e8e4df;
+    --chat-bg:#faf8f5;
+    --bubble-bot-bg:#fff;
+    --bubble-bot-border:#e8e4df;
+    --bubble-bot-text:#2d2d3a;
+    --bubble-user-bg:linear-gradient(135deg,#ff6b6b 0%,#ff8e53 100%);
+    --bubble-user-text:#fff;
+    --input-bg:#fff;
+    --input-border:#e8e4df;
+    --placeholder:#a09890;
+    --chip-bg:#f5f0eb;
+    --chip-border:#e8e4df;
+    --chip-text:#2d2d3a;
+    --typing-bg:#d5cec7;
+    --shadow:0 2px 8px rgba(0,0,0,0.06);
+    --menu-ahl-bg:#e8f8f0;--menu-ahl-text:#27ae60;
+    --menu-dpr-bg:#ffebee;--menu-dpr-text:#e74c3c;
+    --menu-ohd-bg:#fff5e6;--menu-ohd-text:#f39c12;
+    --menu-rush-bg:#e3f2fd;--menu-rush-text:#1e90ff;
+    --menu-afkl-bg:#f3e5f5;--menu-afkl-text:#9c27b0;
+    --menu-mx-bg:#fff3e0;--menu-mx-text:#ff8f00;
+    --menu-system-bg:#eceff1;--menu-system-text:#546e7a;
+    --menu-general-bg:#f5f0eb;--menu-general-text:#6d635b;
+    --menu-codes-bg:#fff;--menu-codes-text:#2d2d3a;
+    --accent:#ff6b6b;
+    --accent-hover:#ff5252;
+    --divider:#e8e4df;
+    --scroll-thumb:#d5cec7;
+  }
+  .dark{
+    --bg:#0f0f1a;
+    --text:#e8e8f0;
+    --header-bg:#16162a;
+    --header-border:#2a2a45;
+    --chat-bg:#0f0f1a;
+    --bubble-bot-bg:#1e1e2f;
+    --bubble-bot-border:#2a2a45;
+    --bubble-bot-text:#e8e8f0;
+    --bubble-user-bg:linear-gradient(135deg,#ff6b6b 0%,#ff8e53 100%);
+    --bubble-user-text:#fff;
+    --input-bg:#1e1e2f;
+    --input-border:#2a2a45;
+    --placeholder:#7a7a9a;
+    --chip-bg:#1e1e2f;
+    --chip-border:#2a2a45;
+    --chip-text:#e8e8f0;
+    --typing-bg:#4a4a6a;
+    --shadow:0 2px 12px rgba(0,0,0,0.4);
+    --menu-ahl-bg:#0d2818;--menu-ahl-text:#2ecc71;
+    --menu-dpr-bg:#2a0a0a;--menu-dpr-text:#ff4757;
+    --menu-ohd-bg:#2a1a00;--menu-ohd-text:#ffa502;
+    --menu-rush-bg:#0a1a2a;--menu-rush-text:#1e90ff;
+    --menu-afkl-bg:#1a0a2a;--menu-afkl-text:#a55eea;
+    --menu-mx-bg:#2a1a0a;--menu-mx-text:#ff9f43;
+    --menu-system-bg:#1a1a2e;--menu-system-text:#a0a0b8;
+    --menu-general-bg:#1e1e2f;--menu-general-text:#a0a0b8;
+    --menu-codes-bg:#1e1e2f;--menu-codes-text:#e8e8f0;
+    --accent:#ff6b6b;
+    --accent-hover:#ff8e53;
+    --divider:#2a2a45;
+    --scroll-thumb:#4a4a6a;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+  html,body{height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;font-size:16px;line-height:1.45;color:var(--text);background:var(--bg);transition:background .2s,color .2s}
+  .app{display:flex;flex-direction:column;height:100%;max-width:600px;margin:0 auto;background:var(--bg)}
+
+  header{flex-shrink:0;display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--header-bg);border-bottom:1px solid var(--header-border);transition:background .2s,border-color .2s}
+  .header-title{font-size:17px;font-weight:700;display:flex;align-items:center;gap:8px}
+  .header-title .dot{width:8px;height:8px;border-radius:50%;background:#3fb950;display:inline-block}
+  .theme-btn{background:transparent;border:none;font-size:20px;cursor:pointer;padding:4px 8px;border-radius:8px}
+  .theme-btn:active{background:rgba(0,0,0,0.05)}
+  .dark .theme-btn:active{background:rgba(255,255,255,0.08)}
+  .new-chat-btn{background:transparent;border:none;font-size:18px;cursor:pointer;padding:4px 8px;border-radius:8px;color:var(--text);opacity:.7}
+  .new-chat-btn:active{opacity:1;background:rgba(0,0,0,0.05)}
+  .dark .new-chat-btn:active{background:rgba(255,255,255,0.08)}
+
+  .quick-bar{flex-shrink:0;display:flex;align-items:center;gap:6px;padding:8px 14px;background:var(--header-bg);border-bottom:1px solid var(--header-border);overflow-x:auto;white-space:nowrap;-webkit-overflow-scrolling:touch}
+  .quick-bar::-webkit-scrollbar{display:none}
+  .quick-label{font-size:11px;font-weight:700;color:var(--placeholder);text-transform:uppercase;letter-spacing:0.03em;margin-right:4px;flex-shrink:0}
+  .quick-chip{display:inline-flex;align-items:center;padding:6px 12px;border-radius:999px;font-size:12px;font-weight:700;cursor:pointer;border:1px solid transparent;flex-shrink:0;transition:transform .1s}
+  .quick-chip:active{transform:scale(0.95)}
+  .quick-chip.ahl{background:var(--menu-ahl-bg);color:var(--menu-ahl-text);border-color:rgba(0,0,0,0.06)}
+  .quick-chip.dpr{background:var(--menu-dpr-bg);color:var(--menu-dpr-text);border-color:rgba(0,0,0,0.06)}
+  .quick-chip.ohd{background:var(--menu-ohd-bg);color:var(--menu-ohd-text);border-color:rgba(0,0,0,0.06)}
+  .quick-chip.rush{background:var(--menu-rush-bg);color:var(--menu-rush-text);border-color:rgba(0,0,0,0.06)}
+  .quick-chip.general{background:var(--menu-general-bg);color:var(--menu-general-text);border-color:rgba(0,0,0,0.06)}
+
+  .chat{flex:1;overflow-y:auto;padding:12px 14px 80px 14px;scroll-behavior:smooth}
+  .chat::-webkit-scrollbar{width:5px}
+  .chat::-webkit-scrollbar-thumb{background:var(--scroll-thumb);border-radius:4px}
+
+  .message{display:flex;margin-bottom:10px;animation:msgIn .25s ease-out;align-items:flex-end}
+  .message.bot{justify-content:flex-start;gap:8px}
+  .message.user{justify-content:flex-end}
+  .avatar{width:32px;height:32px;border-radius:50%;object-fit:cover;flex-shrink:0;border:2px solid var(--header-border);background:#000}
+  .dark .avatar{border-color:#333}
+  @keyframes msgIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+  .bubble{max-width:85%;padding:10px 14px;border-radius:18px;font-size:15px;line-height:1.5;word-wrap:break-word;white-space:pre-wrap;box-shadow:var(--shadow)}
+  .bot .bubble{background:var(--bubble-bot-bg);color:var(--bubble-bot-text);border:1px solid var(--bubble-bot-border);border-bottom-left-radius:4px}
+  .user .bubble{background:var(--bubble-user-bg);color:var(--bubble-user-text);border-bottom-right-radius:4px}
+
+  .bubble strong{color:inherit;font-weight:700}
+  .bubble p{margin-bottom:6px}
+  .bubble p:last-child{margin-bottom:0}
+  .bubble ol,.bubble ul{margin:6px 0 6px 18px}
+  .bubble li{margin-bottom:3px}
+  .bubble .emoji{font-size:1.15em;vertical-align:-2px;margin-right:3px}
+
+  .button-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:10px}
+  .menu-btn{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:14px 8px;border-radius:14px;border:1px solid transparent;font-size:13px;font-weight:700;cursor:pointer;min-height:72px;transition:transform .1s,filter .1s;text-align:center;line-height:1.3}
+  .menu-btn:active{transform:scale(0.97)}
+  .menu-btn .icon{font-size:22px;line-height:1}
+  .menu-btn.ahl{background:var(--menu-ahl-bg);color:var(--menu-ahl-text);border-color:rgba(0,0,0,0.06)}
+  .menu-btn.dpr{background:var(--menu-dpr-bg);color:var(--menu-dpr-text);border-color:rgba(0,0,0,0.06)}
+  .menu-btn.ohd{background:var(--menu-ohd-bg);color:var(--menu-ohd-text);border-color:rgba(0,0,0,0.06)}
+  .menu-btn.rush{background:var(--menu-rush-bg);color:var(--menu-rush-text);border-color:rgba(0,0,0,0.06)}
+  .menu-btn.afkl{background:var(--menu-afkl-bg);color:var(--menu-afkl-text);border-color:rgba(0,0,0,0.06)}
+  .menu-btn.mx{background:var(--menu-mx-bg);color:var(--menu-mx-text);border-color:rgba(0,0,0,0.06)}
+  .menu-btn.system{background:var(--menu-system-bg);color:var(--menu-system-text);border-color:rgba(0,0,0,0.06)}
+  .menu-btn.general{background:var(--menu-general-bg);color:var(--menu-general-text);border-color:rgba(0,0,0,0.06)}
+  .menu-btn.codes{background:var(--menu-codes-bg);color:var(--menu-codes-text);border:1px solid var(--divider)}
+
+  .chip-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+  .chip{display:inline-flex;align-items:center;padding:8px 14px;border-radius:999px;font-size:13px;font-weight:600;cursor:pointer;border:1px solid var(--chip-border);background:var(--chip-bg);color:var(--chip-text);transition:transform .1s}
+  .chip:active{transform:scale(0.95)}
+  .chip.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+  .typing{display:flex;align-items:center;gap:4px;padding:12px 14px;border-radius:18px;background:var(--bubble-bot-bg);border:1px solid var(--bubble-bot-border);width:52px;border-bottom-left-radius:4px}
+  .typing span{display:block;width:7px;height:7px;border-radius:50%;background:var(--typing-bg);animation:typingBounce 1.2s infinite ease-in-out}
+  .typing span:nth-child(2){animation-delay:.15s}
+  .typing span:nth-child(3){animation-delay:.3s}
+  @keyframes typingBounce{0%,80%,100%{transform:scale(0.6);opacity:.4}40%{transform:scale(1);opacity:1}}
+
+  .input-area{position:fixed;bottom:0;left:0;right:0;padding:8px 12px;padding-bottom:max(8px,env(safe-area-inset-bottom));background:var(--header-bg);border-top:1px solid var(--header-border);display:flex;gap:8px;align-items:center;max-width:600px;margin:0 auto;transition:background .2s,border-color .2s}
+  .input-area input{flex:1;background:var(--input-bg);color:var(--text);border:1px solid var(--input-border);border-radius:20px;padding:10px 16px;font-size:16px;outline:none;-webkit-appearance:none}
+  .input-area input::placeholder{color:var(--placeholder)}
+  .input-area input:focus{border-color:var(--accent)}
+  .input-area button.send{width:40px;height:40px;border-radius:50%;border:none;background:var(--accent);color:#fff;font-size:18px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0}
+  .input-area button.send:active{background:var(--accent-hover);transform:scale(0.95)}
+
+  .expand-btn{display:inline-flex;align-items:center;gap:4px;margin-top:8px;padding:6px 12px;border-radius:999px;font-size:12px;font-weight:600;cursor:pointer;border:1px solid var(--divider);background:transparent;color:var(--text);opacity:.8}
+  .expand-btn:active{opacity:1;background:rgba(0,0,0,0.03)}
+  .dark .expand-btn:active{background:rgba(255,255,255,0.05)}
+
+  .ref-box{margin-top:8px;padding:10px 12px;border-radius:10px;border:1px dashed var(--divider);font-size:13px;line-height:1.5;background:rgba(0,0,0,0.02)}
+  .dark .ref-box{background:rgba(255,255,255,0.02)}
+  .ref-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--placeholder);margin-bottom:4px}
+
+  .ops-box{margin-top:10px;padding:12px 14px;border-radius:12px;border:2px solid #ff9800;font-size:13px;line-height:1.6;background:rgba(255,152,0,0.08);color:var(--text)}
+  .dark .ops-box{background:rgba(255,152,0,0.12);border-color:#ff9800}
+  .ops-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#e65100;margin-bottom:6px}
+  .dark .ops-label{color:#ff9800}
+
+  .glossary-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}
+  .gloss-btn{display:flex;align-items:center;justify-content:center;padding:10px 4px;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;border:1px solid var(--divider);background:var(--chip-bg);color:var(--chip-text);min-height:44px}
+  .gloss-btn:active{transform:scale(0.95)}
+
+  .section-title{font-weight:700;margin-bottom:6px;font-size:15px}
+  .step-list{margin:8px 0 8px 0;padding:0;list-style:none}
+  .step-list li{display:flex;gap:8px;margin-bottom:8px;align-items:flex-start}
+  .step-num{flex-shrink:0;width:22px;height:22px;border-radius:50%;background:var(--accent);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px}
+
+  @media(min-width:640px){
+    .app{border-left:1px solid var(--header-border);border-right:1px solid var(--header-border)}
+    .button-grid{grid-template-columns:repeat(3,1fr)}
+    .glossary-grid{grid-template-columns:repeat(6,1fr)}
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <div style="display:flex;align-items:center;gap:8px;">
+      <a href="index.html" style="display:flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:8px;background:transparent;border:none;font-size:18px;cursor:pointer;padding:4px 8px;text-decoration:none;color:var(--text);opacity:.8;" title="Volver al inicio">←</a>
+      <div class="header-title"><span class="dot"></span>WT Helper</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:4px;">
+      <button class="new-chat-btn" id="clearBtn" aria-label="Nuevo chat" title="Nuevo chat">✚</button>
+      <button class="theme-btn" id="themeToggle" aria-label="Cambiar tema">🌙</button>
+    </div>
+  </header>
+  <div class="quick-bar" id="quickBar">
+    <span class="quick-label">🔥</span>
+  </div>
+  <div class="chat" id="chat"></div>
+  <div class="input-area">
+    <input type="text" id="q" placeholder="Escribe tu problema…" autocomplete="off" />
+    <button class="send" id="btn" aria-label="Enviar">➤</button>
+  </div>
+</div>
+<script>
+(function(){
+'use strict';
+
+/* ================= STOP / SYN / INF / UTILS ================= */
+
+const STOP=new Set(['el','la','los','las','un','una','unos','unas','de','del','al','a','en','con','por','para','se','me','mi','te','tu','su','sus','lo','le','les','y','o','u','e','que','qué','como','cómo','cuando','cuándo','donde','dónde','quien','quién','cual','cuál','cuales','porque','porqué','pues','este','esta','esto','ese','esa','eso','aqui','aquí','ahi','ahí','allá','ya','todavia','todavía','si','sí','no','ni','mas','más','menos','muy','mucho','mucha','muchos','muchas','poco','poca','pocos','pocas','tan','tanto','tanta','tantos','tantas','asi','así','tal','tales','nada','algo','alguien','nadie','otro','otra','otros','otras','mismo','misma','mismos','mismas','cada','todo','toda','todos','todas','varios','varias','ser','soy','eres','es','somos','son','estar','estoy','estas','esta','estamos','estan','están','haber','hay','ha','han','he','habia','había','tener','tengo','tiene','tenemos','tienen','hacer','hago','hace','hacemos','hacen','decir','digo','dice','decimos','dicen','ir','voy','va','vamos','van','dar','doy','da','damos','dan','ver','veo','ve','vemos','ven','saber','se','sabe','sabemos','saben','querer','quiero','quiere','queremos','quieren','poder','puedo','puede','podemos','pueden','parecer','parece','parecen','wey','we','wuey','güey','carnal','bro','man','tipo','tio','tío','chavo','chava','güero','güera','neta','nel','sale','va','oki','ok','okay','simon','arnelas','chale','fresa','naco','pedo','pendejo','chingar','chido','padre','aguas','cabrón','huevon','huevón','chafa','pedo','pendejo','chingar','chido','padre','aguas','neta','sale','va','oki','ok','okay','simon','nel','arnelas','chale','en','la','lo','un','de','a','el','con','por','para','y','o','que','quien','donde','como','cuando','cual','cuales','porque','mas','muy','tan','tanto','asi','aqui','ahi','alli','ya','todavia','si','no','ni','algo','nada','todo','cada','otro','mismo','tal','tales','varios','varias','ser','estar','haber','tener','hacer','decir','ir','dar','ver','saber','querer','poder','parecer']);
+
+const SYN={
+  'maleta':['maleta','mochila','valija','equipaje','bag','bolsa','bags','baggage','suitcase','luggage','maletas','mochilas','bolsas','valijas'],
+  'perdida':['perdio','perdió','perdida','perdido','no_llego','no_llegó','llego','llegar','llega','faltante','missing','lost','delayed','delay','no_aparece','aparece','desaparecio','desapareció','extraviada','extraviado','faltan','faltantes','objetos_faltantes','cosas_faltantes','no_esta','no_estan','no_están','falta','faltan_objetos','falta_objeto'],
+  'danada':['danada','dañada','danado','dañado','daño','rota','quebrada','dented','torn','ripped','crushed','wet','damage','damaged','dmg','dpr','rotao','quebrado','partida','partido'],
+  'robo':['robo','robaron','hurto','hurtaron','pilferage','pil','pilfered','abierta','faltante_contenido','robaron_contenido','robao','me_robaron','me_hurtaron','falta_contenido','objetos_perdidos','cosas_robadas','me_robaron_cosas','hurtaron','robaron_cosas'],
+  'tag':['tag','tags','etiqueta','etiquetar','sticker','label','tn','tag_number'],
+  'vuelo':['vuelo','flight','avion','avión','flights','fd'],
+  'pasajero':['pasajero','pasajera','pax','cliente','viajero','passenger','nombre','apellido','nm'],
+  'crear':['crear','abrir','abro','abra','abres','abri','abierto','abierta','hacer','generar','nuevo','create','new','reportar','reporte','report','hago','hace','hacemos','hacen','genero','reporto','armo','monto','armar'],
+  'cerrar':['cerrar','cierre','close','terminar','finalizar','cierra','cierro','cierres'],
+  'buscar':['buscar','encontrar','localizar','trace','search','display','ver','consultar','mirar','busco','busca','mira','abrir','abro','abra','abres','donde_esta','donde_está','ubicar','rastrear','rastreo','seguimiento','seguir','consulta','consulto','muestro','muestra','mostrar','sacar','saco','pull','get','retrieve','recuperar','recupero','esta_madre','esta_chingadera','este_file','ese_file','este_archivo','ese_archivo','numero','número','referencia','ref'],
+  'onhand':['onhand','on-hand','sobrante','mano','olvidada','unclaimed','ohd','qoh','sin_reclamar','sin_reclamo','nadie_reclama','no_reclamado','abandonado','sin_dueno','sin_dueño','nadie_lo_busca','sin_recoger','reclamar','reclamado','recoger'],
+  'rush':['rush','fast_track','fast-track','urgente','correr','fwd','forward','fa','fasttrack'],
+  'login':['login','entrar','acceder','sign_on','signon','signin','iniciar_sesion','sesion','contraseña','password','sign','clave'],
+  'mascarilla':['mascarilla','pantalla_verde','green_screen','terminal','nativa','mask','masks','pantalla','pantall','screen','formulario','forma','form'],
+  'modificar':['modificar','cambiar','editar','update','amend','corregir','ajustar'],
+  'enviar':['enviar','mandar','forward','send','shc','envio','fwd','foh','fah','flz'],
+  'telefono':['telefono','teléfono','celular','movil','móvil','phone','cp','pn','tp','cell'],
+  'direccion':['direccion','dirección','address','casa','domicilio','pa','ta'],
+  'color':['color','tipo','colortype','ct','colour'],
+  'ruta':['ruta','routing','rt','route','itinerario'],
+  'rl':['rl','reason_for_loss','reason','causa','motivo','perdida_motivo','estacion','estación','base','aeropuerto','terminal','aeropuertos','razon_perdida','razón_perdida'],
+  'suspender':['suspender','suspension','sus','suspend','pausar'],
+  'reinstalar':['reinstalar','reinstate','rit','restaurar'],
+  'reactivar':['reactivar','reactivate','raw','activar'],
+  'reabrir':['reabrir','reopen','rcb','abrir_de_nuevo'],
+  'reassign':['reassign','reasignar','rib','transferir'],
+  'bdo':['bdo','delivery','delivery_order','orden_entrega','entrega','envio_domicilio'],
+  'paging':['paging','pagina','página','page','next','wmpn','wmpb','avanzar','retroceder'],
+  'pir':['pir','property_irregularity_report','reporte','report','irregularidad'],
+  'fwdfile':['fwdfile','fwd_file','rushfile','rush_file','foward_file'],
+  'cfd':['cfd','close_ahl_open_dpr','convertir_dpr'],
+  'cfi':['cfi','close_ahl_dpr','cerrar_ahl_dpr'],
+  'xtr':['xtr','extend','extender','ampliar','extension'],
+  'mdo':['mdo','match_delay_override','override'],
+  'banda':['banda','cinta','carousel','carrousel','correa','reclamo','llegada'],
+  'damaged_content':['damaged_content','contenido_danado','contenido_dañado'],
+  'lock':['lock','candado','hinge','bisagra','zipper','cremallera'],
+  'wheel':['wheel','rueda','handle','asa','strap','correa'],
+  'wet':['wet','mojada','mojado','humedad','lluvia','rain','liquid'],
+  'frame':['frame','marco','structure','estructura'],
+  'afkl':['af','kl','airfrance','klm','altea','amadeus','mexaf','klm'],
+  'aduana':['aduana','aicm','mexico','aduanas','hacienda','retencion','retenido','sobrante_aduana'],
+  'contenido':['contenido','objetos','cosas','pertenencias','pertenencia','articulos','artículos','items','stuff','belongings','objeto','cosa']
+};
+
+function canon(t){
+  return t.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9#\/\-]/g,'_').replace(/_+/g,'_').replace(/^_|_$/g,'');
+}
+
+const INF={
+  'hago':'hacer','hace':'hacer','haces':'hacer','hacemos':'hacer','hacen':'hacer','hice':'hacer','hiciste':'hacer','hicimos':'hacer','hicieron':'hacer',
+  'llego':'llegar','llega':'llegar','llegas':'llegar','llegamos':'llegar','llegan':'llegar','llegue':'llegar','llegaste':'llegar','llegaron':'llegar',
+  'reporto':'reportar','reporta':'reportar','reportas':'reportar','reportamos':'reportar','reportan':'reportar','reporte':'reportar','reportes':'reportar','reportar':'reportar','report':'reportar',
+  'genero':'generar','genera':'generar','generas':'generar','generamos':'generar','generan':'generar',
+  'creo':'crear','crea':'crear','creas':'crear','creamos':'crear','crean':'crear',
+  'cierro':'cerrar','cierra':'cerrar','cierras':'cerrar','cerramos':'cerrar','cierran':'cerrar','cerre':'cerrar','cerraste':'cerrar','cerraron':'cerrar',
+  'busco':'buscar','busca':'buscar','buscas':'buscar','buscamos':'buscar','buscan':'buscar',
+  'envio':'enviar','envia':'enviar','envias':'enviar','enviamos':'enviar','envian':'enviar',
+  'modifico':'modificar','modifica':'modificar','modificas':'modificar','modificamos':'modificar','modifican':'modificar',
+  'suspendo':'suspender','suspende':'suspender','suspendes':'suspender','suspendemos':'suspender','suspenden':'suspender',
+  'reinstalo':'reinstalar','reinstala':'reinstalar','reinstalas':'reinstalar','reinstalamos':'reinstalar','reinstalan':'reinstalar',
+  'reactivo':'reactivar','reactiva':'reactivar','reactivas':'reactivar','reactivamos':'reactivar','reactivan':'reactivar',
+  'reabro':'reabrir','reabre':'reabrir','reabres':'reabrir','reabrimos':'reabrir','reabren':'reabrir',
+  'pierdo':'perder','pierde':'perder','pierdes':'perder','perdemos':'perder','pierden':'perder','perdi':'perder','perdio':'perder','perdieron':'perder',
+  'encuentro':'encontrar','encuentra':'encontrar','encuentras':'encontrar','encontramos':'encontrar','encuentran':'encontrar',
+  'olvido':'olvidar','olvida':'olvidar','olvidas':'olvidar','olvidamos':'olvidar','olvidan':'olvidar',
+  'daño':'dañar','daña':'dañar','dañas':'dañar','dañamos':'dañar','dañan':'dañar',
+  'robo':'robar','roba':'robar','robas':'robar','robamos':'robar','roban':'robar',
+  'aparece':'aparecer','aparecen':'aparecer','aparecio':'aparecer','aparecieron':'aparecer',
+  'desaparece':'desaparecer','desaparecen':'desaparecer','desaparecio':'desaparecer','desaparecieron':'desaparecer',
+  'facturo':'facturar','factura':'facturar','facturamos':'facturar','facturan':'facturar',
+  'etiqueto':'etiquetar','etiqueta':'etiquetar','etiquetamos':'etiquetar','etiquetan':'etiquetar',
+  'entrego':'entregar','entrega':'entregar','entregamos':'entregar','entregan':'entregar',
+  'mando':'mandar','manda':'mandar','mandamos':'mandar','mandan':'mandar',
+  'consulto':'consultar','consulta':'consultar','consultamos':'consultar','consultan':'consultar',
+  'muestro':'mostrar','muestra':'mostrar','mostramos':'mostrar','muestran':'mostrar',
+  'saco':'sacar','saca':'sacar','sacamos':'sacar','sacan':'sacar',
+  'pongo':'poner','pone':'poner','ponemos':'poner','ponen':'poner',
+  'tomo':'tomar','toma':'tomar','tomamos':'tomar','toman':'tomar',
+  'robao':'robar','robaron':'robar','me_robaron':'robar','hurtaron':'hurtar',
+  'faltan':'faltar','faltante':'faltar','faltantes':'faltar','falta':'faltar',
+  'reclama':'reclamar','reclamas':'reclamar','reclamamos':'reclamar','reclaman':'reclamar','reclamado':'reclamar','reclamaron':'reclamar'
+};
+
+function expand(tokens){
+  const out=new Set();
+  for(const t of tokens){
+    if(!t||STOP.has(t)) continue;
+    out.add(t);
+    const pool=[t];
+    if(INF[t]) pool.push(INF[t]);
+    for(const w of pool){
+      for(const [k,vals] of Object.entries(SYN)){
+        if(vals.includes(w)||vals.includes(INF[w]||'')){ out.add(canon(k)); }
+      }
+    }
+  }
+  return out;
+}
+
+function makeExpandedSet(arr){
+  const s=new Set(arr.map(canon).filter(Boolean));
+  for(const k of [...s]){
+    for(const [key,vals] of Object.entries(SYN)){
+      const ckey=canon(key);
+      if(ckey===k||vals.includes(k)||vals.includes(INF[k]||'')){
+        s.add(ckey);
+        vals.forEach(v=>s.add(canon(v)));
+      }
+    }
+  }
+  return s;
+}
+
+function scoreChunk(chunk,tokens){
+  const kw=chunk.expandedKeywords;
+  const matched=[...tokens].filter(x=>kw.has(x));
+  const base=kw.size? matched.length/Math.min(kw.size,tokens.size||1):0;
+  let bonus=0;
+  if(chunk.expandedCritical&&chunk.expandedCritical.size){
+    const crit=chunk.expandedCritical;
+    const cm=[...tokens].filter(x=>crit.has(x));
+    bonus=(cm.length/Math.min(crit.size,tokens.size||1))*0.5;
+  }
+  return base+bonus;
+}
+
+/* ===================== DATA: KB ===================== */
+
+const KB=[
+  {
+    id:'login_sign',group:'system',title:'Login / Acceso a WM',
+    summary:'Cómo entrar a WorldTracer Management y la contraseña grupal.',
+    steps_short:['Escribe tu Sign/Contraseña en WM.','Ejemplo histórico: /SIGN ACL932 SAS999.','3 errores consecutivos INHABILITAN WM para toda la Central.'],
+    steps_full:'Para acceder a WM se requiere Sign/Contraseña.\nEjemplo de sign histórico: /SIGN ACL932 SAS999 (los últimos 3 dígitos cambian periódicamente).\nLa introducción errónea de la contraseña por 3 veces INHABILITA WM para toda la Central de Equipajes.\n\nFuente: Guía Usuarios WM GUI.02',
+    reference_en:'',
+    critical:['login','wm','sign','contraseña'],
+    keywords:['login','sign','contraseña','password','wm','worldtracer','acceso','entrar','sesion','mascarilla','green_screen']
+  },
+  {
+    id:'buscar_abrir_archivo',group:'general',title:'Buscar / Abrir un archivo existente',
+    summary:'Consulta expedientes activos o inactivos por número de archivo o tipo.',
+    steps_short:['AHL (perdida): WM DAH MEXAF###### / WM DAH MEXKL######','OHD (sobrante): WM DOH MEXAF###### / WM DOH MEXKL######','DPR (daño/hurto): WM DDP MEXAF###### / WM DDP MEXKL######','FWD (rush): WM DFW MEXAF###### / WM DFW MEXKL######','Archivo inactivo (+100 días): WM PDI AHL MEXAF###### DT + MES/AÑO'],
+    steps_full:'Para archivos inactivos también se puede usar PDE (Amend Past Date File Information). Fuente: SITA WorldTracerWeb QRG Rev.1.2 + CGHD/DGR Training Module v1.0',
+    reference_en:'Display/open existing files by number: DAH (AHL), DOH (OHD), DDP (DPR), DFW (FWD). AF: MEXAF###### / KL: MEXKL######. Inactive files: PDI/PDE.',
+    critical:['buscar','display','dah','doh','ddp','dfw','consultar','abrir','archivo','file','expediente'],
+    keywords:['buscar','encontrar','localizar','trace','search','display','ver','consultar','mirar','busco','busca','mira','abrir','abro','abra','abres','donde_esta','donde_está','ubicar','rastrear','rastreo','seguimiento','seguir','consulta','consulto','muestro','muestra','mostrar','sacar','saco','pull','get','retrieve','recuperar','recupero','esta_madre','esta_chingadera','este_file','ese_file','este_archivo','ese_archivo','numero','número','referencia','ref','mexaf','mexkl','file_number']
+  },
+  {
+    id:'tipos_expediente',group:'general',title:'Tipos de expediente',
+    summary:'Diferencia entre AHL, QOH, OHD, DPR y FWD.',
+    steps_short:['AHL = maleta perdida del pax.','QOH = sobrante registrado en 24h (solo tag).','OHD = sobrante después de 24h sin dueño.','DPR = daño o hurto al llegar.','FWD = reenvío rush (10 días de vigencia).'],
+    steps_full:'AHL (Advise If Hold / Perdida de maleta): Pasajero reclama porque su equipaje facturado no llegó al destino. Máximo 10 maletas por AHL. Vigencia: 180 días abierto o 60 días después del cierre.\n\nQOH (Quick On-Hand): Maleta sobrante registrada el primer día solo con número de etiqueta. Si a las 24 horas no se localiza al dueño, se convierte en OHD.\n\nOHD (On-Hand / Maleta sobrante): Maleta encontrada en dependencias de la aerolínea, sin localizar al dueño después de 24h. Vigencia: 180 días abierto o 45 días después del cierre.\n\nDPR (Damage/Pilferage / Deterioro): Equipaje que llega dañado o con hurto al destino. Vigencia: 180 días abierto o 45 días después del cierre.\n\nFWD (Forward / Rush): Expediente para equipaje encontrado que se envía a su destino etiquetado. Vigencia: 10 días; después se purga del sistema.\n\nFuente: Guía Usuarios WM GUI.02 + CGHD/DGR Training Module v1.0',
+    reference_en:'',
+    critical:['tipos','expediente','ahl','ohd','dpr','qoh','fwd'],
+    keywords:['ahl','ohd','dpr','qoh','fwd','expediente','tipo','file','perdida','sobrante','danada','rush','onhand','quick','equipaje','objetos','cosas','contenido']
+  },
+  {
+    id:'crear_ahl',group:'ahl',title:'Crear AHL',
+    summary:'Abrir un reporte de maleta perdida en WM.',
+    steps_short:['Estándar: WM AHL M','Air France (AF): WM AHL MEXAF /M','KLM (KL): WM AHL MEXKL /M','Llena los campos con asterisco (*)','Obligatorios: NM, IT, CT, FD, RT'],
+    steps_full:'PASOS PARA CREAR AHL (método mascarilla nativa):\n1. Ingresar: WM AHL M\n   Air France (AF / Altea Amadeus): WM AHL MEXAF /M\n   KLM (KL / Altea Amadeus): WM AHL MEXKL /M\n2. Completar campos obligatorios (marcados con * en pantalla).\n\nCAMPOS CLAVE:\n- NM: Apellido del pasajero tal como aparece en el billete. Se pueden introducir 2 sets separados por barra (/): NM01 / NM02.\n- IT: Iniciales del pasajero. Hasta 3 sets separados por barra (/): IT01 / IT02 / IT03. Se usa cuando hay varios pasajeros o las iniciales de la maleta son distintas.\n- PT: Mr/Mrs con nombre de pila.\n- PA01: Dirección permanente (ciudad, código postal, país). Permite 2 sets.\n- PN01: Teléfono permanente. Permite 2 sets. Sin barras ni espacios.\n- TA01: Dirección temporal (ciudad, código postal, país). Permite 2 sets.\n- TP01: Teléfono temporal. Permite 2 sets. Sin barras ni espacios.\n- CP01: Celular/móvil. Permite 2 sets. Sin barras ni espacios.\n- BP: Teléfono que aparece en la maleta (bag phone).\n- AB: Dirección que aparece en la maleta (address on bag).\n- FX: Fax que aparece en la maleta.\n- DV: Fecha hasta la cual el pasajero se queda en la dirección temporal.\n- TK: Número del billete.\n- TN: Número de etiqueta de facturación. Si son varias, separar con barras (/). Si no se sabe el número completo, JK acepta hasta dos X al final (ej: JK12345X).\n- CT: Color y tipo de maleta. Si son varias, separar con barras (/).\n- BI: Marca de la maleta y datos exteriores.\n- FD: Vuelo y fecha del pasajero. Poner todos los vuelos.\n- RT: Ruta completa del pasajero. Si se sospecha desvío a otro aeropuerto, escribir el código separado por doble barra (//).\n- BR: Ruta de los vuelos en los que viajó la maleta, si es diferente a la del pasajero.\n- CC: Categorías de contenido. Escoger siempre las de más peso. Usar CDD.\n\nElementos obligatorios del sistema (Quick Reference Guide):\nNM, IT, CT, FD, RT.\n\nFuente: Guía Usuarios WM GUI.02 + SITA WorldTracerWeb QRG Rev.1.2',
+    reference_en:'The AHL (Advise If Hold) file is created when a passenger reports a checked bag did not arrive at destination. Max 10 bags per AHL. Required elements: NM, IT, CT, FD, RT.',
+    critical:['crear','ahl','perdida','maleta'],
+    keywords:['crear','ahl','perdida','lost','delayed','abrir','nuevo','wm','m','mascara','mask','file','baggage','tag','banda','no_aparece','maleta','expediente','hacer','reportar','reporte','report','llegar','equipaje','objetos','cosas','contenido']
+  },
+  {
+    id:'campos_ahl_detalle',group:'ahl',title:'Campos del AHL',
+    summary:'Referencia rápida de todos los elementos del AHL.',
+    steps_short:['NM = apellido del pasajero (hasta 2 sets)','IT = iniciales (hasta 3 sets)','CT = color/tipo IATA','FD = vuelo/fecha','RT = ruta (aeropuertos con /)'],
+    steps_full:'RESUMEN DE ELEMENTOS AHL:\n\nNM - Apellido del pasajero (hasta 2 sets: NM01/NM02).\nIT - Iniciales (hasta 3 sets: IT01/IT02/IT03).\nPT - Título (Mr/Mrs) + nombre de pila.\nPA - Dirección permanente (ciudad, CP, país). 2 sets.\nPN - Teléfono permanente. 2 sets. Sin barras/espacios.\nTA - Dirección temporal. 2 sets.\nTP - Teléfono temporal. 2 sets.\nCP - Celular/móvil. 2 sets.\nBP - Teléfono en la maleta.\nAB - Dirección en la maleta.\nFX - Fax en la maleta.\nDV - Fecha vigencia dirección temporal.\nTK - Número de billete.\nTN - Número de etiqueta (varias con /; hasta 2 X finales si incompleto).\nCT - Color/Tipo (IATA standard).\nBI - Marca y características exteriores.\nFD - Vuelo/fecha (todos los vuelos).\nRT - Ruta (aeropuertos separados por /; desvío sospechoso con //).\nBR - Ruta de la maleta si difiere del pasajero.\nCC - Contenido (CDD = categorías de más peso).\n\nFuente: Guía Usuarios WM GUI.02 + WT Glossary',
+    reference_en:'',
+    critical:['ahl','campos','elementos','nm','it','ct','fd','rt','tn'],
+    keywords:['nm','it','ct','fd','rt','tn','pa','ta','pn','tp','cp','bp','ab','fx','dv','tk','bi','br','cc','elementos','campos','ahl']
+  },
+  {
+    id:'cerrar_ahl',group:'ahl',title:'Cerrar AHL',
+    summary:'Cerrar un reporte de maleta perdida (transacción CAH).',
+    steps_short:['Escribe: WM CAH M','Completa: NM, CS, AG, FS, RL','Se pueden cerrar hasta 10 AHL a la vez.'],
+    steps_full:'CERRAR AHL - Transacción CAH:\n1. Solicitar máscara: WM CAH M\n2. Completar campos:\n   - NM: Apellido del pasajero.\n   - CS: Coste del expediente.\n   - AG: Agente que cierra el expediente.\n   - FS: Base causante del error / base de origen / la que aparezca en WM.\n   - RL: Razón de la pérdida (la que aparezca en WM).\n\nNota: Se pueden cerrar hasta 10 AHL simultáneamente.\n\nFuente: Guía Usuarios WM GUI.02',
+    reference_en:'Close AHL file using CAH transaction. Required: NM, CS, AG, FS, RL. Up to 10 AHL files can be closed simultaneously.',
+    critical:['cerrar','ahl','cierre','cah'],
+    keywords:['cerrar','close','ahl','cah','wm','m','mascara','terminar','finalizar','expediente']
+  },
+  {
+    id:'crear_dpr',group:'dpr',title:'Crear DPR',
+    summary:'Abrir reporte de equipaje dañado o con hurto.',
+    steps_short:['Estándar: WM DPR M','Air France (AF): WM DPR MEXAF /M','KLM (KL): WM DPR MEXKL /M','Método 2: WM CFD (convierte AHL cerrado a DPR)','Obligatorios: FD, NM, IT, RL, RT'],
+    steps_full:'CREAR DPR - Expediente de equipaje dañado o con hurto:\n\nMétodo 1: Crear DPR desde cero (mascarilla nativa):\nTransacción: WM DPR M\nAir France (AF / Altea Amadeus): WM DPR MEXAF /M\nKLM (KL / Altea Amadeus): WM DPR MEXKL /M\n\nMétodo 2: Convertir AHL cerrado a DPR (CFD):\nTransacción: WM CFD (cierra AHL y crea DPR automáticamente).\n\nElementos obligatorios del sistema (Quick Reference Guide):\n- FD: Vuelo/fecha.\n- NM: Nombre del pasajero.\n- IT: Iniciales.\n- RL: Reason for Loss (código de motivo).\n- RT: Routing.\n\nDescripción del archivo (Quick Reference Guide):\n"Create file (DPR) describes functionality for creating a Damaged/Pilfered Bag file. Screen contains seven tabs: one for quick entry of most frequently required data, and six for additional information."\n\nVigencia: 180 días abierto o 45 días después del cierre.\n\nFuente: SITA WorldTracerWeb QRG Rev.1.2 + CGHD/DGR Training Module v1.0',
+    reference_en:'Create DPR (Damaged/Pilfered Bag file). Method 1: WM DPR M. Method 2: WM CFD converts a closed AHL to DPR. Required: FD, NM, IT, RL, RT. Valid 180 days open or 45 days after closure.',
+    critical:['crear','dpr','danada','maleta'],
+    keywords:['crear','dpr','damage','pilferage','danada','rota','dañada','abrir','file','maleta','expediente','reportar','reporte','report','equipaje','objetos','cosas','contenido','robo','hurto']
+  },
+  {
+    id:'cerrar_dpr',group:'dpr',title:'Cerrar DPR',
+    summary:'Cerrar un reporte de daño/hurto (transacción CDP).',
+    steps_short:['Escribe: WM CDP M','Actualiza elementos necesarios y cierra.','Hasta 10 DPR a la vez.'],
+    steps_full:'CERRAR DPR - Transacción CDP:\n1. Solicitar máscara: WM CDP M\n2. Actualizar elementos necesarios y cerrar.\n\nNota: Se pueden cerrar hasta 10 DPR simultáneamente.\n\nFuente: Guía Usuarios WM GUI.02 + SITA WorldTracerWeb QRG Rev.1.2',
+    reference_en:'Close DPR file using CDP transaction. Up to 10 DPR files can be closed simultaneously.',
+    critical:['cerrar','dpr','cdp'],
+    keywords:['cerrar','close','dpr','cdp','terminar','expediente']
+  },
+  {
+    id:'crear_ohd',group:'ohd',title:'Crear OHD',
+    summary:'Registrar maleta sobrante / no reclamada.',
+    steps_short:['Usa OHD cuando la maleta está sin reclamar en tu estación.','Solo UNA maleta por archivo OHD.','Estándar: WM OHD M','Air France (AF): WM OHD MEXAF /M','KLM (KL): WM OHD MEXKL /M','Obligatorios: CT, FD, RT'],
+    steps_full:'CREAR OHD - Maleta sobrante / no reclamada:\n\nRegla: Usar OHD cuando una maleta está sin reclamar en tu estación. Solo UNA maleta por archivo OHD.\n\nTransacción mascarilla:\n- Estándar: WM OHD M\n- Air France (AF / Altea Amadeus): WM OHD MEXAF /M\n- KLM (KL / Altea Amadeus): WM OHD MEXKL /M\n\nElementos obligatorios del sistema (Quick Reference Guide):\n- CT: Color/Tipo.\n- FD: Vuelo/fecha.\n- RT: Routing.\n\nNotas:\n- Si la maleta se encuentra en las primeras 24h, usar QOH (Quick On-Hand) con solo el número de etiqueta (TN).\n- Después de 24h sin localizar al dueño, el QOH se convierte en OHD con todos los datos posibles.\n\nVigencia OHD: 180 días abierto o 45 días después del cierre.\n\nFuente: Guía Usuarios WM GUI.02 + SITA WorldTracerWeb QRG Rev.1.2',
+    reference_en:'Create OHD (On-Hand Bag) when an unclaimed bag is found at your station. One bag per OHD file. Transaction: WM OHD M. Required: CT, FD, RT. Valid 180 days open or 45 days after closure.',
+    critical:['crear','ohd','sobrante','maleta'],
+    keywords:['crear','ohd','onhand','sobrante','encontrada','unclaimed','abrir','file','maleta','expediente','reportar','reporte','report','equipaje','objetos','cosas','contenido']
+  },
+  {
+    id:'crear_qoh',group:'ohd',title:'Crear QOH',
+    summary:'Registro rápido de maleta sobrante el primer día.',
+    steps_short:['Transacción: WM QOH M','Solo necesitas el número de etiqueta (TN).','Hasta 10 maletas en una sola entrada.','A las 24h sin dueño se convierte en OHD.'],
+    steps_full:'CREAR QOH - Quick On-Hand (registro rápido el primer día):\n\nFunción: Permite ingresar hasta 10 maletas encontradas en UNA sola entrada usando únicamente el número de etiqueta.\n\nTransacción: WM QOH M\n\nElementos permitidos:\n- TN: Número de etiqueta (Tag Number).\n- FI: Información adicional.\n\nNotas:\n- NO se asignan números de referencia de archivo a las entradas QOH.\n- Si a las 24 horas no se localiza al dueño, el QOH se modifica a OHD con todos los datos posibles.\n\nFuente: SITA WorldTracerWeb QRG Rev.1.2 + CGHD/DGR Training Module v1.0',
+    reference_en:'Create QOH (Quick On-Hand) for same-day found bags. Transaction: WM QOH M. Up to 10 bags with tag numbers only. Converts to OHD after 24h if unclaimed.',
+    critical:['crear','qoh','quick','sobrante'],
+    keywords:['qoh','quick','onhand','sobrante','rapido','tag','tn','etiqueta','expediente']
+  },
+  {
+    id:'cerrar_ohd',group:'ohd',title:'Cerrar OHD',
+    summary:'Cerrar o modificar hasta 5 archivos OHD (COH).',
+    steps_short:['Transacción: WM COH M','Cierra/modifica hasta 5 OHD.','Puedes añadir, modificar o eliminar elementos.','Cerrado por error: usa RCB OHD para reabrir.'],
+    steps_full:'CERRAR OHD - Transacción COH:\n1. Función: Cerrar y modificar hasta 5 archivos OHD.\n2. Se puede añadir nueva información y modificar/eliminar elementos.\n\nNota: Si un archivo fue cerrado por error, usar Reopen (RCB OHD) para recrearlo con nuevo número de archivo.\n\nFuente: SITA WorldTracerWeb QRG Rev.1.2 + WT Glossary',
+    reference_en:'Close OHD file using COH transaction. Close or amend up to 5 OHD files. If closed by error, use RCB OHD to reopen with a new file number.',
+    critical:['cerrar','ohd','coh'],
+    keywords:['cerrar','close','ohd','coh','terminar','expediente']
+  },
+  {
+    id:'fwd_pue_prohibido',group:'rush',title:'¿Puedo enviar un FWD a PUE?',
+    summary:'NO se puede hacer FWD al aeropuerto de PUE. En ese caso se debe hacer BDO.',
+    steps_short:['⛔ NO se puede hacer FWD al aeropuerto de PUE.','✅ En ese caso se debe hacer BDO (BDO solo aplica para CDMX, MEX, PUE e HGO).'],
+    steps_full:'⛔ NO se puede hacer FWD al aeropuerto de PUE.\n\nSegún instrucciones del Duty Manager Daniela Olivares (MEX AICM AF/KL), el envío FWD al aeropuerto de Puebla (PUE) está PROHIBIDO.\n\n✅ Alternativa correcta:\nEn ese caso se debe hacer BDO (Baggage Delivery Order).\n\nBDO solo se puede hacer a los estados de CDMX, MEX, PUE e HGO (Hidalgo).\n\nPara cualquier duda, consultar con Duty Manager Daniela Olivares.',
+    reference_en:'FWD to PUE airport is NOT allowed per AF/KL Duty Manager instructions. Use BDO instead. BDO only available for CDMX, MEX, PUE, HGO.',
+    extra_note:'⚠️ Información operativa — Duty Manager Daniela Olivares (MEX AICM AF/KL):\n\n• NO se puede hacer FWD al aeropuerto de PUE.\n• En ese caso se debe hacer BDO (BDO solo aplica para CDMX, MEX, PUE e HGO).\n\n📞 Para mayor información, contactar directamente a Daniela Olivares o a Karina / Eriban de LL.',
+    critical:['fwd','pue','no','prohibido'],
+    keywords:['fwd','pue','aeropuerto_pue','enviar','mandar','puebla','prohibido','no_se_puede','no_puedo','puedo','rush','forward','envio','aeropuerto']
+  },
+  {
+    id:'rush_fwd',group:'rush',title:'Crear Rush / FWD',
+    summary:'Crear expediente para reenviar equipaje encontrado.',
+    steps_short:['Estándar: WM FWD M','Air France (AF): WM FWD MEXAF /M','KLM (KL): WM FWD MEXKL /M','Obligatorios: FO (vuelo de envío), FW (ruta de envío), TN o XT (tag/rush number).','Vigencia: 10 días.'],
+    steps_full:'RUSH / FWD - Expediente para equipaje encontrado enviado a destino:\n\nFunción: Crear archivo para equipaje encontrado que se reenvía a su destino etiquetado.\n\nTransacción crear:\n- Estándar: WM FWD M\n- Air France (AF / Altea Amadeus): WM FWD MEXAF /M\n- KLM (KL / Altea Amadeus): WM FWD MEXKL /M\n\nElementos obligatorios del sistema (Quick Reference Guide):\n- FO: Rush Flight (vuelo de envío).\n- FW: Rush Routing (ruta de envío).\n- TN o XT: Tag Number o Rush Number.\n\nBúsqueda de Rush files: DFW / RFW\n\nVigencia FWD: 10 días; después se purga del sistema.\n\nTipos de Forward (del manual):\n- FAH: Forward Held Bag (desde AHL).\n- FOH: Forward OHD Bag (desde OHD/QOH).\n- FLZ: Forward OHD Bags to LZ Office (oficina central de trazabilidad).\n\nFuente: Guía Usuarios WM GUI.02 + SITA WorldTracerWeb QRG Rev.1.2',
+    reference_en:'Create FWD (Forward/Rush) file for found bags being sent to destination. Transaction: WM FWD M. Required: FO, FW, TN/XT. Valid 10 days. Types: FAH, FOH, FLZ.',
+    extra_note:'⚠️ Información operativa — Duty Manager Daniela Olivares (MEX AICM AF/KL):\n\n• NO se puede hacer FWD al aeropuerto de PUE.\n• En ese caso se debe hacer BDO (BDO solo aplica para CDMX, MEX, PUE e HGO).\n\n📞 Para mayor información, contactar directamente a Daniela Olivares o a Karina / Eriban de LL.',
+    critical:['rush','fwd','fast_track','urgente','crear'],
+    keywords:['rush','fwd','fast_track','fasttrack','urgente','forward','envio','create','crear','maleta','expediente','bdo','enviar','pue']
+  },
+  {
+    id:'display_files',group:'general',title:'Consultar expedientes',
+    summary:'Ver expedientes activos con DAH, DOH, DDP, DFW.',
+    steps_short:['DAH = ver AHL (perdida)','DOH = ver OHD (sobrante)','DDP = ver DPR (daño/hurto)','DFW = ver Rush files','PDI = recuperar archivos inactivos'],
+    steps_full:'VISUALIZAR EXPEDIENTES ACTIVOS:\n\n- DAH: Display AHL file (perdida).\n- DOH: Display OHD file (sobrante).\n- DDP: Display DPR file (daño/hurto).\n- DFW: Display FWD/Rush files.\n\nPara archivos retirados/inactivos (más allá de la vigencia activa):\n- PDI: Past Date File Information (recuperar archivos inactivos).\n- PDE: Amend Past Date File Information.\n\nEjemplo: WM DAH [estación][aerolínea][número]\n\nFuente: SITA WorldTracerWeb QRG Rev.1.2 + CGHD/DGR Training Module v1.0',
+    reference_en:'Display active files: DAH (AHL), DOH (OHD), DDP (DPR), DFW (FWD). For inactive files use PDI/PDE.',
+    critical:['buscar','display','dah','doh','ddp','consultar'],
+    keywords:['display','dah','doh','ddp','dfw','consultar','ver','buscar','file','expediente','visualizar']
+  },
+  {
+    id:'amend_files',group:'general',title:'Modificar expedientes',
+    summary:'Actualizar datos de AHL, OHD o DPR existentes.',
+    steps_short:['AAH = modificar AHL','AOH = modificar OHD','ADP = modificar DPR','Puedes añadir, cambiar o borrar elementos.'],
+    steps_full:'MODIFICAR EXPEDIENTES:\n\n- AAH: Amend AHL File (modificar perdida).\n- AOH: Amend OHD File (modificar sobrante).\n- ADP: Amend DPR File (modificar daño/hurto).\n\nDefinición del manual: "To amend means to add, change or delete elements. Restrictions apply to different elements within each transaction."\n\nFuente: WT Glossary + SITA WorldTracerWeb QRG Rev.1.2',
+    reference_en:'Amend existing files: AAH (AHL), AOH (OHD), ADP (DPR). To amend means to add, change or delete elements.',
+    critical:['modificar','amend','aah','aoh','adp','actualizar'],
+    keywords:['amend','aah','aoh','adp','update','modificar','editar','cambiar','file']
+  },
+  {
+    id:'send_file',group:'general',title:'Enviar expediente (SHC)',
+    summary:'Enviar copia de un archivo a otra estación por telex o email.',
+    steps_short:['SHC AHL [referencia]','SHC OHD [referencia]','SHC DPR [referencia]'],
+    steps_full:'ENVIAR EXPEDIENTE - SHC (Send Hard Copy):\n\nFunción: Enviar copia impresa de un archivo activo a una dirección de teletype o correo electrónico específica.\n\nEjemplos:\n- WM SHC AHL [referencia] (enviar AHL).\n- WM SHC OHD [referencia] (enviar OHD).\n- WM SHC DPR [referencia] (enviar DPR).\n\nFuente: SITA WorldTracerWeb QRG Rev.1.2 + CGHD/DGR Training Module v1.0',
+    reference_en:'Send Hard Copy (SHC) of an active file to a teletype or email address. Examples: WM SHC AHL ref, WM SHC OHD ref, WM SHC DPR ref.',
+    critical:['enviar','shc','send','file','expediente'],
+    keywords:['send','shc','enviar','mandar','file','expediente','teletype','tty','email']
+  },
+  {
+    id:'bdo_donde_enviar',group:'rush',title:'¿A dónde puedo enviar un BDO?',
+    summary:'BDO solo se puede hacer a los estados de CDMX, MEX, PUE e HGO (Hidalgo).',
+    steps_short:['CDMX (Ciudad de México)','MEX (Estado de México)','PUE (Puebla)','HGO (Hidalgo)','NO se puede hacer FWD al aeropuerto de PUE (en ese caso usar BDO).'],
+    steps_full:'BDO solo se puede hacer a los siguientes estados:\n\n• CDMX — Ciudad de México\n• MEX — Estado de México\n• PUE — Puebla\n• HGO — Hidalgo\n\n⛔ NO se puede hacer FWD al aeropuerto de PUE. En ese caso se debe hacer BDO.\n\nPara cualquier otro estado o destino, consultar con Duty Manager Daniela Olivares.',
+    reference_en:'BDO is only available for CDMX, MEX, PUE and HGO states. FWD to PUE airport is NOT allowed; use BDO instead.',
+    extra_note:'⚠️ Información operativa — Duty Manager Daniela Olivares (MEX AICM AF/KL):\n\n• BDO solo se puede hacer a los estados de CDMX, MEX, PUE e HGO (Hidalgo).\n• NO se puede hacer FWD al aeropuerto de PUE; en ese caso se debe hacer BDO.\n\n📞 Para mayor información, contactar directamente a Daniela Olivares o a Karina / Eriban de LL.',
+    critical:['bdo','enviar','estados','cdmx','pue','hgo','mex','donde'],
+    keywords:['bdo','enviar','mandar','a_donde','donde','estados','cdmx','pue','hidalgo','hgo','mex','edo_mex','edomex','envio','domicilio']
+  },
+  {
+    id:'bdo_delivery',group:'rush',title:'Crear BDO',
+    summary:'Orden de entrega para enviar la maleta a domicilio.',
+    steps_short:['Estándar: BDO AHL / BDO OHD','AF/KL: WM BDO AHL + estación + aerolínea','Se imprime y se adjunta a la maleta.'],
+    steps_full:'BDO - Baggage Delivery Order (Orden de Entrega):\n\nFunción: Crear un registro de entrega que se puede imprimir y adjuntar a la maleta que se entrega.\n\nPara ciertas compañías de entrega registradas, el registro se envía automáticamente a la compañía.\n\nContiene información del archivo y de la pantalla de entrega (bag + delivery details).\nUna copia del BDO se transfiere automáticamente al área DLV del archivo.\n\nElemento obligatorio: Delivery Station.\n\nTransacciones:\n- BDO AHL (desde AHL).\n- BDO OHD (desde OHD).\n\nFuente: WT Glossary + SITA WorldTracerWeb QRG Rev.1.2',
+    reference_en:'Create BDO (Baggage Delivery Order) for home/airport delivery. BDO AHL or BDO OHD. One copy auto-transfers to DLV area of the file.',
+    extra_note:'⚠️ Información operativa — Duty Manager Daniela Olivares (MEX AICM AF/KL):\n\n• BDO solo se puede hacer a los estados de CDMX, MEX, PUE e HGO (Hidalgo).\n\n📞 Para mayor información, contactar directamente a Daniela Olivares o a Karina / Eriban de LL.',
+    critical:['bdo','delivery','entrega','orden','enviar','estados','cdmx','pue','hgo'],
+    keywords:['bdo','delivery','orden','entrega','envio_domicilio','mandar','bag','enviar']
+  },
+  {
+    id:'roh_request',group:'general',title:'Solicitar OHD (ROH)',
+    summary:'Pedir una maleta sobrante a otra estación.',
+    steps_short:['Transacción: WM ROH M','Campos: NM, AG*, FI, SI, TX','El sistema pega el ROH automáticamente al expediente.'],
+    steps_full:'ROH - Request OHD Bag (Solicitud de maleta sobrante):\n\nSe usa desde el CAT para solicitar un OHD a otra estación.\n\nEjemplo de máscara:\nWM ROH M\n\nCampos a completar:\n- NM: Apellido del pasajero.\n- AG*: Agente (obligatorio).\n- FI: Forward instructions (ej: PLS FWD TO LHRJK USE JK FLTS ONLY).\n- SI: Special instructions (ej: PLS SECURITY SEAL THE BAG BEFORE SENDING).\n- TX: Direcciones teletype (ej: ATLAAJK/LHRAAJK).\n\nSi el match se produce entre AHL y QOH, la segunda línea incluirá QOH, el aeropuerto del OHD y la etiqueta.\n\nAl completar y pulsar INTRO, el sistema pega automáticamente el ROH al final del expediente y da opción de suspender la búsqueda (SUS).\n\nFuente: Guía Usuarios WM GUI.02',
+    reference_en:'Request OHD Bag (ROH) from another station. Transaction: WM ROH M. Required: AG. Optional: FI, SI, TX. Auto-appended to file.',
+    critical:['roh','request','solicitar','ohd','ahl'],
+    keywords:['roh','request','solicitar','ohd','ahl','pedir','maleta']
+  },
+  {
+    id:'sus_rit_raw',group:'general',title:'Suspender / Reinstalar / Reactivar',
+    summary:'Controlar el estado de búsqueda de expedientes.',
+    steps_short:['SUS = suspender búsqueda','RIT = reinstalar en búsqueda','RAW = reactivar archivo inactivo','RCB = reabrir archivo cerrado por error','RIB = reasignar a otra estación'],
+    steps_full:'CONTROL DE BÚSQUEDA DE EXPEDIENTES:\n\nSUSPENDER:\n- SUS AHL / SAH: Suspender AHL en WorldTracer Tracing (archivo completo o elementos individuales en multibag).\n- SUS OHD / SOH: Suspender OHD.\n\nREINSTALAR:\n- RIT AHL: Reinstalar AHL en búsqueda.\n- RIT OHD / ROT: Reinstalar OHD en búsqueda.\n\nREACTIVAR:\n- RAW: Reactivar AHL que fue creado como Non-Tracing o ya no está activo.\n- ROW: Reactivar OHD en las mismas condiciones.\n\nREABRIR:\n- RCB AHL: Reabrir AHL cerrado por error (crea nuevo archivo con referencia AR al viejo).\n- RCB OHD: Reabrir OHD cerrado por error.\n\nREASIGNAR:\n- RIB AHL: Reasignar AHL a otra estación/aerolínea.\n- RIB OHD: Reasignar OHD.\n- RIB DPR: Reasignar DPR.\n\nFuente: Guía Usuarios WM GUI.02 + SITA WorldTracerWeb QRG Rev.1.2',
+    reference_en:'Control file tracing status: SUS (suspend), RIT (reinstate), RAW (reactivate), RCB (reopen), RIB (reassign).',
+    critical:['suspender','reinstalar','reactivar','sus','rit','raw'],
+    keywords:['sus','suspend','rit','reinstate','raw','reactivate','suspender','reinstalar','reactivar','pausar','restaurar']
+  },
+  {
+    id:'fwd_types',group:'rush',title:'Tipos de Forward',
+    summary:'FAH, FOH y FLZ: diferencias entre tipos de reenvío.',
+    steps_short:['FAH = desde AHL (maleta retenida)','FOH = desde OHD/QOH (sobrante)','FLZ = a oficina central de trazabilidad'],
+    steps_full:'TIPOS DE FORWARD:\n\n- FAH: Forward Held Bag. Enviar maleta retenida (desde AHL).\n- FOH: Forward OHD/QOH Bag. Enviar maleta sobrante (desde OHD/QOH).\n- FLZ: Forward OHD Bags to LZ Office. Enviar maleta sobrante a oficina central de trazabilidad.\n\nNota: FHB ya no está disponible; usar FAH.\n\nEl FOH adjunta datos de envío al AHL coincidente (match). Si el OHD fue ingresado como OHD (no QOH), los datos también se adjuntan al archivo OHD.\n\nFuente: WT Glossary + SITA WorldTracerWeb QRG Rev.1.2',
+    reference_en:'Forward types: FAH (from AHL), FOH (from OHD/QOH), FLZ (to LZ Office). FHB is no longer available; use FAH.',
+    critical:['forward','fah','foh','flz','envio','mandar'],
+    keywords:['fah','foh','flz','forward','enviar','mandar','maleta','sobrante','held','onhand']
+  },
+  {
+    id:'vigencia',group:'general',title:'Vigencia de expedientes',
+    summary:'Cuánto duran activos AHL, OHD, DPR, QOH y FWD.',
+    steps_short:['AHL: 180 días abierto / 60 días cerrado','OHD/DPR: 180 días abierto / 45 días cerrado','QOH: 24 horas','FWD: 10 días','XTR: extiende a 100 días'],
+    steps_full:'VIGENCIA DE EXPEDIENTES:\n\nAHL:\n- Abierto: 180 días.\n- Cerrado: 60 días después del cierre.\n- Lo que ocurra primero. Después se retira (inactivo).\n\nOHD:\n- Abierto: 180 días.\n- Cerrado: 45 días después del cierre.\n- Lo que ocurra primero.\n\nDPR:\n- Abierto: 180 días.\n- Cerrado: 45 días después del cierre.\n\nQOH:\n- 24 horas; después se purga o convierte en OHD.\n\nFWD:\n- 10 días; después se purga del sistema.\n\nEXTENSIÓN DE BÚSQUEDA:\n- XTR: Extiende tiempo de búsqueda de AHL/OHD/DPR de 45 a 100 días.\n\nARCHIVOS RETIRADOS (INACTIVOS):\n- PDI: Recuperar copia de archivos retirados.\n- PDE: Modificar archivos retirados.\n\nFuente: Guía Usuarios WM GUI.02 + CGHD/DGR Training Module v1.0',
+    reference_en:'File validity: AHL 180d open / 60d closed. OHD/DPR 180d open / 45d closed. QOH 24h. FWD 10d. XTR extends to 100 days.',
+    critical:['vigencia','dias','retirado','pdi','pde','activo','inactivo'],
+    keywords:['vigencia','dias','retirado','pdi','pde','activo','inactivo','180','45','60','100','xtr']
+  },
+  {
+    id:'paging',group:'system',title:'Navegación en pantallas',
+    summary:'Moverse entre páginas de la mascarilla verde.',
+    steps_short:['WMPN = siguiente página','WMPB = página anterior','WMPF = primera página','WMPL = última página','WMPD# = mostrar ítem número #'],
+    steps_full:'PAGING FUNCTIONS - Navegación en pantallas verde (mascarilla):\n\nFunciones generales:\n- WMPN: Page Next (siguiente página).\n- WMPB: Page Back (página anterior).\n- WMPF: Page First (primera página).\n- WMPG: Page Current (página actual).\n- WMPL: Page Last (última página).\n\nFunciones de lista de archivos:\n- WMPD#: Display Item Number # (mostrar ítem número #).\n- WMPD: Redisplay File list from beginning (volver a mostrar lista desde el inicio).\n\nAplicación: Listas de matches (MCH), mensajes de forward (FWD) en HIS/A de AHL, y todos los listados de reportes (RAF, ROF, DAH, DOH, DDP, DFW...).\n\nFuente: CGHD/DGR Training Module v1.0',
+    reference_en:'Paging functions for green screen: WMPN (next), WMPB (back), WMPF (first), WMPL (last), WMPD# (display item #).',
+    critical:['paging','pagina','pantalla','navegar','wmpn'],
+    keywords:['paging','wmpn','wmpb','wmpf','wmpg','wmpl','wmpd','pagina','pantalla','navegar','avanzar','retroceder']
+  },
+  {
+    id:'tnt_trace',group:'general',title:'Buscar por etiqueta (TNT)',
+    summary:'Trazar maleta retrasada con pocos datos.',
+    steps_short:['TNT = Tag Number Trace','Busca por estación + aerolínea + tag','También permite crear/editar AHL directo.'],
+    steps_full:'TNT - Tag Number Trace (Búsqueda por número de etiqueta):\n\nFunción: Trazado preliminar de maleta retrasada usando criterios mínimos de búsqueda.\n\nPermite:\n- Buscar por estación + código de aerolínea + hasta 10 números de etiqueta (filtro "All files").\n- Buscar por estación + código de aerolínea + nombre de pasajero y/o una etiqueta (filtros "Delayed", "On-hand", "Rush").\n\nTambién permite visualizar AHL existente o crear/editar uno nuevo.\n\nFuente: SITA WorldTracerWeb QRG Rev.1.2',
+    reference_en:'Tag Number Trace (TNT) for preliminary tracing of delayed bags using minimal criteria. Search by station + airline + up to 10 tag numbers.',
+    critical:['tnt','tag','etiqueta','buscar','trace','numero'],
+    keywords:['tnt','tag_number_trace','etiqueta','tag','buscar','trace','localizar','numero']
+  },
+  {
+    id:'rl_primary',group:'codes',title:'RL Primary (10-90)',
+    summary:'Códigos principales de razón de pérdida.',
+    steps_short:['10 = error de check-in en origen','20 = no cargada en origen','30 = carga/descarga','40 = error en llegada','50 = error en transferencia','60 = problema general aeropuerto','70 = varios / no aerolínea','80 = daño','90 = hurto / pilferage'],
+    steps_full:'RL - PRIMARY CODES (Códigos principales de razón de pérdida):\n\n10 - ORIGIN STATION CHECK IN (Error de check-in en origen)\n20 - ORIGIN STATION FAILED TO LOAD (No cargada en origen)\n30 - ANY STATION - LOADING/OFFLOADING (Carga/descarga en cualquier estación)\n40 - ARRIVAL STATION (Error en estación de llegada)\n50 - TRANSFER STATION (Error en estación de transferencia)\n60 - AIRPORT - GENERAL (Problemas generales del aeropuerto)\n70 - MISCELLANEOUS (Varios / no causado por aerolínea)\n80 - DAMAGE (Daño)\n90 - PILFERAGE (Hurto / robo)\n\nFuente: WT Glossary + CGHD/DGR Training Module v1.0',
+    reference_en:'RL Primary Reason for Loss codes: 10 (Origin check-in), 20 (Failed to load), 30 (Loading/offloading), 40 (Arrival), 50 (Transfer), 60 (Airport general), 70 (Misc), 80 (Damage), 90 (Pilferage).',
+    critical:['rl','reason_for_loss','codigo','primary','perdida','motivo'],
+    keywords:['rl','reason','codigo','primary','perdida','motivo','10','20','30','40','50','60','70','80','90']
+  },
+  {
+    id:'rl_secondary_10_20',group:'codes',title:'RL Secundarios 10-20',
+    summary:'Códigos secundarios de check-in y failed to load.',
+    steps_short:['10: 11=tag mal, 16=tarde, 17=tag vieja','20: 21=dejada en origen, 23=standby, 26=espacio/peso'],
+    steps_full:'RL - SECONDARY CODES (10 y 20):\n\nP-10 ORIGIN STATION CHECK IN:\n11 Incorrect or no entries on tag (Entradas incorrectas o ausentes en etiqueta).\n12 Not checked to final destination (No facturado a destino final).\n13 Checked to final destination - 2 separate contracts (Facturado a destino final - 2 contratos separados).\n15 Wrong bag labeled - tag switch (Etiqueta equivocada - cambio de etiqueta).\n16 Bag received too late from check-in (Maleta recibida muy tarde de check-in).\n17 Old tag not removed (Etiqueta vieja no retirada).\n18 Bag not authorised to load (Maleta no autorizada para cargar).\n\nP-20 ORIGIN STATION FAILED TO LOAD:\n21 Bag left at station of origin / correctly labeled (Maleta dejada en origen / correctamente etiquetada).\n23 Standby baggage left behind (Equipaje standby dejado atrás).\n25 Gate checked baggage left behind (Equipaje gate-checked dejado atrás).\n26 Offloading due space/weight restrictions (Descarga por restricciones de espacio/peso).\n27 Local passenger rerouted / bag not rerouted (Pasajero local re-rutado / maleta no re-rutada).\n\nFuente: WT Glossary + CGHD/DGR Training Module v1.0',
+    reference_en:'RL Secondary codes 10-20: Check-in errors (11-18) and failed to load reasons (21-27).',
+    critical:['rl','secundario','10','20','checkin','failed_load'],
+    keywords:['rl','secondary','10','20','checkin','tagging','shortshipped','failed_load','origen']
+  },
+  {
+    id:'rl_secondary_30_50',group:'codes',title:'RL Secundarios 30-50',
+    summary:'Códigos secundarios de loading, arrival y transfer.',
+    steps_short:['30: 31=avión equivocado, 32=descargada por error','40: 41=área equivocada, 42=entrega demorada','50: 51=pax re-rutado, 54=interline no entregó'],
+    steps_full:'RL - SECONDARY CODES (30, 40, 50):\n\nP-30 ANY STATION LOADING/OFFLOADING:\n31 Sorting or loading error - wrong aircraft (Error de clasificación/carga - avión equivocado).\n32 Offloaded by error (Descargada por error).\n33 Not offloaded (No descargada).\n35 Sorting or loading error - wrong container / wrong compartment / behind cargo.\n\nP-40 ARRIVAL STATION:\n41 Delivered to wrong area (Entregada en área equivocada).\n42 Delayed delivery to claim area (Entrega demorada al área de reclamo).\n43 Delayed delivery of oversized/oddsized baggage (Entrega demorada de equipaje extradimensionado).\n\nP-50 TRANSFER STATION:\n51 Passenger rerouted / bag not rerouted (Pasajero re-rutado / maleta no).\n52 Interline MCT available (MCT interline disponible).\n53 Interline MCT not available (MCT interline no disponible).\n54 Interline bags not made available by inbound carrier (Equipaje interline no entregado por portador entrante).\n55 Online - own carrier - MCT available (Online propia - MCT disponible).\n56 Online - own carrier - MCT not available (Online propia - MCT no disponible).\n57 Alliance partner (Socio alianza).\n58 Codeshare partner (Socio codeshare).\n59 Bag not authorised to load (Maleta no autorizada para cargar).\n\nFuente: WT Glossary + CGHD/DGR Training Module v1.0',
+    reference_en:'RL Secondary codes 30-50: Loading errors (31-35), arrival errors (41-43), transfer issues (51-59).',
+    critical:['rl','secundario','30','40','50','loading','arrival','transfer'],
+    keywords:['rl','secondary','30','40','50','loading','offloading','arrival','transfer','transferencia']
+  },
+  {
+    id:'rl_secondary_60_90',group:'codes',title:'RL Secundarios 60-90',
+    summary:'Códigos secundarios de airport, misc, damage y pilferage.',
+    steps_short:['60: 61=huelga, 64=equipo fuera de servicio','70: 74=cambio de maleta, 76=sin etiqueta','80: 83=daño por seguridad','90: 91=hurto con daño, 93=seguridad'],
+    steps_full:'RL - SECONDARY CODES (60, 70, 80, 90):\n\nP-60 AIRPORT - GENERAL:\n61 Industrial dispute i.e. strike (Conflicto laboral/huelga).\n62 Other reasons i.e. meteorological (Otras razones, ej. meteorológicas).\n63 Airport security (Seguridad aeroportuaria).\n64 Unserviceable equipment / belt / sortation system (Equipo fuera de servicio).\n65 Space/weight restrictions due weather (Restricciones espacio/peso por clima).\n66 Error by non-aviation carrier (Error por transporte no aéreo).\n67 Customs/police/immigration action (Acción de aduana/policía/inmigración).\n\nP-70 MISCELLANEOUS:\n72 Passenger offloaded / bag not offloaded (Pasajero descargado / maleta no).\n73 Bag not claimed by passenger where required (Maleta no reclamada donde correspondía).\n74 Bag switch e.g. passenger takes wrong bag (Cambio de maleta - pasajero toma equivocada).\n75 Not identified by passenger at security check (No identificada por pasajero en seguridad).\n76 Found without tag (Encontrada sin etiqueta).\n77 Errors by other carrier e.g. tagging (Errores de otra aerolínea, ej. etiquetado).\n78 Reason for mishandling not detectable (Razón no detectable).\n79 Report created in error (Reporte creado por error).\n\nP-80 DAMAGE:\n83 Damage to security inspected baggage (Daño a equipaje inspeccionado por seguridad).\n\nP-90 PILFERAGE:\n91 Pilferage including bag damage (Hurto incluyendo daño a maleta).\n93 Pilferage from security inspected baggage (Hurto de equipaje inspeccionado por seguridad).\n95 Pilferage from crew baggage (Hurto de equipaje de tripulación).\n96 Pilferage from crew baggage including bag damage (Hurto de equipaje de tripulación incluyendo daño).\n98 Pilferage from security inspected crew baggage (Hurto de equipaje de tripulación inspeccionado por seguridad).\n\nFuente: WT Glossary + CGHD/DGR Training Module v1.0',
+    reference_en:'RL Secondary codes 60-90: Airport issues (61-67), miscellaneous (72-79), damage (83), pilferage (91-98).',
+    critical:['rl','secundario','60','70','80','90','airport','misc','damage','pilferage'],
+    keywords:['rl','secondary','60','70','80','90','airport','miscellaneous','damage','pilferage','hurto','robo','daño']
+  },
+  {
+    id:'dmg_codes',group:'codes',title:'Códigos de Daño (DMG)',
+    summary:'Códigos numéricos para describir daño en equipaje.',
+    steps_short:['81 = candado/bisagra rota','82 = asa/rueda/rota','84 = abollada/rasgada','85 = aplastada','88 = mojada','89 = contenido dañado'],
+    steps_full:'CÓDIGOS DE DAÑO EN EQUIPAJE (Damage / DPR):\n\n81 Broken locks or hinges (Candado o bisagra rota).\n82 Handle or strap or wheel broken or torn off (Asa, correa o rueda rota/desprendida).\n83 Damage to security inspected baggage (Daño a equipaje inspeccionado por seguridad).\n84 Bag dented / torn or ripped (Maleta abollada / rasgada / rota).\n85 Bag crushed (Maleta aplastada).\n86 Frame broken (Marco roto).\n87 Superficial damage including minor scratches (Daño superficial incluyendo rayones menores).\n88 Wet due rain or liquid spillage in hold (Mojada por lluvia o derrame de líquido en bodega).\n89 Damaged contents (Contenido dañado).\n\nFuente: CGHD/DGR Training Module v1.0',
+    reference_en:'Damage codes for DPR: 81 (locks/hinges), 82 (handle/strap/wheel), 84 (dented/torn), 85 (crushed), 88 (wet), 89 (damaged contents).',
+    critical:['dmg','damage','codigo','danada','daño','rota'],
+    keywords:['dmg','damage','codigo','codigos','danada','daño','rota','quebrada','broken','crushed','wet','lock','wheel','handle','strap','frame','maleta']
+  },
+  {
+    id:'pil_codes',group:'codes',title:'Códigos de Hurto (PIL)',
+    summary:'Códigos numéricos para reportar hurto/pilferage.',
+    steps_short:['91 = hurto con daño a maleta','93 = hurto de equipaje inspeccionado por seguridad','95 = hurto de tripulación','96 = hurto tripulación con daño'],
+    steps_full:'CÓDIGOS DE HURTO/PILFERAGE:\n\n91 Pilferage including bag damage (Hurto incluyendo daño a maleta).\n93 Pilferage from security inspected baggage (Hurto de equipaje inspeccionado por seguridad).\n95 Pilferage from crew baggage (Hurto de equipaje de tripulación).\n96 Pilferage from crew baggage including bag damage (Hurto de equipaje de tripulación incluyendo daño).\n98 Pilferage from security inspected crew baggage (Hurto de equipaje de tripulación inspeccionado por seguridad).\n\nFuente: CGHD/DGR Training Module v1.0',
+    reference_en:'Pilferage codes: 91 (including bag damage), 93 (security inspected baggage), 95 (crew baggage), 96 (crew + damage), 98 (security inspected crew).',
+    critical:['pil','pilferage','codigo','hurto','robo','faltante'],
+    keywords:['pil','pilferage','hurto','robo','faltante','codigo','codigos','crew','security','maleta']
+  },
+  {
+    id:'match_forward',group:'general',title:'Matches y Forwarding',
+    summary:'Cómo WM relaciona OHL con AHL y los mensajes de reenvío.',
+    steps_short:['WM relaciona AHL y OHD por tag, nombre, color, tipo.','MCH = matches encontrados en HIS/A','FWD = mensajes de reenvío en HIS/A','Verifica el porcentaje de coincidencia antes de confirmar.'],
+    steps_full:'MATCHES Y FORWARDING:\n\n- WM relaciona OHD y AHL a través de códigos comunes (tag number, name, colour and type...).\n- Los "matches" tienen un porcentaje de acierto; el agente debe verificar si es el mismo caso.\n- MCH: Matches encontrados en el área HIS/A del AHL.\n- FWD: Forwarding messages en el área HIS/A del AHL.\n\nFuente: Guía Usuarios WM GUI.02',
+    reference_en:'WM matches AHL and OHD using common codes (tag, name, colour, type). MCH = matches in HIS/A. FWD = forwarding messages. Always verify match percentage.',
+    critical:['match','forwarding','his','mch','coincidencia'],
+    keywords:['match','mch','forwarding','his','coincidencia','fwd','mensaje','ohl','ahl']
+  },
+  {
+    id:'cfi_cfd',group:'general',title:'Convertir AHL ↔ DPR',
+    summary:'Cambiar un AHL cerrado a DPR o cerrar ambos juntos.',
+    steps_short:['CFD = cierra AHL y crea DPR automático','CFI = cierra AHL y DPR en una sola transacción'],
+    steps_full:'CONVERSIÓN AHL <> DPR:\n\n- CFD: Close AHL - Create DPR file (cierra AHL y abre DPR automáticamente).\n- CFI: Close AHL/DPR file (cierra AHL y DPR en una sola transacción).\n\nFuente: CGHD/DGR Training Module v1.0 + WT Glossary',
+    reference_en:'Convert AHL to DPR: CFD (close AHL, create DPR). CFI (close both AHL and DPR in one transaction).',
+    critical:['cfd','cfi','convertir','ahl','dpr'],
+    keywords:['cfd','cfi','convertir','ahl','dpr','cerrar','crear']
+  },
+  {
+    id:'xtr_extend',group:'general',title:'Extender búsqueda (XTR)',
+    summary:'Alargar el tiempo de búsqueda de 45 a 100 días.',
+    steps_short:['XTR extiende búsqueda a 100 días.','Después los archivos pasan a inactivos en Atlanta.','Usa PDI para recuperar archivos inactivos.'],
+    steps_full:'XTR - EXTEND TRACING:\n\nExtiende el tiempo de búsqueda de AHL/OHD/DPR de 45 a 100 días.\n\nDespués de este tiempo, los expedientes pasan a inactivos y a un segundo disco duro de Atlanta durante 12 meses. Para recuperar estos datos usar PDI.\n\nFuente: Guía Usuarios WM GUI.02',
+    reference_en:'XTR extends tracing time from 45 to 100 days for AHL/OHD/DPR. After that, files go inactive to Atlanta backup for 12 months. Use PDI to retrieve.',
+    critical:['xtr','extend','extender','busqueda','ampliar'],
+    keywords:['xtr','extend','extender','busqueda','ampliar','100','dias','tracing']
+  },
+  {
+    id:'mascarilla_green',group:'system',title:'Mascarilla / Green Screen',
+    summary:'Cómo usar la interfaz nativa de WM en terminal.',
+    steps_short:['WM [transacción] M = solicitar máscara','WM HELP [código] = ayuda','WMPN = siguiente página','Campos con * son obligatorios'],
+    steps_full:'INTERFAZ NATIVA DE MASCARILLAS (GREEN SCREEN):\n\nWorldTracer Management se opera principalmente mediante mascarillas (pantallas de formulario) en interfaz de terminal/caracteres (green screen).\n\nComandos básicos:\n- >WM [transacción] M: Solicitar máscara de entrada (ej: WM AHL M, WM DPR M, WM OHD M).\n- >WM HELP [código]: Mostrar ayuda de una transacción/elemento (ej: WM HELP CAH, WM HELP CT/8).\n- >WMPN: Page Next (cuando hay más páginas).\n\nTipos de pantalla:\n- Formularios con campos etiquetados (NM, IT, CT, FD, RT, TN, etc.).\n- Los campos con asterisco (*) son obligatorios.\n- Se navega entre campos con tabulador o enter.\n\nFuente: Guía Usuarios WM GUI.02 + CGHD/DGR Training Module v1.0',
+    reference_en:'Native green screen interface: WM [transaction] M to request mask, WM HELP [code] for help, WMPN for next page. Fields with * are mandatory.',
+    critical:['mascarilla','green_screen','pantalla','interfaz','nativa','wm'],
+    keywords:['mascarilla','green_screen','pantalla_verde','interfaz','nativa','terminal','mask','formulario','forma','form','wm','pantalla','screen']
+  },
+  {
+    id:'afkl_ahl_altea',group:'afkl',title:'AF/KL — Crear AHL en Altea',
+    summary:'Shortcuts y campos específicos de AF/KL en Altea Amadeus.',
+    steps_short:['Pestaña: World Tracer (0)','Shortcuts: F10=añadir, F12=restaurar, SF12=reiniciar','Air France (AF): WM AHL MEXAF /M','KLM (KL): WM AHL MEXKL /M','Campos específicos: .PT, .FL, .CL, .KK, .ZP, .ST, .CO'],
+    steps_full:'AF/KL - AHL EN ALTEA AMADEUS:\n\nAcceso:\n- En Altea Amadeus, usar pestaña "World Tracer (0)".\n- Default aerolínea: AF. También se puede operar con KL.\n- Pestañas disponibles: World Tracer (0) | Reservations (1) | AF Flight XXX (2)\n\nShortcuts de teclado en mascarilla:\n- F10: Add Line\n- Pause: Clear\n- F11: Delete Line\n- F8: Print to Default\n- F9: Print with Opt.\n- F12: Restore Page\n- AF10: Printing\n- SF12 (Shift+F12): Restart\n\nComandos crear/trace:\n- Air France (AF): WM AHL MEXAF /M\n- KLM (KL): WM AHL MEXKL /M\n- WM TNT MEXAF /KL .TN + número de etiqueta\n\nCampos adicionales específicos AF/KL en AHL:\n- .PR reservation\n- .PT pax title (Mr., Miss o Mrs)\n- .FL frequent Flyer\n- .CL combination lock\n- .KK key collect\n- .ZP zip\n- .ST state\n- .CO country\n- .AM automate message (se pone Y)\n- .NW new weight\n- .IN insurance\n- .KT\n- .HCY\n- .PC af\n- .CS\n- YP = permanent city\n- YT = temporary town\n- TZ = temporary zip\n- TS = temporary state\n- TC = temporary country\n- LD = local delivery\n- CI = custom info\n- DV = date delivery (en AF/KL es fecha de entrega, no vigencia de dirección temporal)\n\nNota: Los campos marcados con asterisco (*) en la mascarilla son obligatorios.\n\nFuente: wt_propio.pdf (micro manual AF/KL vía Altea Amadeus)',
+    reference_en:'AF/KL AHL in Altea Amadeus: World Tracer (0) tab. Shortcuts F10/F12/SF12. AF: WM AHL MEXAF /M. KL: WM AHL MEXKL /M. Additional fields: .PT, .FL, .CL, .KK, .ZP, .ST, .CO, etc.',
+    critical:['afkl','ahl','crear','altea','amadeus'],
+    keywords:['af','kl','airfrance','klm','altea','amadeus','mexaf','mascara','ahl','crear','tnt','trace','shortcut','f10','f12','campo','obligatorio','asterisco']
+  },
+  {
+    id:'afkl_modificar_buscar',group:'afkl',title:'AF/KL — Gestionar expedientes',
+    summary:'Modificar, suspender, reactivar, buscar e imprimir en Altea.',
+    steps_short:['AAH = modificar AHL','SAH = suspender (TOTAL o PARCIAL)','RAT = reactivar','RCB = reabrir','CFD = convertir a DPR','RAF/ROF/RFW = buscar files','PIR = imprimir'],
+    steps_full:'AF/KL - GESTIÓN DE EXPEDIENTES EN ALTEA:\n\nModificar AHL:\n- WM AAH MEXAF12345 + campos a cambiar + AG\n\nCerrar AHL:\n- WM CAH + AHL + NM, CS D/MXN00, CR, AG, DR, RC, DA, LD01, XR, FS, RL, FT, DD, DW\n\nSuspender AHL (TOTAL):\n- WM SAH + NUMERO AHL (MEXAF12345) + AG\n\nSuspender AHL (PARCIAL - por tag específico):\n- WM SAH + NUMERO AHL (MEXAF12345)\n- TN01/CT02/TN03/CT01\n- AG DANYMEX\n\nReactivar AHL:\n- WM RAT + FILE AHL (MEXAF13245) + AG\n\nReabrir AHL:\n- WM RCB AHL MEXAF .AR + FILE AHL (MEXAF13245)\n\nConvertir AHL a DPR:\n- WM CFD + file ahl (mexaf 12345)\n- 1. Se cierra normal el reporte\n- 2. Se crea el DPR normal\n- Si AHL tiene más piezas: WM CFD + file ahl (mexaf 12345) TN01/CT02\n  1. Se suspende normal el reporte\n  2. Se crea el DPR normal\n\nBuscar files:\n- AHL — Air France (AF): WM RAF MEXAF\n- AHL — KLM (KL): WM RAF MEXKL\n- OHD — Air France (AF): WM ROF MEXAF\n- OHD — KLM (KL): WM ROF MEXKL\n- FWD — Air France (AF): WM RFW MEXAF\n- FWD — KLM (KL): WM RFW MEXKL\n- OHD de otras aerolíneas: WM ROF + estación + aerolínea (ej: WM ROF MEXAM)\n\nReporte viejo/inactivo:\n- WM PDI AHL + FILE (MEXAF12345) DT + MES/AÑO\n\nImprimir:\n- WM PIR AHL + FILE (MEXAF12345)\n- WM PIR DPR + FILE (MEXAF12345)\n\nFuente: wt_propio.pdf (micro manual AF/KL vía Altea Amadeus)',
+    reference_en:'AF/KL file management in Altea: AAH (amend), SAH (suspend total/partial), RAT (reactivate), RCB (reopen), CFD (convert to DPR), RAF/ROF/RFW (search), PIR (print).',
+    critical:['afkl','modificar','suspender','reactivar','reabrir','convertir','buscar','imprimir'],
+    keywords:['af','kl','airfrance','klm','aah','sah','rat','rcb','cfd','raf','rof','rfw','pdi','pir','modificar','suspender','reactivar','reabrir','convertir','dpr','buscar','imprimir','total','parcial','tag','numero']
+  },
+  {
+    id:'afkl_dpr_foh_fwd_bdo',group:'afkl',title:'AF/KL — DPR, FWD y BDO',
+    summary:'Crear DPR, reenvíos (FOH/FAH/FWD) y órdenes de entrega.',
+    steps_short:['DPR — Air France (AF): WM DPR MEXAF /M','DPR — KLM (KL): WM DPR MEXKL /M','FOH: WM FOH + número de file','FAH: WM FAH MEXAF + file','FWD — Air France (AF): WM FWD MEXAF /M','FWD — KLM (KL): WM FWD MEXKL /M','BDO: WM BDO AHL + estación + aerolínea'],
+    steps_full:'AF/KL - DPR, FORWARD Y BDO:\n\nDPR (Damage/Pilferage):\n- Air France (AF): WM DPR MEXAF /M\n- KLM (KL): WM DPR MEXKL /M\n- Campos adicionales específicos: LP lost property, BD baggage detail, CD content damage, TD type of damage, RP repair Y/N, RB replacement bag Y/N, BW bag weight, DW damage weight, IN insurance Y/N, HCY, PC partner code, LT, FI\n- TD type of damage opciones: TOP, BOTTOM, SIDE, END, HANDLE, LOCK, HOLE, TORN, SCRATCHED, FOOT/WHEEL, ZIPER, STRAP, FRAME, CRUSHED, STAINED, BINDINGS, HINGES, DENTED, CONTENTS, OTHER\n- Gravedad: MINOR, MAJOR, TOTAL\n- Ejemplo TD: TD TOP06MA (TOP=ubicación, MA=Major)\n\nFOH (Forward On Hand):\n- WM FOH + número file (ej: WM FOH MEXAF23993)\n- Campos: NM nombre pax, XT numero de rush, FO flight on bound, FW forward station, DA, SI supplementary information, TX telex station, AG agente\n\nFAH (Forward in AHL):\n- WM FAH MEXAF 12345\n- Campos prellenados del AHL: NM, TN, CT, PA, PN\n- Se completan: FO, FW, XT, TA, DV, TP, DA, SI, AG, TX\n\nFWD (Forward):\n- Air France (AF): WM FWD MEXAF /M\n- KLM (KL): WM FWD MEXKL /M\n- Campos: OS original station, TN tag number, XT tag rush, NM name, FD flight and date, FO flight, FW forward station, FB número de piezas, AG agent, RL reason for lost, RC, SI supplementary information, TX telex station, FA, FS fault station\n\nBDO (Baggage Delivery Order):\n- WM BDO AHL ESTACION + AEROLINEA\n- DS MEXAF01/DATOS (si pax recupera en aeropuerto)\n- DS MEXAF99/DATOS (si pax NO recupera / envío domicilio)\n- Datos requeridos: PA ó la TA, YP, CP, PN, EA, TN, CT\n- DV está solo en caso del TA\n- Ejemplo completo:\n  WM BDO AHL MEXAF86366 /0443GMT/12MAY26\n  DS MEXAF01 - PERSONAL TRANSPORT +52 5581719454\n  NM01MICHELI .NM02SIMONE\n  TAHTL CAMINO REAL MZA 3 LTE 15 ZONA PLATEADA\n  YTPACHUCA\n  TZ42083 .DD .DW .DV 29MAY\n  CP0100393357891049\n  EA01 SIMONE/D/MICHELI/A/VALMET/D/COM\n  LD01****SEND TO TA****\n  TN01 AF224633\n  CT01 BU22\n  /RECHARGE - /SIGNATURE FOR RECEIPT OF 1 BAG .RTCDG\n  TX .AG\n\nFuente: wt_propio.pdf (micro manual AF/KL vía Altea Amadeus)',
+    reference_en:'AF/KL DPR, Forward and BDO: AF: WM DPR MEXAF /M / KL: WM DPR MEXKL /M. AF: WM FWD MEXAF /M / KL: WM FWD MEXKL /M. FOH, FAH, BDO commands with specific fields and examples.',
+    extra_note:'⚠️ Información operativa — Duty Manager Daniela Olivares (MEX AICM AF/KL):\n\n• BDO solo se puede hacer a los estados de CDMX, MEX, PUE e HGO (Hidalgo).\n• NO se puede hacer FWD al aeropuerto de PUE; en ese caso se debe hacer BDO.\n\n📞 Para mayor información, contactar directamente a Daniela Olivares o a Karina / Eriban de LL.',
+    critical:['afkl','dpr','foh','fwd','fah','bdo'],
+    keywords:['af','kl','airfrance','klm','dpr','foh','fwd','fah','bdo','forward','onhand','delivery','damage','pilferage','tipo_danio','td','piezas','ds']
+  },
+  {
+    id:'afkl_email_pxf',group:'afkl',title:'AF/KL — Email y PXF',
+    summary:'Caracteres especiales de email y mensajes telex en mascarilla verde.',
+    steps_short:['@ = /A/ | . = /D/ | _ = /U/ | ~ = /T/ | + = /P/','Ejemplo: dgolivaresperez/a/airfrance/d/fr','PXF simple: WM PXF + estaciones + aerolínea AP .MEX'],
+    steps_full:'AF/KL - CARACTERES ESPECIALES EN EMAIL (MASCARILLA VERDE):\n\nEn la interfaz nativa/mascarilla verde de Altea Amadeus, los caracteres especiales del email se ingresan con códigos específicos:\n\n- Undercore `_` = /U/\n- Dot `.` = /D/\n- Tilde `~` = /T/\n- At sign `@` = /A/\n- Plus sign `+` = /P/\n\nEjemplo de email:\n- dgolivaresperez/a/airfrance/d/fr\n(En este ejemplo: /a/ = @, /d/ = .)\n\nMENSAJES PXF (TELEX/FREE TEXT):\n\nMensaje simple:\n- WM PXF + ESTACIONES DE INTERES + AEROLINEA AP .MEX\n- ********** TEXTOLIBRE **********\n- AG\n\nEjemplo:\n- WM PXF CDGAF/LHRKL/AMSAF AP .MEX\n- DEAR COLLEAGUES PLS SEND ASAP BAG UNDER NAME MR. TRAVIS/SCOTT WITH TN AF 123456 TO MEX TNKS BST RGRDS\n- AG DANY\n\nMensaje ligado a reporte AHL:\n- WM PXF + ESTACIONES DE INTERES + AEROLINEA AP AHL\n- x m LIBRE ***\n- AG\n\nFuente: wt_propio.pdf (micro manual AF/KL vía Altea Amadeus)',
+    reference_en:'AF/KL special email characters in green screen: @=/A/, .=/D/, _=/U/, ~=/T/, +=/P/. PXF telex messages format and examples.',
+    critical:['afkl','email','caracteres','pxf','mensaje','telex'],
+    keywords:['af','kl','airfrance','klm','email','caracter','arroba','punto','guion_bajo','tilde','plus','pxf','mensaje','telex','texto_libre']
+  },
+  {
+    id:'afkl_cc_contents',group:'afkl',title:'AF/KL — Contenidos +5 días (CC)',
+    summary:'Códigos de contenido obligatorios cuando la maleta lleva más de 5 días sin info.',
+    steps_short:['Después de 5 días sin información, llena CC.','Códigos: /ALCOHOL, /ART, /COAT, /DRESS, /GIFT, /HOUSEHOLD, /MECHANIC, /OPTICS, /RELIGIOUS, /SHIRT, /SPORT, /SUIT, /TIMEPIECE, /TOBACCO, /TOOLS, /TROUSERS, /UNIFORM, /VIDEO, /WEATHER','Pon Y delante de cada categoría seleccionada.'],
+    steps_full:'AF/KL - CONTENIDOS (CC) CUANDO LA MALETA LLEVA MÁS DE 5 DÍAS SIN INFORMACIÓN:\n\nCuando la maleta lleva más de 5 días sin información alguna, se debe completar el campo CC (contents) con los códigos de contenido específicos de AF/KL.\n\nCódigos disponibles:\n- /ALCOHOL~-2\n- /ART-3\n- /COAT-1\n- /DRESS-1\n- /GIFT-1\n- /HOUSEHOLD-1\n- /MECHANIC-3\n- /OPTICS-3\n- /RELIGIOUS-3\n- /SHIRT-1\n- /SPORT-1\n- /SPORTSWEAR-1\n- /SUIT-1\n- /TIMEPIECE-2\n- /TOBACCO-2\n- /TOOLS-3\n- /TROUSERS-1\n- /UNIFORM-3\n- /VIDEO-1\n- /WEATHER-1\n\nFormato:\n- Y-YES- IN FRONT OF EACH CATEGORY SELECTED\n- Se pone Y delante de cada categoría seleccionada.\n\nEjemplo:\nY /BAG 01 / BU22RHW\n1 GY headphones apple\n1 GY laptop airbook\n1 lipbalm 2 shadow eyes bk and green\n1 EIFFEL tower 5 keychains of different countries\n1 cheese 1 box of macarons\n1 BK hair dryer\n1 TIEX\n\nFuente: wt_propio.pdf (micro manual AF/KL vía Altea Amadeus)',
+    reference_en:'AF/KL contents (CC) after 5 days without information. Codes: /ALCOHOL, /ART, /COAT, /DRESS, /GIFT, /HOUSEHOLD, /MECHANIC, /OPTICS, /RELIGIOUS, /SHIRT, /SPORT, /SUIT, /TIMEPIECE, /TOBACCO, /TOOLS, /TROUSERS, /UNIFORM, /VIDEO, /WEATHER. Prefix selected categories with Y.',
+    critical:['afkl','cc','contents','contenido','5_dias','diccionario'],
+    keywords:['af','kl','airfrance','klm','cc','contents','contenido','contenidos','5_dias','cinco_dias','dias','cinco','despues','alcohol','art','coat','dress','gift','household','mechanic','optics','religious','shirt','sport','sportswear','suit','timepiece','tobacco','tools','trousers','uniform','video','weather']
+  },
+  {
+    id:'mx_aduana_aicm',group:'mx',title:'México — Aduana AICM',
+    summary:'Trámite aduanero para equipajes retenidos, sobrevolados o sobrantes.',
+    steps_short:['Presenta el equipaje ante aduana con la carta correspondiente.','Revisión por rayos X y/o física.','Si no hay excedentes ni restricciones, se autoriza el retiro.','Firmas: representante aerolínea + jefe de sala + aduana.'],
+    steps_full:'MÉXICO - ADUANA AICM (AGENCIA NACIONAL DE ADUANAS):\n\nAsunto: salida de equipajes, sobrevolados o sobrantes de aerolíneas.\n\nDocumento requerido:\n- Carta de la Agencia Nacional de Aduanas de México, Aduana del Aeropuerto Internacional de la Ciudad de México (AICM).\n- Se requiere cuando el equipaje no se presentó al pasajero por: demora de la aerolínea, olvido, abandono del pasajero, o envío posterior por falta de capacidad en el vuelo correspondiente.\n\nCampos del formato:\n- N° de maletas\n- N° de etiqueta\n- Nombre del pasajero\n- Origen\n- Destino\n- Color\n- Motivo real\n- Descripción de la mercancía\n\nOpciones de motivo:\n1. Enviar al domicilio\n2. Equipaje Sobrevolado\n3. Rechazo\n4. Conexión Internacional\n5. Entrega en mostrador\n\nProcedimiento:\n- El representante de la aerolínea presenta el equipaje ante la autoridad aduanera para solicitar la autorización de salida.\n- Se somete a revisión mediante equipo no intrusivo (rayos X) y/o revisión física.\n- Si no se detecta mercancía excedente a la franquicia ni mercancía sujeta a regulaciones/restricciones no arancelarias, se autoriza el retiro.\n\nFirmas requeridas en el documento:\n- Representante de la aerolínea (Nombre + No. Folio TIA)\n- Jefe o responsable de sala que autoriza (Nombre + Constancia de Id)\n- Personal de aduana que realiza la revisión física (Nombre + Constancia de Id)\n\nFuente: wt_propio.pdf (formato Aduana AICM)',
+    reference_en:'Mexico AICM customs procedure for retained, overflown or unclaimed baggage. Requires customs letter, X-ray/physical inspection, and signatures from airline rep, duty manager, and customs officer.',
+    critical:['mx','aduana','aicm','mexico','retenido','sobrante','sobrevolado'],
+    keywords:['mexico','aduana','aicm','hacienda','retenido','sobrante','sobrevolado','rechazo','conexion','mostrador','domicilio','salida','equipaje']
+  }
+];
+
+
+/* ===================== DATA: GLOSSARY ===================== */
+
+const GLOSSARY=[
+  {id:'g_nm',term:'NM',title:'NM — Name',summary:'Apellido del pasajero tal como aparece en el billete.',es:'Apellido del pasajero tal como aparece en el billete. Se pueden introducir dos sets separados por barra (/): NM01 / NM02.',en:'The -NM- element contains the passenger name as it appears on the ticket. Up to 2 sets may be entered separated by a slash (/).',example:'NM TRAVIS/SCOTT',keywords:['nm','name','nombre','pasajero','apellido','significado','que_es','que_significa'],critical:['nm','name','nombre']},
+  {id:'g_it',term:'IT',title:'IT — Initials',summary:'Iniciales del pasajero (hasta 3 sets).',es:'Iniciales del pasajero. Hasta 3 sets separados por barra (/): IT01 / IT02 / IT03. Se usa cuando hay varios pasajeros o las iniciales de la maleta son distintas.',en:'The -IT- element contains the passenger initials. Up to 3 sets may be entered separated by a slash (/). Used when there are multiple passengers or the bag initials differ.',example:'IT JS / IT AB',keywords:['it','initials','iniciales','pasajero','nombre'],critical:['it','initials','iniciales']},
+  {id:'g_ct',term:'CT',title:'CT — Colour / Type',summary:'Color y tipo de maleta en formato IATA.',es:'Color y tipo de maleta en formato IATA estándar. Se usa en AHL, OHD y DPR. Se pueden buscar por tipo (CT BK63XXX) o por color (CT BU).',en:'The -CT- element describes colour and type using IATA standard format. Used in AHL, OHD and DPR. Searchable by type (CT BK63XXX) or by colour (CT BU).',example:'CT BK22RHW',keywords:['ct','color','type','colour','tipo','colortype','iata','descriptivo'],critical:['ct','color','type','tipo']},
+  {id:'g_fd',term:'FD',title:'FD — Flight / Date',summary:'Vuelo y fecha del pasajero.',es:'Itinerario del pasajero incluyendo aerolínea, número de vuelo y fecha. También permite rango de fechas de hasta 7 días dentro de los últimos 100 días.',en:'The -FD- element contains the passenger itinerary including airline/flight number and date. Date ranges up to 7 days within the last 100 days are supported.',example:'FD LH450/18MAY',keywords:['fd','flight','date','vuelo','fecha','itinerario'],critical:['fd','flight','date','vuelo','fecha']},
+  {id:'g_rt',term:'RT',title:'RT — Routing',summary:'Ruta del pasajero o estación donde se encontró la maleta.',es:'Códigos de aeropuertos que definen la ruta del pasajero o la estación donde se encontró la maleta. Separados por barras (/). Desvío sospechoso con doble barra (//).',en:'The -RT- element contains airport codes defining the passenger route or the station where the bag was found. Separated by slashes (/). Suspected misroute with double slash (//).',example:'RT LAX/NRT/SEL',keywords:['rt','routing','ruta','aeropuerto','itinerario'],critical:['rt','routing','ruta']},
+  {id:'g_tn',term:'TN',title:'TN — Tag Number',summary:'Número de etiqueta de facturación.',es:'Número de etiqueta de facturación. Si son varias maletas, separar con barras (/). Si no se sabe el número completo, se aceptan hasta dos X al final (ej: JK12345X).',en:'The -TN- element contains the check-in tag number. Multiple bags separated by slashes (/). Up to 2 trailing X accepted if incomplete (e.g. JK12345X).',example:'TN AF123456',keywords:['tn','tag','etiqueta','number','numero','facturacion','checkin'],critical:['tn','tag','etiqueta','numero']},
+  {id:'g_pa',term:'PA',title:'PA — Permanent Address',summary:'Dirección permanente del pasajero.',es:'Dirección permanente del pasajero: ciudad, código postal, país. Permite 2 sets (PA01 / PA02).',en:'The -PA- element contains the passenger permanent address: city, postal code, country. Up to 2 sets allowed (PA01 / PA02).',example:'PA MEXICO CITY 01234 MX',keywords:['pa','permanent_address','direccion','dirección','domicilio','permanente'],critical:['pa','direccion','dirección','permanente']},
+  {id:'g_pn',term:'PN',title:'PN — Permanent Phone',summary:'Teléfono permanente del pasajero.',es:'Teléfono permanente del pasajero. Permite 2 sets. Sin barras ni espacios.',en:'The -PN- element contains the passenger permanent phone number. Up to 2 sets. No slashes or spaces.',example:'PN 5512345678',keywords:['pn','permanent_phone','telefono','teléfono','permanente'],critical:['pn','telefono','teléfono','permanente']},
+  {id:'g_ta',term:'TA',title:'TA — Temporary Address',summary:'Dirección temporal del pasajero.',es:'Dirección temporal del pasajero: ciudad, código postal, país. Permite 2 sets. Se usa cuando el pasajero está de viaje.',en:'The -TA- element contains the passenger temporary address: city, postal code, country. Up to 2 sets. Used when the passenger is travelling.',example:'TA CANCUN 77500 MX',keywords:['ta','temporary_address','direccion','dirección','temporal'],critical:['ta','direccion','dirección','temporal']},
+  {id:'g_tp',term:'TP',title:'TP — Temporary Phone',summary:'Teléfono temporal del pasajero.',es:'Teléfono temporal del pasajero. Permite 2 sets. Sin barras ni espacios.',en:'The -TP- element contains the passenger temporary phone number. Up to 2 sets. No slashes or spaces.',example:'TP 5544332211',keywords:['tp','temporary_phone','telefono','teléfono','temporal'],critical:['tp','telefono','teléfono','temporal']},
+  {id:'g_cp',term:'CP',title:'CP — Cell Phone',summary:'Celular / móvil del pasajero.',es:'Número de celular/móvil del pasajero. Permite 2 sets. Sin barras ni espacios.',en:'The -CP- element contains the passenger cell/mobile phone number. Up to 2 sets. No slashes or spaces.',example:'CP 5555555555',keywords:['cp','cell_phone','celular','movil','móvil','mobile'],critical:['cp','celular','movil','móvil']},
+  {id:'g_pt',term:'PT',title:'PT — Passenger Title',summary:'Título y nombre de pila del pasajero.',es:'Título del pasajero seguido del nombre de pila: Mr, Mrs, Miss, etc.',en:'The -PT- element contains the passenger title followed by the first name: Mr, Mrs, Miss, etc.',example:'PT MR JOHN',keywords:['pt','passenger_title','titulo','título','pasajero','mr','mrs'],critical:['pt','titulo','título']},
+  {id:'g_bp',term:'BP',title:'BP — Bag Phone',summary:'Teléfono escrito en la maleta.',es:'Teléfono que aparece escrito o etiquetado en la maleta.',en:'The -BP- element contains the phone number written or tagged on the bag itself.',example:'BP 5511223344',keywords:['bp','bag_phone','telefono','teléfono','maleta'],critical:['bp','telefono','teléfono','maleta']},
+  {id:'g_ab',term:'AB',title:'AB — Address on Bag',summary:'Dirección escrita en la maleta.',es:'Dirección que aparece escrita o etiquetada en la maleta.',en:'The -AB- element contains the address written or tagged on the bag itself.',example:'AB 123 MAIN ST',keywords:['ab','address_on_bag','direccion','dirección','maleta'],critical:['ab','direccion','dirección','maleta']},
+  {id:'g_fx',term:'FX',title:'FX — Fax',summary:'Número de fax.',es:'Número de fax que aparece en la maleta o del pasajero.',en:'The -FX- element contains the fax number on the bag or of the passenger.',example:'FX 5555555555',keywords:['fx','fax','numero'],critical:['fx','fax']},
+  {id:'g_dv',term:'DV',title:'DV — Date Valid',summary:'Fecha vigente de la dirección temporal.',es:'Fecha hasta la cual el pasajero se queda en la dirección temporal. En AF/KL también se usa como fecha de entrega (date delivery).',en:'The -DV- element contains the date until which the passenger stays at the temporary address. In AF/KL it is also used as the delivery date.',example:'DV 25MAY',keywords:['dv','date_valid','delivery','fecha','vigencia','entrega'],critical:['dv','fecha','vigencia','entrega']},
+  {id:'g_tk',term:'TK',title:'TK — Ticket',summary:'Número de billete.',es:'Número del billete del pasajero.',en:'The -TK- element contains the passenger ticket number.',example:'TK 1234567890',keywords:['tk','ticket','billete','numero'],critical:['tk','ticket','billete']},
+  {id:'g_bi',term:'BI',title:'BI — Bag Identification',summary:'Marca y características exteriores de la maleta.',es:'Marca de la maleta y datos exteriores descriptivos (stickers, cintas, etc.).',en:'The -BI- element contains the bag brand and exterior descriptive details (stickers, ribbons, etc.).',example:'BI SAMSONITE RED RIBBON',keywords:['bi','bag_identification','marca','maleta','identificacion'],critical:['bi','marca','maleta','identificacion']},
+  {id:'g_br',term:'BR',title:'BR — Bag Routing',summary:'Ruta de los vuelos de la maleta (si difiere del pasajero).',es:'Ruta de los vuelos en los que viajó la maleta, si es diferente a la del pasajero (RT).',en:'The -BR- element contains the routing of the flights on which the bag travelled, if different from the passenger routing (RT).',example:'BR CDG/FRA/MEX',keywords:['br','bag_routing','ruta','maleta','vuelo'],critical:['br','ruta','maleta','vuelo']},
+  {id:'g_cc',term:'CC',title:'CC — Contents',summary:'Categorías de contenido del equipaje.',es:'Categorías de contenido del equipaje. Se eligen las de más peso. Se usa CDD para descripción detallada. En AF/KL, después de 5 días sin información se completan con códigos específicos (/ALCOHOL, /ART, /COAT, etc.).',en:'The -CC- element contains baggage content categories. Heaviest categories are selected. CDD is used for detailed description. In AF/KL, after 5 days without information, specific codes are used (/ALCOHOL, /ART, /COAT, etc.).',example:'CC CLOTHES ELECTRONICS',keywords:['cc','contents','contenido','contenidos','articulos','artículos','cdd'],critical:['cc','contenido','contenidos']},
+  {id:'g_fs',term:'FS',title:'FS — Fault Station',summary:'Estación responsable del error.',es:'Código de la estación responsable del error (base causante del error / base de origen / la que aparece en WM). Se usa al cerrar AHL (CAH).',en:'The -FS- element contains the code of the station responsible for the error (fault station / origin base / the one shown in WM). Used when closing AHL (CAH).',example:'FS MEX',keywords:['fs','fault_station','estacion','estación','causante','error','cierre'],critical:['fs','estacion','estación','causante']},
+  {id:'g_ag',term:'AG',title:'AG — Agent',summary:'Código del agente que opera.',es:'Código del agente que realiza la transacción. Obligatorio en casi todas las operaciones de cierre, modificación y envío.',en:'The -AG- element contains the agent code performing the transaction. Required in almost all close, amend and send operations.',example:'AG DANYMEX',keywords:['ag','agent','agente','codigo','cierre','modificar'],critical:['ag','agent','agente']},
+  {id:'g_rl',term:'RL',title:'RL — Reason for Loss',summary:'Razón numérica de la pérdida (10-90).',es:'Código numérico que indica la razón de la pérdida (Primary 10-90 y Secondary). Se usa al cerrar AHL y crear DPR.',en:'The -RL- element contains the numeric code indicating the reason for loss (Primary 10-90 and Secondary codes). Used when closing AHL and creating DPR.',example:'RL 10',keywords:['rl','reason_for_loss','razon','razón','perdida','motivo','codigo'],critical:['rl','razon','razón','perdida','motivo']},
+  {id:'g_fo',term:'FO',title:'FO — Forward Flight',summary:'Vuelo de envío para reenvío rush.',es:'Vuelo de envío para equipaje reenviado (Rush/FWD).',en:'The -FO- element contains the forward flight for rush/forwarded baggage.',example:'FO AF123/20MAY',keywords:['fo','forward_flight','vuelo','envio','rush','fwd'],critical:['fo','vuelo','envio','rush']},
+  {id:'g_fw',term:'FW',title:'FW — Forward Routing',summary:'Ruta de envío para reenvío rush.',es:'Ruta de envío para equipaje reenviado (Rush/FWD).',en:'The -FW- element contains the forward routing for rush/forwarded baggage.',example:'FW CDG/MEX',keywords:['fw','forward_routing','ruta','envio','rush','fwd'],critical:['fw','ruta','envio','rush']},
+  {id:'g_xt',term:'XT',title:'XT — Rush Number',summary:'Número de rush tag.',es:'Número de rush tag para equipaje reenviado. Alternativa a TN en FWD.',en:'The -XT- element contains the rush tag number for forwarded baggage. Alternative to TN in FWD.',example:'XT R12345',keywords:['xt','rush_number','forward_number','rush','fwd','numero'],critical:['xt','rush','fwd','numero']},
+  {id:'g_da',term:'DA',title:'DA — Delivery Address',summary:'Dirección de entrega.',es:'Dirección de entrega para BDO o envío a domicilio.',en:'The -DA- element contains the delivery address for BDO or home delivery.',example:'DA MEXICO CITY 01234 MX',keywords:['da','delivery_address','direccion','dirección','entrega','bdo'],critical:['da','direccion','dirección','entrega']},
+  {id:'g_ld',term:'LD',title:'LD — Local Delivery',summary:'Indicador de entrega local.',es:'Indicador de entrega local. En AF/KL se usa con comentarios como ****SEND TO TA****.',en:'The -LD- element indicates local delivery. In AF/KL used with comments like ****SEND TO TA****.',example:'LD01****SEND TO TA****',keywords:['ld','local_delivery','entrega','local','bdo'],critical:['ld','entrega','local']},
+  {id:'g_si',term:'SI',title:'SI — Special Instructions',summary:'Instrucciones especiales para manejo.',es:'Instrucciones especiales para el envío o manejo de la maleta (ej: PLS SECURITY SEAL THE BAG BEFORE SENDING).',en:'The -SI- element contains special instructions for handling or shipping the bag (e.g. PLS SECURITY SEAL THE BAG BEFORE SENDING).',example:'SI PLS HANDLE WITH CARE',keywords:['si','special_instructions','instrucciones','especiales','mensaje'],critical:['si','instrucciones','especiales']},
+  {id:'g_tx',term:'TX',title:'TX — Telex Address',summary:'Dirección telex entre estaciones.',es:'Direcciones telex/teletype para envío de mensajes entre estaciones (ej: ATLAAJK/LHRAAJK).',en:'The -TX- element contains telex/teletype addresses for inter-station messaging (e.g. ATLAAJK/LHRAAJK).',example:'TX ATLAAJK/LHRAAJK',keywords:['tx','telex','direccion','dirección','teletype','mensaje'],critical:['tx','telex','direccion','dirección']}
+];
+
+/* ===================== PRECOMPUTE ===================== */
+
+for(const c of KB){
+  const kw=[...c.keywords];
+  if(c.extra_note) kw.push(...c.extra_note.split(/[\s\n.,;!?():\-]+/));
+  c.expandedKeywords=makeExpandedSet(kw);
+  c.expandedCritical=c.critical?makeExpandedSet(c.critical):new Set();
+}
+for(const g of GLOSSARY){
+  g.expandedKeywords=makeExpandedSet(g.keywords);
+  g.expandedCritical=g.critical?makeExpandedSet(g.critical):new Set();
+}
+
+const ALL_TERMS=['AHL','DPR','OHD','Rush','FWD','DMG','PIL','Login','Mascarilla','Green Screen','CAH','CDP','COH','QOH','BDO','SHC','ROH','SUS','RIT','RAW','RCB','RIB','XTR','CFD','CFI','DAH','DOH','DDP','DFW','TNT','CT','FD','RT','TN','NM','IT','PT','PA','PN','TA','TP','CP','RL','FS','AG','CC','BI','BR','DV','TK','FX','AB','BP','AF','KL','Altea','Amadeus','Aduana','AICM'];
+let msgIdCounter=0;
+
+/* ===================== CHAT ENGINE ===================== */
+
+const chat=document.getElementById('chat');
+const qEl=document.getElementById('q');
+const btn=document.getElementById('btn');
+const themeToggle=document.getElementById('themeToggle');
+const clearBtn=document.getElementById('clearBtn');
+const themeColor=document.getElementById('themeColor');
+
+function escapeHtml(t){return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+function scrollToBottom(){chat.scrollTop=chat.scrollHeight;}
+
+function clearChat(){
+  chat.innerHTML='';
+  try{localStorage.removeItem('wt_helper_v6');}catch(e){}
+  msgIdCounter++;
+  showHomeMenu();
+}
+
+function addMessage(text,sender){
+  const div=document.createElement('div');
+  div.className='message '+sender;
+  if(sender==='bot'){
+    const img=document.createElement('img');
+    img.src='wt/avatar.png';
+    img.className='avatar';
+    img.alt='AF-KL';
+    img.onerror=function(){this.style.display='none';};
+    div.appendChild(img);
+  }
+  const bubble=document.createElement('div');
+  bubble.className='bubble';
+  bubble.innerHTML=text;
+  div.appendChild(bubble);
+  chat.appendChild(div);
+  scrollToBottom();
+  saveHistory();
+  return bubble;
+}
+
+function showTyping(){
+  const div=document.createElement('div');
+  div.className='message bot typing-msg';
+  div.innerHTML='<div class="bubble typing"><span></span><span></span><span></span></div>';
+  chat.appendChild(div);
+  scrollToBottom();
+  return div;
+}
+function hideTyping(el){if(el&&el.parentNode)el.parentNode.removeChild(el);}
+
+function botReply(text,buttons, delay=300){
+  const t=showTyping();
+  setTimeout(()=>{
+    hideTyping(t);
+    const bubble=addMessage(text,'bot');
+    if(buttons&&buttons.length) renderButtons(buttons,bubble);
+    saveHistory();
+  },delay);
+}
+
+function renderButtons(buttons,intoBubble){
+  const row=document.createElement('div');
+  row.className='chip-row';
+  for(const b of buttons){
+    const btn=document.createElement('button');
+    btn.className='chip'+(b.primary?' primary':'');
+    btn.textContent=b.label;
+    btn.dataset.action=b.action;
+    if(b.action==='kb_item'&&b.data) btn.dataset.kbId=b.data.id;
+    if(b.action==='glossary_item'&&b.data) btn.dataset.glossaryId=b.data.id;
+    if(b.action==='menu'){
+      if(b.menuGroup) btn.dataset.menuGroup=b.menuGroup;
+      if(b.menuType) btn.dataset.menuType=b.menuType;
+      if(b.replyText) btn.dataset.replyText=b.replyText;
+    }
+    row.appendChild(btn);
+  }
+  intoBubble.appendChild(row);
+}
+
+function renderMenuGrid(buttons,intoBubble){
+  const grid=document.createElement('div');
+  grid.className='button-grid';
+  for(const b of buttons){
+    const btn=document.createElement('button');
+    btn.className='menu-btn '+(b.style||'');
+    btn.innerHTML='<span class="icon">'+(b.icon||'')+'</span><span>'+escapeHtml(b.label)+'</span>';
+    btn.dataset.action=b.action;
+    if(b.action==='kb_item'&&b.data) btn.dataset.kbId=b.data.id;
+    if(b.action==='glossary_item'&&b.data) btn.dataset.glossaryId=b.data.id;
+    if(b.action==='menu'){
+      if(b.menuGroup) btn.dataset.menuGroup=b.menuGroup;
+      if(b.menuType) btn.dataset.menuType=b.menuType;
+      if(b.replyText) btn.dataset.replyText=b.replyText;
+    }
+    grid.appendChild(btn);
+  }
+  intoBubble.appendChild(grid);
+}
+
+function renderGlossaryGrid(intoBubble){
+  const grid=document.createElement('div');
+  grid.className='glossary-grid';
+  for(const g of GLOSSARY){
+    const btn=document.createElement('button');
+    btn.className='gloss-btn';
+    btn.textContent=g.term;
+    btn.dataset.action='glossary_item';
+    btn.dataset.glossaryId=g.id;
+    grid.appendChild(btn);
+  }
+  intoBubble.appendChild(grid);
+}
+
+function userMessage(text){
+  addMessage(escapeHtml(text),'user');
+}
+
+/* ===================== EVENT DELEGATION ===================== */
+
+function handleChatClick(e){
+  const btn=e.target.closest('[data-action]');
+  if(!btn) return;
+  const action=btn.dataset.action;
+
+  if(action==='expand'){
+    const type=btn.dataset.expandType;
+    const id=btn.dataset.expandId;
+    const box=document.getElementById(type+'-'+id);
+    if(box){box.style.display='block';btn.style.display='none';scrollToBottom();saveHistory();}
+    return;
+  }
+
+  if(action==='kb_item'){
+    const id=btn.dataset.kbId;
+    const item=KB.find(k=>k.id===id);
+    if(!item) return;
+    userMessage(btn.textContent);
+    showKbItem(item);
+    return;
+  }
+
+  if(action==='glossary_item'){
+    const id=btn.dataset.glossaryId;
+    const item=GLOSSARY.find(g=>g.id===id);
+    if(!item) return;
+    userMessage(btn.textContent);
+    showGlossaryItem(item);
+    return;
+  }
+
+  if(action==='menu'){
+    const group=btn.dataset.menuGroup;
+    const type=btn.dataset.menuType;
+    const replyText=btn.dataset.replyText||('📂 '+btn.textContent+' — ¿Qué necesitas?');
+    let children;
+    if(group) children=buildMenuChildren(group);
+    else if(type==='extras') children=buildMenuChildren('general').concat(buildMenuChildren('codes')).slice(0,8).concat([{label:'↩️ Inicio',action:'home'}]);
+    else if(type==='glossary') children=glossaryMenuChildren();
+    userMessage(btn.textContent);
+    botReply(replyText,children);
+    return;
+  }
+
+  if(action==='home'){
+    userMessage('Inicio');
+    showHomeMenu();
+    return;
+  }
+}
+
+function showKbItem(item){
+  const uid=item.id+'-'+(++msgIdCounter);
+  let html='<div class="section-title">'+escapeHtml(item.title)+'</div>';
+  html+='<p><strong>'+escapeHtml(item.summary)+'</strong></p>';
+  if(item.steps_short&&item.steps_short.length){
+    html+='<ol class="step-list">';
+    for(let i=0;i<item.steps_short.length;i++){
+      html+='<li><span class="step-num">'+(i+1)+'</span><span>'+escapeHtml(item.steps_short[i])+'</span></li>';
+    }
+    html+='</ol>';
+  }
+  const hasFull=item.steps_full&&item.steps_full.length>item.summary.length+50;
+  const hasRef=item.reference_en&&item.reference_en.length>10;
+  const hasExtra=item.extra_note&&item.extra_note.length>10;
+  if(hasFull){
+    html+='<button class="expand-btn" data-action="expand" data-expand-type="full" data-expand-id="'+uid+'">Ver más 🔽</button>';
+    html+='<div id="full-'+uid+'" style="display:none;margin-top:8px;"><div style="white-space:pre-wrap;font-size:13px;line-height:1.5;">'+escapeHtml(item.steps_full)+'</div></div>';
+  }
+  if(hasRef){
+    html+='<button class="expand-btn" data-action="expand" data-expand-type="ref" data-expand-id="'+uid+'">🇬🇧 Ver referencia del manual</button>';
+    html+='<div id="ref-'+uid+'" style="display:none;margin-top:8px;"><div class="ref-box"><div class="ref-label">Manual reference</div><div style="white-space:pre-wrap;">'+escapeHtml(item.reference_en)+'</div></div></div>';
+  }
+  if(hasExtra){
+    html+='<div class="ops-box"><div class="ops-label">Información operativa</div><div style="white-space:pre-wrap;">'+escapeHtml(item.extra_note)+'</div></div>';
+  }
+  const related=getRelated(item);
+  botReply(html,related,250);
+}
+
+function showGlossaryItem(item){
+  const uid=item.id+'-'+(++msgIdCounter);
+  let html='<div class="section-title">'+escapeHtml(item.title)+'</div>';
+  html+='<p><strong>🇲🇽 '+escapeHtml(item.summary)+'</strong></p>';
+  if(item.example) html+='<p style="font-size:13px;opacity:.85;"><strong>Ejemplo:</strong> <code>'+escapeHtml(item.example)+'</code></p>';
+  html+='<button class="expand-btn" data-action="expand" data-expand-type="ref-g" data-expand-id="'+uid+'">🇬🇧 Ver referencia del manual</button>';
+  html+='<div id="ref-g-'+uid+'" style="display:none;margin-top:8px;"><div class="ref-box"><div class="ref-label">Manual reference</div><div style="white-space:pre-wrap;">'+escapeHtml(item.en)+'</div></div></div>';
+  botReply(html,[{label:'↩️ Otro término',action:'home'},{label:'📖 Glosario',action:'menu',replyText:'📖 Elige un elemento:',menuType:'glossary'}],250);
+}
+
+function getRelated(item){
+  const sameGroup=KB.filter(k=>k.group===item.group&&k.id!==item.id);
+  const btns=sameGroup.slice(0,3).map(k=>({label:k.title,action:'kb_item',data:k}));
+  const afklMap={'ahl':'afkl_ahl_altea','dpr':'afkl_dpr_foh_fwd_bdo','ohd':'afkl_modificar_buscar','rush':'afkl_dpr_foh_fwd_bdo','bdo':'afkl_dpr_foh_fwd_bdo'};
+  if(afklMap[item.group]){
+    const afkl=KB.find(k=>k.id===afklMap[item.group]);
+    if(afkl) btns.push({label:'✈️ AF/KL: '+afkl.title,action:'kb_item',data:afkl});
+  }
+  btns.push({label:'↩️ Inicio',action:'home'});
+  return btns;
+}
+
+/* ===================== MENUS ===================== */
+
+function buildMenuChildren(group,icon,style){
+  return KB.filter(k=>k.group===group).map(k=>({label:k.title,action:'kb_item',data:k}));
+}
+
+function glossaryMenuChildren(){
+  return GLOSSARY.map(g=>({label:g.term,action:'glossary_item',data:g}));
+}
+
+function showHomeMenu(){
+  const html='<strong>“Bienvenido a bordo. Todo parece estar bajo control.”</strong><br><br>Conectado a AF-KL World Tracer. Manteniendo el flujo operativo un incidente a la vez. Procedimientos disponibles. Paciencia recomendada.';
+  const bubble=addMessage(html,'bot');
+  renderMenuGrid([
+    {label:'PERDIDA (AHL)',icon:'🟢',style:'ahl',action:'menu',replyText:'🟢 AHL — Maleta perdida. ¿Qué necesitas?',menuGroup:'ahl'},
+    {label:'RUSH / FWD',icon:'🔵',style:'rush',action:'menu',replyText:'🔵 Rush / FWD — Reenvío. ¿Qué necesitas?',menuGroup:'rush'},
+    {label:'📦 BDO',icon:'📦',style:'rush',action:'menu',replyText:'📦 BDO — Orden de entrega. ¿Qué necesitas?',menuGroup:'rush'},
+    {label:'DAÑO/HURTO (DPR)',icon:'🔴',style:'dpr',action:'menu',replyText:'🔴 DPR — Daño o hurto. ¿Qué necesitas?',menuGroup:'dpr'},
+    {label:'SOBRANTE (OHD)',icon:'🟠',style:'ohd',action:'menu',replyText:'🟠 OHD — Maleta sobrante. ¿Qué necesitas?',menuGroup:'ohd'},
+    {label:'GLOSARIO',icon:'📖',style:'general',action:'menu',replyText:'📖 Elige un elemento:',menuType:'glossary'},
+    {label:'AF / KL',icon:'✈️',style:'afkl',action:'menu',replyText:'✈️ AF/KL — ¿Qué necesitas?',menuGroup:'afkl'},
+    {label:'MÉXICO / ADUANA',icon:'🇲🇽',style:'mx',action:'menu',replyText:'🇲🇽 México / Aduana. ¿Qué necesitas?',menuGroup:'mx'},
+    {label:'LOGIN / SISTEMA',icon:'⚙️',style:'system',action:'menu',replyText:'⚙️ Login / Sistema. ¿Qué necesitas?',menuGroup:'system'}
+  ],bubble);
+  renderButtons([{label:'📋 Más temas',action:'menu',replyText:'📋 Más temas:',menuType:'extras'}],bubble);
+  saveHistory();
+}
+
+/* ===================== SEARCH (free text) ===================== */
+
+function detectGlossaryIntent(query){
+  const q=canon(query);
+  if(/^(que_significa|que_es|definicion_de|significado_de|para_que_sirve|como_se_usa|donde_va|donde_pongo|elemento|campo)/.test(q)) return true;
+  const trimmed=query.trim();
+  if(/^[A-Z]{2,4}\d{0,2}$/i.test(trimmed)&&trimmed.length<=6) return true;
+  return false;
+}
+
+function searchProcedure(tokens){
+  let best=null,bestScore=-1;
+  for(const c of KB){ const s=scoreChunk(c,tokens); if(s>bestScore){bestScore=s;best=c;} }
+  if(bestScore<0.25) return null;
+  return best;
+}
+function searchGlossary(tokens){
+  let best=null,bestScore=-1;
+  for(const g of GLOSSARY){ const s=scoreChunk(g,tokens); if(s>bestScore){bestScore=s;best=g;} }
+  if(bestScore<0.20) return null;
+  return best;
+}
+
+function handleFileNumber(query){
+  const match=query.match(/\b(MEXAF\d{4,6}|MEXKL\d{4,6})\b/i);
+  if(!match) return false;
+  const num=match[1].toUpperCase();
+  const airline=num.startsWith('MEXAF')?'Air France (AF)':'KLM (KL)';
+  const q=query.toUpperCase();
+  const typeAhl=/\bAHL\b/.test(q);
+  const typeOhd=/\bOHD\b/.test(q);
+  const typeDpr=/\bDPR\b/.test(q);
+  const typeFwd=/\bFWD\b/.test(q)||/\bRUSH\b/.test(q);
+
+  let html='<div class="section-title">📂 Archivo detectado: '+num+'</div>'+
+    '<p><strong>'+airline+'</strong></p>';
+
+  if(typeAhl){
+    html+='<p>Abrir AHL (maleta perdida):</p><ol class="step-list"><li><span class="step-num">1</span><span><strong>WM DAH '+num+'</strong></span></li></ol>';
+  }else if(typeOhd){
+    html+='<p>Abrir OHD (maleta sobrante):</p><ol class="step-list"><li><span class="step-num">1</span><span><strong>WM DOH '+num+'</strong></span></li></ol>';
+  }else if(typeDpr){
+    html+='<p>Abrir DPR (daño/hurto):</p><ol class="step-list"><li><span class="step-num">1</span><span><strong>WM DDP '+num+'</strong></span></li></ol>';
+  }else if(typeFwd){
+    html+='<p>Abrir FWD (rush):</p><ol class="step-list"><li><span class="step-num">1</span><span><strong>WM DFW '+num+'</strong></span></li></ol>';
+  }else{
+    html+='<p>Comandos para abrir este archivo según el tipo de expediente:</p>'+
+      '<ol class="step-list">'+
+      '<li><span class="step-num">1</span><span>AHL (perdida): <strong>WM DAH '+num+'</strong></span></li>'+
+      '<li><span class="step-num">2</span><span>OHD (sobrante): <strong>WM DOH '+num+'</strong></span></li>'+
+      '<li><span class="step-num">3</span><span>DPR (daño/hurto): <strong>WM DDP '+num+'</strong></span></li>'+
+      '<li><span class="step-num">4</span><span>FWD (rush): <strong>WM DFW '+num+'</strong></span></li>'+
+      '</ol>';
+  }
+  html+='<p style="font-size:13px;opacity:.85;margin-top:8px;">Si el archivo está inactivo (más de 100 días): <strong>WM PDI AHL '+num+' DT + MES/AÑO</strong></p>';
+  botReply(html,[{label:'↩️ Inicio',action:'home'}],250);
+  return true;
+}
+
+function handleFreeText(query){
+  if(handleFileNumber(query)) return;
+  const raw=query.split(/[\s\/.,;!?():\-]+/).map(canon).filter(Boolean);
+  const tokens=expand(raw);
+  if(tokens.size===0){
+    botReply('No entendí bien. ¿Puedes intentar con otras palabras o tocar un botón de arriba? 👆',[{label:'↩️ Inicio',action:'home'}]);
+    return;
+  }
+  const isGloss=detectGlossaryIntent(query);
+  let result=null;
+  if(isGloss){ result=searchGlossary(tokens); if(!result) result=searchProcedure(tokens); }
+  else { result=searchProcedure(tokens); if(!result) result=searchGlossary(tokens); }
+  if(!result){
+    const suggs=[];
+    for(const t of tokens){
+      if(SYN['maleta']&&SYN['maleta'].includes(t)) suggs.push({label:'🟢 AHL',action:'menu',replyText:'🟢 AHL — Maleta perdida. ¿Qué necesitas?',menuGroup:'ahl'});
+      if(SYN['perdida']&&SYN['perdida'].includes(t)) suggs.push({label:'🟢 AHL',action:'menu',replyText:'🟢 AHL — Maleta perdida. ¿Qué necesitas?',menuGroup:'ahl'});
+      if(SYN['danada']&&SYN['danada'].includes(t)) suggs.push({label:'🔴 DPR',action:'menu',replyText:'🔴 DPR — Daño o hurto. ¿Qué necesitas?',menuGroup:'dpr'});
+      if(SYN['robo']&&SYN['robo'].includes(t)) suggs.push({label:'🔴 DPR',action:'menu',replyText:'🔴 DPR — Daño o hurto. ¿Qué necesitas?',menuGroup:'dpr'});
+      if(SYN['onhand']&&SYN['onhand'].includes(t)) suggs.push({label:'🟠 OHD',action:'menu',replyText:'🟠 OHD — Maleta sobrante. ¿Qué necesitas?',menuGroup:'ohd'});
+      if(SYN['rush']&&SYN['rush'].includes(t)) suggs.push({label:'🔵 Rush',action:'menu',replyText:'🔵 Rush / FWD — Reenvío. ¿Qué necesitas?',menuGroup:'rush'});
+    }
+    const unique=[];
+    const seen=new Set();
+    for(const s of suggs){ if(!seen.has(s.label)){seen.add(s.label);unique.push(s);} }
+    botReply('No encontré eso exacto. ¿Quizás buscabas?',unique.slice(0,3).concat([{label:'↩️ Inicio',action:'home'}]));
+    return;
+  }
+  if(GLOSSARY.includes(result)){ showGlossaryItem(result); }
+  else { showKbItem(result); }
+}
+
+/* ===================== HISTORY & THEME ===================== */
+
+function saveHistory(){
+  try{
+    const msgs=[];
+    chat.querySelectorAll('.message').forEach(m=>{
+      const bubble=m.querySelector('.bubble');
+      if(!bubble) return;
+      msgs.push({sender:m.classList.contains('bot')?'bot':'user',html:bubble.innerHTML});
+    });
+    localStorage.setItem('wt_helper_v6',JSON.stringify(msgs.slice(-30)));
+  }catch(e){}
+}
+
+function loadHistory(){
+  try{
+    const raw=localStorage.getItem('wt_helper_v6');
+    if(!raw) return false;
+    const msgs=JSON.parse(raw);
+    for(const m of msgs){
+      const div=document.createElement('div');
+      div.className='message '+m.sender;
+      const bubble=document.createElement('div');
+      bubble.className='bubble';
+      bubble.innerHTML=m.html;
+      div.appendChild(bubble);
+      chat.appendChild(div);
+    }
+    scrollToBottom();
+    return true;
+  }catch(e){return false;}
+}
+
+function setTheme(dark){
+  document.documentElement.classList.toggle('dark',dark);
+  themeToggle.textContent=dark?'☀️':'🌙';
+  themeColor.setAttribute('content',dark?'#0d1117':'#ffffff');
+  try{localStorage.setItem('wt_helper_dark',dark?'1':'0');}catch(e){}
+}
+
+themeToggle.addEventListener('click',()=>setTheme(!document.documentElement.classList.contains('dark')));
+if(localStorage.getItem('wt_helper_dark')==='1') setTheme(true);
+
+/* ===================== EVENTS ===================== */
+
+btn.addEventListener('click',()=>{
+  const v=qEl.value.trim();
+  if(!v) return;
+  qEl.value='';
+  userMessage(v);
+  handleFreeText(v);
+});
+qEl.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();btn.click();}});
+
+clearBtn.addEventListener('click',clearChat);
+
+chat.addEventListener('click',handleChatClick);
+document.getElementById('quickBar').addEventListener('click',handleChatClick);
+
+/* ===================== QUICK BAR ===================== */
+
+function renderQuickBar(){
+  const bar=document.getElementById('quickBar');
+  if(!bar) return;
+  bar.innerHTML='<span class="quick-label">🔥</span>';
+  const items=[
+    {label:'AHL',style:'ahl',action:'menu',replyText:'🟢 AHL — Maleta perdida. ¿Qué necesitas?',menuGroup:'ahl'},
+    {label:'BDO',style:'rush',action:'menu',replyText:'📦 BDO — Orden de entrega. ¿Qué necesitas?',menuGroup:'rush'},
+    {label:'FWD',style:'rush',action:'menu',replyText:'🔵 Rush / FWD — Reenvío. ¿Qué necesitas?',menuGroup:'rush'},
+    {label:'Glosario',style:'general',action:'menu',replyText:'📖 Elige un elemento:',menuType:'glossary'}
+  ];
+  for(const it of items){
+    const chip=document.createElement('span');
+    chip.className='quick-chip '+it.style;
+    chip.textContent=it.label;
+    chip.dataset.action=it.action;
+    if(it.menuGroup) chip.dataset.menuGroup=it.menuGroup;
+    if(it.menuType) chip.dataset.menuType=it.menuType;
+    if(it.replyText) chip.dataset.replyText=it.replyText;
+    bar.appendChild(chip);
+  }
+}
+
+/* ===================== INIT ===================== */
+
+renderQuickBar();
+if(!loadHistory()){
+  showHomeMenu();
+}
+
+})();
+</script>
+</body>
+</html>

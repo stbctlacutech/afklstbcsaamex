@@ -1606,6 +1606,18 @@ window.__CONFIG = {
       "nota": "El supervisor NO se presentará a servicio",
       "mes": 5,
       "dia": 18
+    },
+    {
+      "id": "2000788",
+      "nota": "El agente NO se presentará a servicio",
+      "mes": 5,
+      "dia": 15
+    },
+    {
+      "id": "2000673",
+      "nota": "El agente NO se presentará a servicio.",
+      "mes": 5,
+      "dia": 21
     }
   ],
   "cursosAduana": [
@@ -2337,6 +2349,50 @@ window.__CONFIG = {
       "id2_trabaja": 18,
       "id2_trabaja_mes": 5,
       "id2_descansa": 20,
+      "id2_descansa_mes": 5,
+      "mes": 5
+    },
+    {
+      "id1": "2000677",
+      "nombre1": "Rey Belman",
+      "id2": "2000789",
+      "nombre2": "Cassandra García",
+      "id1_trabaja": 4,
+      "id1_trabaja_mes": 6,
+      "id1_descansa": 19,
+      "id1_descansa_mes": 5,
+      "id2_trabaja": 19,
+      "id2_trabaja_mes": 5,
+      "id2_descansa": 4,
+      "id2_descansa_mes": 6
+    },
+    {
+      "id1": "2000673",
+      "nombre1": "Fatima Moreno",
+      "id2": "2000681",
+      "nombre2": "Monserrat Guzman",
+      "id1_trabaja": 27,
+      "id1_trabaja_mes": 5,
+      "id1_descansa": 22,
+      "id1_descansa_mes": 5,
+      "id2_trabaja": 22,
+      "id2_trabaja_mes": 5,
+      "id2_descansa": 27,
+      "id2_descansa_mes": 5,
+      "mes": 5
+    },
+    {
+      "id1": "2000470",
+      "nombre1": "Alejandro Morfin",
+      "id2": "2000544",
+      "nombre2": "Fernando Estrada",
+      "id1_trabaja": 31,
+      "id1_trabaja_mes": 5,
+      "id1_descansa": 22,
+      "id1_descansa_mes": 5,
+      "id2_trabaja": 22,
+      "id2_trabaja_mes": 5,
+      "id2_descansa": 31,
       "id2_descansa_mes": 5,
       "mes": 5
     },
