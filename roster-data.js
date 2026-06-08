@@ -1,6 +1,20 @@
 (function () {
   'use strict';
 
+  // ═══════════════════════════════════════════════════════════════════
+  // CACHE DE ESTADO DE AGENTE
+  // ═══════════════════════════════════════════════════════════════════
+  var _statusCache = new Map();
+  var CACHE_MAX_SIZE = 2000; // ~42 agentes × 31 días = 1302 entries
+
+  function getCacheKey(agentId, date) {
+    return agentId + '|' + date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+  }
+
+  function invalidateStatusCache() {
+    _statusCache.clear();
+  }
+
   function getCfg() {
     return window.__CONFIG || {};
   }
@@ -169,78 +183,115 @@
   // FUNCIÓN PRINCIPAL DE ESTADO
   // ═══════════════════════════════════════════════════════════════════
 
+  function isVacacionesAprobada(agentId, date) {
+    var vacs = window.VACACIONES_APROBADAS;
+    if (!vacs || !vacs.length) return false;
+    var d = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+    for (var vi = 0; vi < vacs.length; vi++) {
+      var v = vacs[vi];
+      if (v.agente_id !== agentId) continue;
+      var inicio = new Date(v.fecha_inicio + 'T00:00:00');
+      var fin = new Date((v.fecha_fin || v.fecha_inicio) + 'T00:00:00');
+      fin.setHours(23, 59, 59, 999);
+      if (d >= inicio && d <= fin) return true;
+    }
+    return false;
+  }
+
   function getAgentStatus(agentId, date) {
+    var key = getCacheKey(agentId, date);
+    if (_statusCache.has(key)) {
+      return _statusCache.get(key);
+    }
+
     var mes = date.getMonth() + 1;
     var dia = date.getDate();
+
+    var result;
 
     var incap = getIncapacidades().find(
       function (i) { return i.id === agentId && i.mes === mes && dia >= i.diaInicio && dia <= i.diaFin; }
     );
-    if (incap) return { status: 'incapacidad', label: 'Incapacidad', canWork: false };
-
-    var cursoA = getCursosAduana().find(
-      function (c) { return c.id === agentId && c.mes === mes && c.dias.indexOf(dia) !== -1; }
-    );
-    if (cursoA) return { status: 'curso', label: cursoA.label || 'Curso', canWork: false, horario: cursoA.horario || null };
-
-    var cursoR = getCursosRecurrentes().find(
-      function (c) { return c.id === agentId && c.entries.some(function (e) { return e.mes === mes && e.dias.indexOf(dia) !== -1; }); }
-    );
-    if (cursoR) return { status: 'curso-recurrente', label: 'Curso Rec. Gpo ' + cursoR.grupo, canWork: false, grupo: cursoR.grupo };
-
-    var permiso = getPermisoEntradaTarde().find(
-      function (p) { return p.id === agentId && p.mes === mes && p.dia === dia; }
-    );
-    if (permiso) return { status: 'permiso', label: 'Permiso', canWork: false, nota: permiso.nota };
-
-    var sinGoce = getPermisoSinGoce().find(
-      function (p) { return p.id === agentId && p.mes === mes && p.dia === dia; }
-    );
-    if (sinGoce) return { status: 'permiso-sin-goce', label: 'Permiso s/Goce', canWork: false, nota: sinGoce.nota };
-
-    var ajuste = getDescansosAjuste().find(
-      function (d) { return d.id === agentId && d.mes === mes && d.dia === dia; }
-    );
-    if (ajuste) return { status: 'descanso', label: 'Descanso Ajuste', canWork: false };
-
-    var permutas = getPermutas();
-    for (var pi = 0; pi < permutas.length; pi++) {
-      var p = permutas[pi];
-      var m1d = (p.id1_descansa_mes !== undefined) ? p.id1_descansa_mes : p.mes;
-      var m1t = (p.id1_trabaja_mes  !== undefined) ? p.id1_trabaja_mes  : p.mes;
-      var m2d = (p.id2_descansa_mes !== undefined) ? p.id2_descansa_mes : p.mes;
-      var m2t = (p.id2_trabaja_mes  !== undefined) ? p.id2_trabaja_mes  : p.mes;
-      if (p.id1 === agentId) {
-        if (mes === m1d && dia === p.id1_descansa) return { status: 'descanso', label: 'Permuta Descanso', canWork: false, conQuien: p.nombre2 };
-        if (mes === m1t && dia === p.id1_trabaja)  return { status: 'trabajo',  label: 'Permuta Trabajo',  canWork: true,  conQuien: p.nombre2 };
-      }
-      if (p.id2 === agentId) {
-        if (mes === m2d && dia === p.id2_descansa) return { status: 'descanso', label: 'Permuta Descanso', canWork: false, conQuien: p.nombre1 };
-        if (mes === m2t && dia === p.id2_trabaja)  return { status: 'trabajo',  label: 'Permuta Trabajo',  canWork: true,  conQuien: p.nombre1 };
+    if (incap) { result = { status: 'incapacidad', label: 'Incapacidad', canWork: false }; }
+    else if (isVacacionesAprobada(agentId, date)) {
+      result = { status: 'vacaciones', label: 'Vacaciones', canWork: false };
+    }
+    else {
+      var cursoA = getCursosAduana().find(
+        function (c) { return c.id === agentId && c.mes === mes && c.dias.indexOf(dia) !== -1; }
+      );
+      if (cursoA) { result = { status: 'curso', label: cursoA.label || 'Curso', canWork: false, horario: cursoA.horario || null }; }
+      else {
+        var cursoR = getCursosRecurrentes().find(
+          function (c) { return c.id === agentId && c.entries.some(function (e) { return e.mes === mes && e.dias.indexOf(dia) !== -1; }); }
+        );
+        if (cursoR) { result = { status: 'curso-recurrente', label: 'Curso Rec. Gpo ' + cursoR.grupo, canWork: false, grupo: cursoR.grupo }; }
+        else {
+          var permiso = getPermisoEntradaTarde().find(
+            function (p) { return p.id === agentId && p.mes === mes && p.dia === dia; }
+          );
+          if (permiso) { result = { status: 'permiso', label: 'Permiso', canWork: false, nota: permiso.nota }; }
+          else {
+            var sinGoce = getPermisoSinGoce().find(
+              function (p) { return p.id === agentId && p.mes === mes && p.dia === dia; }
+            );
+            if (sinGoce) { result = { status: 'permiso-sin-goce', label: 'Permiso s/Goce', canWork: false, nota: sinGoce.nota }; }
+            else {
+              var ajuste = getDescansosAjuste().find(
+                function (d) { return d.id === agentId && d.mes === mes && d.dia === dia; }
+              );
+              if (ajuste) { result = { status: 'descanso', label: 'Descanso Ajuste', canWork: false }; }
+              else {
+                var permutas = getPermutas();
+                var permutaResult = null;
+                for (var pi = 0; pi < permutas.length; pi++) {
+                  var p = permutas[pi];
+                  var m1d = (p.id1_descansa_mes !== undefined) ? p.id1_descansa_mes : p.mes;
+                  var m1t = (p.id1_trabaja_mes  !== undefined) ? p.id1_trabaja_mes  : p.mes;
+                  var m2d = (p.id2_descansa_mes !== undefined) ? p.id2_descansa_mes : p.mes;
+                  var m2t = (p.id2_trabaja_mes  !== undefined) ? p.id2_trabaja_mes  : p.mes;
+                  if (p.id1 === agentId) {
+                    if (mes === m1d && dia === p.id1_descansa) { permutaResult = { status: 'descanso', label: 'Permuta Descanso', canWork: false, conQuien: p.nombre2 }; break; }
+                    if (mes === m1t && dia === p.id1_trabaja)  { permutaResult = { status: 'trabajo',  label: 'Permuta Trabajo',  canWork: true,  conQuien: p.nombre2 }; break; }
+                  }
+                  if (p.id2 === agentId) {
+                    if (mes === m2d && dia === p.id2_descansa) { permutaResult = { status: 'descanso', label: 'Permuta Descanso', canWork: false, conQuien: p.nombre1 }; break; }
+                    if (mes === m2t && dia === p.id2_trabaja)  { permutaResult = { status: 'trabajo',  label: 'Permuta Trabajo',  canWork: true,  conQuien: p.nombre1 }; break; }
+                  }
+                }
+                if (permutaResult) { result = permutaResult; }
+                else {
+                  var dl = getDescansoLaborado().find(
+                    function (d) { return d.id === agentId && d.mes === mes && d.dia === dia; }
+                  );
+                  if (dl) { result = { status: 'trabajo', label: 'Descanso Laborado', canWork: true }; }
+                  else {
+                    var celda = calcularDiaPorPatron(agentId, date);
+                    var esDescanso = celda === 'R';
+                    if (!esDescanso && esCumpleanos(agentId, date)) {
+                      result = { status: 'cumpleanos', label: 'Cumpleaños', canWork: false };
+                    } else {
+                      result = {
+                        status: esDescanso ? 'descanso' : 'trabajo',
+                        label:  esDescanso ? 'Descanso Base' : 'En Servicio',
+                        canWork: !esDescanso,
+                      };
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     }
 
-    var dl = getDescansoLaborado().find(
-      function (d) { return d.id === agentId && d.mes === mes && d.dia === dia; }
-    );
-    if (dl) return { status: 'trabajo', label: 'Descanso Laborado', canWork: true };
-
-    var celda = calcularDiaPorPatron(agentId, date);
-    var esDescanso = celda === 'R';
-
-    if (!esDescanso && esCumpleanos(agentId, date)) {
-      return {
-        status: 'cumpleanos',
-        label: 'Cumpleaños',
-        canWork: false,
-      };
+    if (_statusCache.size >= CACHE_MAX_SIZE) {
+      var firstKey = _statusCache.keys().next().value;
+      _statusCache.delete(firstKey);
     }
-
-    return {
-      status: esDescanso ? 'descanso' : 'trabajo',
-      label:  esDescanso ? 'Descanso Base' : 'En Servicio',
-      canWork: !esDescanso,
-    };
+    _statusCache.set(key, result);
+    return result;
   }
 
   // ═══════════════════════════════════════════════════════════════════
@@ -378,6 +429,7 @@
   function invalidateCache() {
     _trafficCache = null;
     _supervisorCache = null;
+    invalidateStatusCache();
   }
 
   // ═══════════════════════════════════════════════════════════════════
@@ -434,6 +486,13 @@
     getDescansoLaboradoNota: getDescansoLaboradoNota,
     isAgentInObservacion: isAgentInObservacion,
     invalidateCache: invalidateCache,
+    invalidateStatusCache: invalidateStatusCache,
   };
+
+  // Inicializar vacaciones estáticas desde config (antes de que calendario las sobreescriba con Supabase)
+  var cfgVac = getCfg().vacacionesAprobadas;
+  if (cfgVac && cfgVac.length) {
+    window.VACACIONES_APROBADAS = (window.VACACIONES_APROBADAS || []).concat(cfgVac);
+  }
 
 })();

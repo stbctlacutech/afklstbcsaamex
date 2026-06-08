@@ -1065,15 +1065,19 @@ window.__CONFIG = {
         "A2": 1,
         "A1": 1,
         "A0": 1,
-        "A5": 1,
+        "A5": 0,
         "A3": 1
       },
       "descansoPatron": {
+        "tipo": "ciclo",
         "diasDescanso": [
           5,
           6
         ]
-      }
+      },
+      "cambiosDescanso": [],
+      "notas": [],
+      "restricciones": []
     },
     {
       "id": "2000718",
@@ -1126,15 +1130,19 @@ window.__CONFIG = {
         "A2": 0,
         "A1": 0,
         "A0": 0,
-        "A5": 1,
+        "A5": 0,
         "A3": 1
       },
       "descansoPatron": {
+        "tipo": "ciclo",
         "diasDescanso": [
           5,
           6
         ]
-      }
+      },
+      "cambiosDescanso": [],
+      "notas": [],
+      "restricciones": []
     },
     {
       "id": "2000607",
@@ -1330,6 +1338,16 @@ window.__CONFIG = {
         "A3": 0.75
       },
       "wfmWeekendExcluded": true,
+      "restricciones": [
+        {
+          "tipo": "diasBloqueados",
+          "dias": [
+            0,
+            6
+          ],
+          "motivo": "No opera fines de semana"
+        }
+      ],
       "descansoPatron": {
         "diasDescanso": [
           4,
@@ -1480,6 +1498,13 @@ window.__CONFIG = {
         "A5": 1,
         "A3": 1
       },
+      "restricciones": [
+        {
+          "tipo": "bloqueoPosicion",
+          "posicion": "supervisor_caja",
+          "motivo": "Sin curso de caja"
+        }
+      ],
       "descansoPatron": {
         "diasDescanso": [
           1,
@@ -1510,28 +1535,6 @@ window.__CONFIG = {
       }
     },
     {
-      "id": "2000799",
-      "nombre": "DURAN FIGUEROA AZUCENA MINERVA",
-      "name": "Azucena Duran",
-      "tipo": "traffic",
-      "descansos": "Mie-Jue",
-      "cumple": "26/04",
-      "skills": {
-        "A2": 0,
-        "A1": 0,
-        "A0": 0,
-        "A5": 0,
-        "A3": 0.5
-      },
-      "descansoPatron": {
-        "tipo": "ciclo",
-        "diasDescanso": [
-          3,
-          4
-        ]
-      }
-    },
-    {
       "id": "2000800",
       "nombre": "GARCIA LICONA CARLOS UBALDO",
       "name": "Ubaldo García",
@@ -1552,11 +1555,33 @@ window.__CONFIG = {
           2
         ]
       }
+    },
+    {
+      "id": "2000403",
+      "nombre": "ORTIZ SANCHEZ ERIKA ELEONORA",
+      "name": "Erika Ortiz",
+      "tipo": "admin",
+      "descansos": "",
+      "cumple": null,
+      "skills": null,
+      "descansoPatron": null
+    },
+    {
+      "id": "2000101",
+      "nombre": "Machepe",
+      "name": "🦝 Machepe",
+      "tipo": "admin",
+      "descansos": "",
+      "cumple": null,
+      "skills": null,
+      "descansoPatron": null
     }
   ],
   "wfmExcludedIds": [
     "2000185",
-    "2000562"
+    "2000562",
+    "2000403",
+    "2000101"
   ],
   "special": {
     "diegoId": "2000787",
@@ -1618,6 +1643,18 @@ window.__CONFIG = {
       "nota": "El agente NO se presentará a servicio.",
       "mes": 5,
       "dia": 21
+    },
+    {
+      "id": "2000707",
+      "nota": "Agente NO se presentará a servicio.",
+      "mes": 6,
+      "dia": 13
+    },
+    {
+      "id": "2000469",
+      "nota": "Agente NO se presentará a servicio.",
+      "mes": 6,
+      "dia": 6
     }
   ],
   "cursosAduana": [
@@ -2409,8 +2446,481 @@ window.__CONFIG = {
       "id2_trabaja_mes": 5,
       "id2_descansa": 4,
       "id2_descansa_mes": 6
+    },
+    {
+      "id1": "2000674",
+      "nombre1": "Kenji Jurado",
+      "id2": "2000607",
+      "nombre2": "Argelia Garcia",
+      "id1_trabaja": 3,
+      "id1_trabaja_mes": 6,
+      "id1_descansa": 6,
+      "id1_descansa_mes": 6,
+      "id2_trabaja": 6,
+      "id2_trabaja_mes": 6,
+      "id2_descansa": 3,
+      "id2_descansa_mes": 6,
+      "mes": 6
+    },
+    {
+      "id1": "2000789",
+      "nombre1": "Cassandra García",
+      "id2": "2000549",
+      "nombre2": "Mitchel Herrejon",
+      "id1_trabaja": 3,
+      "id1_trabaja_mes": 6,
+      "id1_descansa": 6,
+      "id1_descansa_mes": 6,
+      "id2_trabaja": 6,
+      "id2_trabaja_mes": 6,
+      "id2_descansa": 3,
+      "id2_descansa_mes": 6,
+      "mes": 6
+    },
+    {
+      "id1": "2000701",
+      "nombre1": "Angel Ledezma",
+      "id2": "2000707",
+      "nombre2": "Liliana Solares",
+      "id1_trabaja": 17,
+      "id1_trabaja_mes": 6,
+      "id1_descansa": 9,
+      "id1_descansa_mes": 6,
+      "id2_trabaja": 9,
+      "id2_trabaja_mes": 6,
+      "id2_descansa": 17,
+      "id2_descansa_mes": 6,
+      "mes": 6
+    },
+    {
+      "id1": "2000673",
+      "nombre1": "Fatima Moreno",
+      "id2": "2000469",
+      "nombre2": "Katia Peña",
+      "id1_trabaja": 9,
+      "id1_trabaja_mes": 6,
+      "id1_descansa": 15,
+      "id1_descansa_mes": 6,
+      "id2_trabaja": 15,
+      "id2_trabaja_mes": 6,
+      "id2_descansa": 9,
+      "id2_descansa_mes": 6,
+      "mes": 6
+    },
+    {
+      "id1": "2000682",
+      "nombre1": "Fernanda Moreno",
+      "id2": "2000734",
+      "nombre2": "Jonathan Sánchez",
+      "id1_trabaja": 9,
+      "id1_trabaja_mes": 6,
+      "id1_descansa": 15,
+      "id1_descansa_mes": 6,
+      "id2_trabaja": 15,
+      "id2_trabaja_mes": 6,
+      "id2_descansa": 9,
+      "id2_descansa_mes": 6,
+      "mes": 6
+    },
+    {
+      "id1": "2000681",
+      "nombre1": "Monserrat Guzman",
+      "id2": "2000549",
+      "nombre2": "Mitchel Herrejon",
+      "id1_trabaja": 4,
+      "id1_trabaja_mes": 6,
+      "id1_descansa": 30,
+      "id1_descansa_mes": 5,
+      "id2_trabaja": 30,
+      "id2_trabaja_mes": 5,
+      "id2_descansa": 4,
+      "id2_descansa_mes": 6
+    },
+    {
+      "id1": "2000677",
+      "nombre1": "Rey Belman",
+      "id2": "2000789",
+      "nombre2": "Cassandra García",
+      "id1_trabaja": 4,
+      "id1_trabaja_mes": 6,
+      "id1_descansa": 19,
+      "id1_descansa_mes": 5,
+      "id2_trabaja": 19,
+      "id2_trabaja_mes": 5,
+      "id2_descansa": 4,
+      "id2_descansa_mes": 6
     }
   ],
   "cursosRecurrentes": [],
-  "onboardingSchedule": []
+  "onboardingSchedule": [],
+  "vacacionesElegibilidad": {
+    "fechaCorte": "2026-05-25",
+    "totalAgentes": 42,
+    "agentes": [
+      {
+        "id": "2000191",
+        "estado": "Puede Tomar Vacaciones",
+        "puedeSolicitar": "2024-06-15",
+        "puedeTomar": "2024-12-17",
+        "diasServicio": 889
+      },
+      {
+        "id": "2000462",
+        "estado": "Puede Solicitar Vacaciones",
+        "puedeSolicitar": "2026-02-21",
+        "puedeTomar": "2026-08-25",
+        "diasServicio": 273
+      },
+      {
+        "id": "2000467",
+        "estado": "Puede Solicitar Vacaciones",
+        "puedeSolicitar": "2026-02-28",
+        "puedeTomar": "2026-09-01",
+        "diasServicio": 266
+      },
+      {
+        "id": "2000469",
+        "estado": "Puede Solicitar Vacaciones",
+        "puedeSolicitar": "2026-02-28",
+        "puedeTomar": "2026-09-01",
+        "diasServicio": 266
+      },
+      {
+        "id": "2000470",
+        "estado": "Puede Solicitar Vacaciones",
+        "puedeSolicitar": "2026-02-28",
+        "puedeTomar": "2026-09-01",
+        "diasServicio": 266
+      },
+      {
+        "id": "2000472",
+        "estado": "Puede Solicitar Vacaciones",
+        "puedeSolicitar": "2026-02-28",
+        "puedeTomar": "2026-09-01",
+        "diasServicio": 266
+      },
+      {
+        "id": "2000475",
+        "estado": "Puede Solicitar Vacaciones",
+        "puedeSolicitar": "2026-02-28",
+        "puedeTomar": "2026-09-01",
+        "diasServicio": 266
+      },
+      {
+        "id": "2000477",
+        "estado": "Puede Solicitar Vacaciones",
+        "puedeSolicitar": "2026-02-28",
+        "puedeTomar": "2026-09-01",
+        "diasServicio": 266
+      },
+      {
+        "id": "2000536",
+        "estado": "Puede Solicitar Vacaciones",
+        "puedeSolicitar": "2026-03-16",
+        "puedeTomar": "2026-09-17",
+        "diasServicio": 250
+      },
+      {
+        "id": "2000544",
+        "estado": "Puede Solicitar Vacaciones",
+        "puedeSolicitar": "2026-03-16",
+        "puedeTomar": "2026-09-17",
+        "diasServicio": 250
+      },
+      {
+        "id": "2000549",
+        "estado": "Puede Solicitar Vacaciones",
+        "puedeSolicitar": "2026-03-16",
+        "puedeTomar": "2026-09-17",
+        "diasServicio": 250
+      },
+      {
+        "id": "2000562",
+        "estado": "Puede Solicitar Vacaciones",
+        "puedeSolicitar": "2026-03-16",
+        "puedeTomar": "2026-09-17",
+        "diasServicio": 250
+      },
+      {
+        "id": "2000545",
+        "estado": "Puede Solicitar Vacaciones",
+        "puedeSolicitar": "2026-03-16",
+        "puedeTomar": "2026-09-17",
+        "diasServicio": 250
+      },
+      {
+        "id": "2000566",
+        "estado": "Puede Solicitar Vacaciones",
+        "puedeSolicitar": "2026-03-16",
+        "puedeTomar": "2026-09-17",
+        "diasServicio": 250
+      },
+      {
+        "id": "2000567",
+        "estado": "Puede Solicitar Vacaciones",
+        "puedeSolicitar": "2026-03-16",
+        "puedeTomar": "2026-09-17",
+        "diasServicio": 250
+      },
+      {
+        "id": "2000587",
+        "estado": "Puede Solicitar Vacaciones",
+        "puedeSolicitar": "2026-04-05",
+        "puedeTomar": "2026-10-07",
+        "diasServicio": 230
+      },
+      {
+        "id": "2000588",
+        "estado": "Puede Solicitar Vacaciones",
+        "puedeSolicitar": "2026-04-05",
+        "puedeTomar": "2026-10-07",
+        "diasServicio": 230
+      },
+      {
+        "id": "2000607",
+        "estado": "Puede Solicitar Vacaciones",
+        "puedeSolicitar": "2026-04-05",
+        "puedeTomar": "2026-10-07",
+        "diasServicio": 230
+      },
+      {
+        "id": "2000609",
+        "estado": "Puede Solicitar Vacaciones",
+        "puedeSolicitar": "2026-04-05",
+        "puedeTomar": "2026-10-07",
+        "diasServicio": 230
+      },
+      {
+        "id": "2000673",
+        "estado": "Menos de 180 días",
+        "puedeSolicitar": "2026-05-31",
+        "puedeTomar": "2026-12-02",
+        "diasServicio": 174
+      },
+      {
+        "id": "2000674",
+        "estado": "Menos de 180 días",
+        "puedeSolicitar": "2026-05-31",
+        "puedeTomar": "2026-12-02",
+        "diasServicio": 174
+      },
+      {
+        "id": "2000675",
+        "estado": "Menos de 180 días",
+        "puedeSolicitar": "2026-05-31",
+        "puedeTomar": "2026-12-02",
+        "diasServicio": 174
+      },
+      {
+        "id": "2000676",
+        "estado": "Menos de 180 días",
+        "puedeSolicitar": "2026-05-31",
+        "puedeTomar": "2026-12-02",
+        "diasServicio": 174
+      },
+      {
+        "id": "2000677",
+        "estado": "Menos de 180 días",
+        "puedeSolicitar": "2026-05-31",
+        "puedeTomar": "2026-12-02",
+        "diasServicio": 174
+      },
+      {
+        "id": "2000681",
+        "estado": "Menos de 180 días",
+        "puedeSolicitar": "2026-05-31",
+        "puedeTomar": "2026-12-02",
+        "diasServicio": 174
+      },
+      {
+        "id": "2000682",
+        "estado": "Menos de 180 días",
+        "puedeSolicitar": "2026-05-31",
+        "puedeTomar": "2026-12-02",
+        "diasServicio": 174
+      },
+      {
+        "id": "2000683",
+        "estado": "Menos de 180 días",
+        "puedeSolicitar": "2026-05-31",
+        "puedeTomar": "2026-12-02",
+        "diasServicio": 174
+      },
+      {
+        "id": "2000701",
+        "estado": "Menos de 180 días",
+        "puedeSolicitar": "2026-07-06",
+        "puedeTomar": "2027-01-07",
+        "diasServicio": 138
+      },
+      {
+        "id": "2000704",
+        "estado": "Menos de 180 días",
+        "puedeSolicitar": "2026-07-06",
+        "puedeTomar": "2027-01-07",
+        "diasServicio": 138
+      },
+      {
+        "id": "2000706",
+        "estado": "Menos de 180 días",
+        "puedeSolicitar": "2026-07-06",
+        "puedeTomar": "2027-01-07",
+        "diasServicio": 138
+      },
+      {
+        "id": "2000707",
+        "estado": "Menos de 180 días",
+        "puedeSolicitar": "2026-07-06",
+        "puedeTomar": "2027-01-07",
+        "diasServicio": 138
+      },
+      {
+        "id": "2000708",
+        "estado": "Menos de 180 días",
+        "puedeSolicitar": "2026-07-12",
+        "puedeTomar": "2027-01-13",
+        "diasServicio": 132
+      },
+      {
+        "id": "2000718",
+        "estado": "Menos de 180 días",
+        "puedeSolicitar": "2026-08-02",
+        "puedeTomar": "2027-02-03",
+        "diasServicio": 111
+      },
+      {
+        "id": "2000734",
+        "estado": "Menos de 180 días",
+        "puedeSolicitar": "2026-08-02",
+        "puedeTomar": "2027-02-03",
+        "diasServicio": 111
+      },
+      {
+        "id": "2000185",
+        "estado": "Menos de 180 días",
+        "puedeSolicitar": "2026-08-29",
+        "puedeTomar": "2027-03-02",
+        "diasServicio": 84
+      },
+      {
+        "id": "2000787",
+        "estado": "Menos de 180 días",
+        "puedeSolicitar": "2026-09-28",
+        "puedeTomar": "2027-04-01",
+        "diasServicio": 54
+      },
+      {
+        "id": "2000788",
+        "estado": "Menos de 180 días",
+        "puedeSolicitar": "2026-09-28",
+        "puedeTomar": "2027-04-01",
+        "diasServicio": 54
+      },
+      {
+        "id": "2000789",
+        "estado": "Menos de 180 días",
+        "puedeSolicitar": "2026-09-28",
+        "puedeTomar": "2027-04-01",
+        "diasServicio": 54
+      },
+      {
+        "id": "2000790",
+        "estado": "Menos de 180 días",
+        "puedeSolicitar": "2026-09-28",
+        "puedeTomar": "2027-04-01",
+        "diasServicio": 54
+      },
+      {
+        "id": "2000796",
+        "estado": "Menos de 180 días",
+        "puedeSolicitar": "2026-10-21",
+        "puedeTomar": "2027-04-24",
+        "diasServicio": 31
+      },
+      {
+        "id": "2000799",
+        "estado": "Menos de 180 días",
+        "puedeSolicitar": "2026-10-21",
+        "puedeTomar": "2027-04-24",
+        "diasServicio": 31
+      },
+      {
+        "id": "2000800",
+        "estado": "Menos de 180 días",
+        "puedeSolicitar": "2026-10-21",
+        "puedeTomar": "2027-04-24",
+        "diasServicio": 31
+      }
+    ]
+  },
+  "vacaciones": [
+    {
+      "id": "2000191",
+      "fechaInicio": "2026-06-20",
+      "fechaFin": "2026-06-22"
+    }
+  ],
+  "vacacionesAprobadas": [
+    {
+      "agente_id": "2000191",
+      "fecha_inicio": "2026-06-20",
+      "fecha_fin": "2026-06-22"
+    }
+  ],
+  "supervisoresAgentes": {
+    "2000191": [
+      "2000467",
+      "2000587",
+      "2000704",
+      "2000734",
+      "2000472",
+      "2000788",
+      "2000191"
+    ],
+    "2000462": [
+      "2000675",
+      "2000673",
+      "2000701",
+      "2000549",
+      "2000470",
+      "2000790",
+      "2000462"
+    ],
+    "2000545": [
+      "2000609",
+      "2000682",
+      "2000706",
+      "2000536",
+      "2000588",
+      "2000789",
+      "2000545"
+    ],
+    "2000566": [
+      "2000475",
+      "2000683",
+      "2000544",
+      "2000676",
+      "2000708",
+      "2000566",
+      "2000796"
+    ],
+    "2000567": [
+      "2000469",
+      "2000707",
+      "2000677",
+      "2000718",
+      "2000185",
+      "2000567",
+      "2000799"
+    ],
+    "2000787": [
+      "2000477",
+      "2000674",
+      "2000681",
+      "2000607",
+      "2000562",
+      "2000787",
+      "2000800"
+    ]
+  }
 };
